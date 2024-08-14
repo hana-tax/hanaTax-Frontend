@@ -1,0 +1,108 @@
+.home-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  height: 400px;
+}
+
+.slider {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 300%; /* 총 슬라이드 수에 따라 변경 */
+}
+
+.main-box {
+  display: flex;
+  align-items: center;
+
+  border-radius: 8px;
+  height: 400px;
+  flex: 1 0 100%; /* 한 슬라이드의 너비를 100%로 설정 */
+}
+
+.left-section {
+}
+
+.left-section h1 {
+  margin: 10px 0;
+}
+
+.start-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4bcb9c;
+  color: #fff;
+  border: none;
+  border-radius: 19px;
+  cursor: pointer;
+  width: 120px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+}
+
+.start-button:hover {
+  background-color: #019873;
+}
+
+.char {
+}
+
+/* 각 박스별 고유 스타일 */
+.box3 .start-button {
+  background-color: #6356da;
+}
+
+/* 추가로 각 박스별 다른 스타일을 정의할 수 있습니다 */
+.box1 .left-section h1 {
+  color: #333;
+  font-weight: bold;
+}
+
+.box2 .left-section h1 {
+  color: #444;
+}
+
+.box3 .left-section h1 {
+  color: #555;
+}
+
+.left-section {
+  display: flex;
+  flex-direction: column;
+  margin-left: 120px;
+}
+.box1 .char {
+  margin-left: -351px;
+}
+.box2 .char {
+  margin-left: 120px;
+}
+.box3 .char {
+  margin-left: 120px;
+  width: 450px;
+}
+
+.navigation-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  border-radius: 50%;
+  margin: 0 5px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.dot.active {
+  width: 30px; /* 현재 활성화된 dot은 길게 */
+  border-radius: 15px; /* 길게 하면서 양 끝을 둥글게 유지 */
+}

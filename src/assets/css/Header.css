@@ -1,0 +1,148 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  height: 60px;
+  position: relative;
+}
+
+ul,
+li {
+  list-style: none;
+  padding: 0;
+}
+
+.logo {
+  height: 20px;
+  margin-left: 10px;
+  width: auto;
+}
+
+.nav {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.nav-item {
+  margin-left: 50px;
+  font-size: 17px;
+  position: relative;
+  font-weight: bold;
+}
+
+.nav-item a,
+.nav-item span {
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.dropdown-container {
+  display: flex;
+  padding: 20px;
+}
+
+.dropdown-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+}
+
+.left-image {
+  max-width: 200px;
+  margin-bottom: 20px;
+}
+
+.inquiry-button {
+  background-color: #18cd8c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 11px;
+  font-weight: bold;
+}
+
+.inquiry-button:hover {
+  background-color: #15a36f;
+}
+
+.dropdown-right {
+  display: flex;
+  padding-left: 30px;
+}
+
+.dropdown-column {
+  margin-right: 40px;
+}
+
+.menu-title {
+  font-weight: bold;
+  font-size: 15px;
+  color: #333;
+  margin-bottom: 10px;
+  color: #aaaaaa;
+}
+
+.dropdown-submenu {
+  padding-top: 10px;
+}
+
+.dropdown-item {
+  padding-top: 13px;
+  color: #555;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 30px;
+  left: -510px;
+  width: 100vw;
+  background-color: white;
+  list-style: none;
+  padding: 20px 0;
+  margin: 0;
+  z-index: 1100;
+}
+
+.nav-item.dropdown-active .dropdown-menu {
+  display: block;
+}
+
+.login-button {
+  background-color: #099a96;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 19px;
+  margin-right: 20px;
+  font-weight: bold;
+}
+
+.login-button:hover {
+  background-color: #097673;
+}
+
+.header.hidden {
+  top: -100px;
+}
+
+.header.visible {
+  top: 0;
+}
