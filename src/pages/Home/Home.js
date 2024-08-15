@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-custom-alert";
 import "../../assets/css/Home.css";
+import "react-custom-alert/dist/index.css";
 import { ReactComponent as Char1 } from "../../assets/svg/연말정산/연말정산_배경.svg";
 import { ReactComponent as Char2 } from "../../assets/svg/금융소득/금융소득_배경.svg";
 import { ReactComponent as Char3 } from "../../assets/svg/절세상품/절세상품_배경.svg";
 
 const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const navigate = useNavigate();
 
   const boxes = [
     {
@@ -41,8 +45,11 @@ const Home = () => {
     return () => clearInterval(interval);
   }, [boxes.length]);
 
-  const handleDotClick = (index) => {
-    setCurrentIndex(index);
+  const handleStartClick = () => {
+    toast.warning("로그인이 필요한 서비스입니다."); // 경고 메시지를 표시
+    setTimeout(() => {
+      navigate("/Login");
+    }, 2000);
   };
 
   return (
@@ -58,29 +65,31 @@ const Home = () => {
           return (
             <div
               key={index}
-              className={`main-box ${box.className}`} // 고유 클래스 이름 추가
+              className={`main-box ${box.className}`}
               style={{ background: box.background }}
             >
               <div className="left-section">
                 <h1>{box.title1}</h1>
                 <h1>{box.title2}</h1>
-                <button className="start-button">시작하기</button>
+                <button className="start-button" onClick={handleStartClick}>
+                  시작하기
+                </button>
               </div>
               <SvgComponent className="char" />
             </div>
           );
         })}
       </div>
-
       <div className="navigation-dots">
         {boxes.map((_, index) => (
           <div
             key={index}
             className={`dot ${currentIndex === index ? "active" : ""}`}
-            onClick={() => handleDotClick(index)}
+            onClick={() => setCurrentIndex(index)}
           ></div>
         ))}
       </div>
+      <ToastContainer floatingTime={5000} />
     </div>
   );
 };

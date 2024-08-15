@@ -1,0 +1,61 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-box {
+  text-align: center;
+  padding: 40px;
+  border-radius: 8px;
+}
+
+.login-box h2 {
+  margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  line-height: 1.4;
+}
+
+.kakao-login {
+  width: 100%;
+  background-color: #fee500;
+  color: #181600;
+  padding: 12px 0;
+  border: none;
+  border-radius: 11px;
+  font-size: 16px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  font-family: "Pretendard-Regular";
+  font-weight: bold;
+}
+
+.naver-login {
+  width: 100%;
+  background-color: #00c73c;
+  color: #fff;
+  padding: 12px 0;
+  border: none;
+  border-radius: 11px;
+  font-size: 16px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  font-family: "Pretendard-Regular";
+  font-weight: bold;
+}
+
+.default-login {
+  width: 100%;
+  background-color: transparent;
+  color: #18cd8c;
+  padding: 12px 0;
+  border: 1.5px solid #18cd8c;
+  border-radius: 11px;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: "Pretendard-Regular";
+  font-weight: bold;
+}

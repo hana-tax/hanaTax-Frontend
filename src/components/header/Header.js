@@ -102,13 +102,92 @@ function Header() {
               </div>
             )}
           </li>
-          <li className="nav-item">
-            <Link to="/productlist">금융소득</Link>
+          <li
+            className={`nav-item ${
+              activeDropdown === "income" ? "dropdown-active" : ""
+            }`}
+            onClick={() => toggleDropdown("income")}
+          >
+            <span>금융소득</span>
+            {activeDropdown === "income" && (
+              <div className="dropdown-menu">
+                <div className="dropdown-container">
+                  <div className="dropdown-left">
+                    {/* <img
+                      src={LeftImage}
+                      alt="Left Content"
+                      className="left-image"
+                    /> */}
+                    <button className="inquiry-button">한눈에 조회하기</button>
+                  </div>
+                  <div className="dropdown-right">
+                    <div className="dropdown-column">
+                      <span className="menu-title">연말정산 공제</span>
+                      <ul className="dropdown-submenu">
+                        <li className="dropdown-item">카드 공제 혜택</li>
+                        <li className="dropdown-item">의료 공제 혜택</li>
+                        <li className="dropdown-item">
+                          월세 및 부대 비용 공제 혜택
+                        </li>
+                        <li className="dropdown-item">중소기업 공제 혜택</li>
+                        <li className="dropdown-item">근로세액 및 IRP 혜택</li>
+                      </ul>
+                    </div>
+                    <div className="dropdown-column">
+                      <span className="menu-title">연말정산 상세 정보</span>
+                      <ul className="dropdown-submenu">
+                        <li className="dropdown-item">연말정산의 모든 것</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </li>
-          <li className="nav-item">절세상품</li>
+          <li
+            className={`nav-item ${
+              activeDropdown === "product" ? "dropdown-active" : ""
+            }`}
+            onClick={() => toggleDropdown("product")}
+          >
+            <span>절세상품</span>
+            {activeDropdown === "product" && (
+              <div className="dropdown-menu">
+                <div className="dropdown-container">
+                  <div className="dropdown-left">
+                    {/* <img
+                      src={LeftImage}
+                      alt="Left Content"
+                      className="left-image"
+                    /> */}
+                    <button className="inquiry-button">한눈에 조회하기</button>
+                  </div>
+                  <div className="dropdown-right">
+                    <div className="dropdown-column">
+                      <span className="menu-title">연말정산 공제</span>
+                      <ul className="dropdown-submenu">
+                        <li className="dropdown-item">카드 공제 혜택</li>
+                        <li className="dropdown-item">의료 공제 혜택</li>
+                        <li className="dropdown-item">
+                          월세 및 부대 비용 공제 혜택
+                        </li>
+                        <li className="dropdown-item">중소기업 공제 혜택</li>
+                        <li className="dropdown-item">근로세액 및 IRP 혜택</li>
+                      </ul>
+                    </div>
+                    <div className="dropdown-column">
+                      <span className="menu-title">연말정산 상세 정보</span>
+                      <ul className="dropdown-submenu">
+                        <li className="dropdown-item">연말정산의 모든 것</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </li>
         </ul>
       </nav>
-      <button className="login-button">로그인</button>
     </header>
   );
 }
