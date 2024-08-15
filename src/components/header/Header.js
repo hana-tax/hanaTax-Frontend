@@ -10,6 +10,9 @@ function Header() {
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const lastScrollY = useRef(0);
   const dropdownRef = useRef(null);
+  const ToAllofYearEnd = () => {
+    navigate("/allofYearEnd");
+  };
 
   const toggleDropdown = (dropdown) => {
     if (activeDropdown === dropdown) {
@@ -94,7 +97,9 @@ function Header() {
                     <div className="dropdown-column">
                       <span className="menu-title">연말정산 상세 정보</span>
                       <ul className="dropdown-submenu">
-                        <li className="dropdown-item">연말정산의 모든 것</li>
+                        <li className="dropdown-item" onClick={ToAllofYearEnd}>
+                          연말정산의 모든 것
+                        </li>
                       </ul>
                     </div>
                   </div>

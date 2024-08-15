@@ -1,0 +1,57 @@
+.yearend-section {
+  padding: 40px 300px;
+}
+
+.yearend-section h2 {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.yearend-section h3 {
+  margin-right: 250px;
+}
+
+.yearend-content {
+  background-color: #4f6be7;
+  border-radius: 20px;
+  width: 110vh;
+  height: 60vh;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+.content {
+  display: inline-block;
+}
+
+.Char {
+  margin-left: 40px;
+  margin-top: 50px;
+  width: 100%;
+}
+
+.content p {
+  font-size: 18px;
+  color: #898989;
+}
+
+.toc-container {
+  background-color: #f4f5f7;
+  border-radius: 20px;
+  width: 110vh;
+  height: 29vh;
+  padding: 1px 30px;
+  margin-bottom: 60px;
+  margin-top: 60px;
+}
+
+.toc-container p {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #898989;
+}
+
+.toc-container p a {
+  color: #898989;
+}
