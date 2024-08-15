@@ -1,0 +1,161 @@
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.signup-form {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 8px;
+  text-align: center;
+  width: 300px;
+  border: 0.5px solid #e3e3e3;
+}
+
+.signup-form h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.signup-form p {
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.signup-form input {
+  width: 94%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  font-family: "Pretendard-Regular";
+}
+
+.signup-form .email-input {
+  display: flex;
+  align-items: center;
+  font-family: "Pretendard-Regular";
+  justify-content: space-between;
+}
+
+.signup-form .email-input input {
+  flex: 1;
+  margin-right: 10px;
+  font-family: "Pretendard-Regular";
+}
+.signup-form .email-input span {
+  margin-bottom: 13px;
+}
+
+.signup-form .birthdate {
+  display: flex;
+  justify-content: space-between;
+}
+
+.signup-form .birthdate input {
+  width: 25%;
+  font-family: "Pretendard-Regular";
+}
+
+.signup-form button {
+  background-color: #18cd8c;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: "Pretendard-Regular";
+  font-weight: bold;
+}
+
+.signup-form button:hover {
+  background-color: #14b57a;
+}
+
+#info__id {
+  position: relative;
+}
+
+#info__id input {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  font-family: "Pretendard-Regular";
+}
+
+#info__id button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 2px;
+  border-radius: 3px;
+  background-color: #fff;
+  color: #18cd8c;
+  border: 1px solid #18cd8c;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 8px 8px;
+}
+
+#info__id button:hover {
+  background-color: #18cd8c;
+  color: white;
+}
+
+.box.domain {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.domain__selected {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.domain .domain__list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+  box-sizing: border-box;
+  border-radius: 1px;
+  border: 1px solid #d9d6d6;
+  background: white; /* 배경색 추가 */
+  max-height: 0;
+  opacity: 0;
+  transition: 0.3s;
+  z-index: 1000; /* 드롭다운이 다른 요소 위에 보이도록 설정 */
+}
+
+.domain .domain__list.active {
+  max-height: 150px; /* 드롭다운 높이 조정 */
+  opacity: 1;
+  overflow-y: auto; /* 스크롤 가능 */
+}
+
+.option {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.option:hover {
+  background-color: #f0f0f0; /* 호버 시 배경색 변경 */
+}
+
+.resident-number {
+  display: flex;
+}
+
+.resident-number span {
+  padding: 10px;
+}
