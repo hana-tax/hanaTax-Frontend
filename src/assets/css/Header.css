@@ -113,11 +113,12 @@ li {
   top: 30px;
   left: -510px;
   width: 100vw;
-  background-color: white;
+  background-color: #fffcfc;
   list-style: none;
   padding: 20px 0;
   margin: 0;
   z-index: 1100;
+  height: 45vh;
 }
 
 .nav-item.dropdown-active .dropdown-menu {

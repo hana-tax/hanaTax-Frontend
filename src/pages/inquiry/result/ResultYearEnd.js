@@ -37,8 +37,8 @@ const ResultYearEnd = () => {
     return () => clearInterval(interval);
   }, [targetAmount]);
 
-  const ToAllofYearEnd = () => {
-    navigate("/allofYearEnd");
+  const ToRefundDetails = () => {
+    navigate("/yearend/refundDetails");
   };
 
   return (
@@ -51,7 +51,7 @@ const ResultYearEnd = () => {
             있어요!
           </h1>
 
-          <button className="description-button" onClick={ToAllofYearEnd}>
+          <button className="description-button" onClick={ToRefundDetails}>
             자세히 보기{" "}
           </button>
         </div>

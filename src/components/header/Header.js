@@ -132,25 +132,34 @@ function Header() {
                       alt="Left Content"
                       className="left-image"
                     /> */}
-                    <button className="inquiry-button">한눈에 조회하기</button>
+                    <button className="inquiry-button">
+                      대상자 여부 조회하기
+                    </button>
                   </div>
                   <div className="dropdown-right">
                     <div className="dropdown-column">
-                      <span className="menu-title">연말정산 공제</span>
+                      <span className="menu-title">금융소득 조회</span>
                       <ul className="dropdown-submenu">
-                        <li className="dropdown-item">카드 공제 혜택</li>
-                        <li className="dropdown-item">의료 공제 혜택</li>
+                        <li className="dropdown-item">나의 금융소득 조회</li>
                         <li className="dropdown-item">
-                          월세 및 부대 비용 공제 혜택
+                          금융소득 종합과세 대상자 알림 신청
                         </li>
-                        <li className="dropdown-item">중소기업 공제 혜택</li>
-                        <li className="dropdown-item">근로세액 및 IRP 혜택</li>
                       </ul>
                     </div>
                     <div className="dropdown-column">
-                      <span className="menu-title">연말정산 상세 정보</span>
+                      <span className="menu-title">금융소득 상식과 꿀팁</span>
                       <ul className="dropdown-submenu">
-                        <li className="dropdown-item">연말정산의 모든 것</li>
+                        <li className="dropdown-item">금융소득의 모든 것</li>
+                        <li className="dropdown-item">
+                          금융소득 종합과세 VS 분리과세
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="dropdown-column">
+                      <span className="menu-title">세테크 시작하기</span>
+                      <ul className="dropdown-submenu">
+                        <li className="dropdown-item">나의 금융소득 분석</li>
+                        <li className="dropdown-item">절세 솔루션 안내</li>
                       </ul>
                     </div>
                   </div>

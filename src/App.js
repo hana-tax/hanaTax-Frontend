@@ -10,6 +10,7 @@ import Signup2 from "./pages/Signup/Signup2";
 import AllofYearEnd from "./pages/Allof/allofYearEnd";
 import InquiryYearEnd from "./pages/inquiry/InquiryYearEnd";
 import ResultYearEnd from "./pages/inquiry/result/ResultYearEnd";
+import RefundDetailsYearEnd from "./pages/inquiry/RefundDetailsYearEnd";
 
 function App() {
   return (
@@ -25,6 +26,10 @@ function App() {
           <Route path="/allofYearEnd" element={<AllofYearEnd />} />
           <Route path="/inquiryYearEnd" element={<InquiryYearEnd />} />
           <Route path="/inquiryYearEnd/result" element={<ResultYearEnd />} />
+          <Route
+            path="/yearend/refundDetails"
+            element={<RefundDetailsYearEnd />}
+          />
         </Routes>
       </div>
     </Router>

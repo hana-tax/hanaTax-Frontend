@@ -1,0 +1,91 @@
+.refund-container {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 8px;
+  padding: 20px;
+  margin: auto;
+}
+
+.refund-summary {
+  background-color: #18cd8c;
+  color: white;
+  border-radius: 19px;
+  padding: 10px;
+}
+
+.refund-summary h1 {
+  color: #333;
+  font-size: 18px;
+}
+
+.refund-summary h2 {
+  font-size: 24px;
+  margin-top: 10px;
+}
+
+.refund-summary p {
+  font-size: 14px;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+.refund-details {
+  background-color: #ececec;
+  border-radius: 19px;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.refund-details h3 {
+  font-size: 16px;
+  color: #333;
+  margin-top: 20px;
+}
+
+.refund-details h4 {
+  font-size: 18px;
+  margin-top: 5px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.item-title {
+  color: #666;
+  font-size: 14px;
+}
+
+.item-amount {
+  color: #333;
+  font-size: 14px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.btn-close,
+.btn-confirm {
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-close {
+  background-color: #d9d9d9;
+  color: #fff;
+}
+
+.btn-confirm {
+  background-color: #18cd8c;
+  color: #fff;
+  margin-left: 10px;
+}

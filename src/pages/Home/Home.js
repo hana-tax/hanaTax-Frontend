@@ -53,7 +53,7 @@ const Home = () => {
   };
 
   return (
-    <div className="home-container">
+    <div className="homepage-container">
       <div
         className="slider"
         style={{
