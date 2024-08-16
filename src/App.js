@@ -8,6 +8,8 @@ import LoginForm from "./pages/Login/LoginForm";
 import Signup from "./pages/Signup/Signup";
 import Signup2 from "./pages/Signup/Signup2";
 import AllofYearEnd from "./pages/Allof/allofYearEnd";
+import InquiryYearEnd from "./pages/inquiry/InquiryYearEnd";
+import ResultYearEnd from "./pages/inquiry/result/ResultYearEnd";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/signup2" element={<Signup2 />} />
           <Route path="/allofYearEnd" element={<AllofYearEnd />} />
+          <Route path="/inquiryYearEnd" element={<InquiryYearEnd />} />
+          <Route path="/inquiryYearEnd/result" element={<ResultYearEnd />} />
         </Routes>
       </div>
     </Router>

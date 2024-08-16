@@ -14,6 +14,10 @@ function Header() {
     navigate("/allofYearEnd");
   };
 
+  const ToInquiryYearEnd = () => {
+    navigate("/inquiryYearEnd");
+  };
+
   const toggleDropdown = (dropdown) => {
     if (activeDropdown === dropdown) {
       setActiveDropdown(null);
@@ -79,7 +83,12 @@ function Header() {
                       alt="Left Content"
                       className="left-image"
                     /> */}
-                    <button className="inquiry-button">한눈에 조회하기</button>
+                    <button
+                      className="inquiry-button"
+                      onClick={ToInquiryYearEnd}
+                    >
+                      한눈에 조회하기
+                    </button>
                   </div>
                   <div className="dropdown-right">
                     <div className="dropdown-column">
