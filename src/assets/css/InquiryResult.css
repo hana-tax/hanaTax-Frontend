@@ -1,3 +1,65 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.solution-container {
+  background-color: #faf9f9;
+  width: 100%;
+  display: grid;
+  margin-top: 150px;
+}
+
+.solutions-section {
+  justify-content: center;
+  text-align: center;
+  margin-top: 60px;
+}
+
+.solutions-section h2 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.highlight {
+  color: #18cd8c;
+  font-size: 32px;
+}
+
+.icon-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px auto;
+  max-width: 600px;
+}
+
+.icon-container img {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.solution-button {
+  background-color: #18cd8c;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 100px;
+}
+
+.solution-button:hover {
+  background-color: #16b17a;
+}
+
 .price {
   color: #18cd8c;
 }
@@ -5,6 +67,7 @@
 .right {
   margin-left: 20px;
 }
+
 .left {
   display: flex;
   flex-direction: column;
@@ -30,4 +93,47 @@
   align-items: center;
   text-align: center;
   justify-content: center;
+}
+
+.slider {
+  height: 100px;
+  margin: auto;
+  position: relative;
+  width: 300%;
+}
+
+.slide-track {
+  display: flex;
+  width: calc(100px * 10);
+  animation: scroll 30s linear infinite;
+}
+
+.slide-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scroll {
+  100% {
+    transform: translateX(calc(-100px * 10)); /* 아이콘 수에 따라 조정 */
+  }
+  0% {
+    transform: translateX(100px);
+  }
+}
+
+.slide {
+  height: 100px; /* 아이콘 높이 조정 */
+  width: 100px; /* 아이콘 너비 조정 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide img {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
 }
