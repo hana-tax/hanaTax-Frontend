@@ -11,6 +11,7 @@ import AllofYearEnd from "./pages/Allof/allofYearEnd";
 import InquiryYearEnd from "./pages/inquiry/InquiryYearEnd";
 import ResultYearEnd from "./pages/inquiry/result/ResultYearEnd";
 import RefundDetailsYearEnd from "./pages/inquiry/RefundDetailsYearEnd";
+import SolutionYearEnd from "./pages/solution/SolutionYearEnd";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             path="/yearend/refundDetails"
             element={<RefundDetailsYearEnd />}
           />
+          <Route path="/yearend/solution" element={<SolutionYearEnd />} />
         </Routes>
       </div>
     </Router>

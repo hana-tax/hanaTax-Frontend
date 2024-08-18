@@ -15,7 +15,7 @@ const ResultYearEnd = () => {
   const navigate = useNavigate();
   const targetAmount = 780000;
   const ToSolutionYearEnd = () => {
-    navigate("/solution/yearend");
+    navigate("/yearend/solution");
   };
 
   useEffect(() => {
