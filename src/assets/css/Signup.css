@@ -2,7 +2,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 
 .signup-form {
@@ -158,4 +157,19 @@
 
 .resident-number span {
   padding: 10px;
+}
+
+.email-input select {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.email-input select:focus {
+  outline: none;
 }

@@ -14,14 +14,22 @@ const Signup = () => {
     domain: "naver.com",
   });
 
-  const [isDomainListActive, setDomainListActive] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [customDomain, setCustomDomain] = useState(false);
+  const [, setIsSubmitted] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    if (name === "domainSelect") {
+      if (value === "직접입력") {
+        setCustomDomain(true);
+        setFormData({ ...formData, domain: "" });
+      } else {
+        setCustomDomain(false);
+        setFormData({ ...formData, domain: value });
+      }
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSubmit = (e) => {
@@ -33,21 +41,6 @@ const Signup = () => {
     setTimeout(() => {
       navigate("/signup2");
     }, 300);
-  };
-
-  const handleDomainSelect = (domain) => {
-    setFormData({ ...formData, domain });
-    setDomainListActive(false);
-  };
-
-  const toggleDomainList = () => {
-    setDomainListActive(!isDomainListActive);
-  };
-
-  const handleDirectInput = () => {
-    // 도메인 입력란을 비워줌
-    setFormData({ ...formData, domain: "" });
-    setDomainListActive(false);
   };
 
   const pageVariants = {
@@ -65,7 +58,7 @@ const Signup = () => {
     <motion.div
       className="form-container"
       initial="initial"
-      animate={isSubmitted ? "out" : "in"}
+      animate="in"
       exit="out"
       variants={pageVariants}
       transition={pageTransition}
@@ -114,28 +107,27 @@ const Signup = () => {
             required
           />
           <span>@</span>
-          <div className="box domain" onClick={toggleDomainList}>
-            <div className="domain__selected">{formData.domain}</div>
-            <ul
-              className={`domain__list ${isDomainListActive ? "active" : ""}`}
+          {customDomain ? (
+            <input
+              type="text"
+              name="domain"
+              placeholder="도메인 직접 입력"
+              value={formData.domain}
+              onChange={handleChange}
+              required
+              style={{ marginLeft: "10px" }}
+            />
+          ) : (
+            <select
+              name="domainSelect"
+              onChange={handleChange}
+              value={formData.domain}
             >
-              <li
-                className="option"
-                onClick={() => handleDomainSelect("naver.com")}
-              >
-                naver.com
-              </li>
-              <li
-                className="option"
-                onClick={() => handleDomainSelect("google.com")}
-              >
-                google.com
-              </li>
-              <li className="option" onClick={handleDirectInput}>
-                직접 입력
-              </li>
-            </ul>
-          </div>
+              <option value="naver.com">naver.com</option>
+              <option value="google.com">google.com</option>
+              <option value="직접입력">직접입력</option>
+            </select>
+          )}
         </div>
 
         <input
