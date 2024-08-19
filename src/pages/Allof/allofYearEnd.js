@@ -20,7 +20,7 @@ const YearEndSection = () => {
       <h2>"연말정산이 뭐에요?" 연말정산 쉽게 이해하기</h2>
 
       <div className="yearend-content">
-        <Char />
+        <Char className="allofChar" />
       </div>
       <div className="content">
         <h3>연말정산, 꼭 알아야 할 이유</h3>

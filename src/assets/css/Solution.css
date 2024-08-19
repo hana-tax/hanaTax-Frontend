@@ -396,6 +396,7 @@ input[type="radio"]:checked {
   padding: 7px 25px;
   margin-top: 15px;
   color: #000;
+  font-size: 13px;
 }
 
 .irp-account-body span {

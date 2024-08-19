@@ -1,214 +1,203 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/svg/하나은행로고.svg";
-// import LeftImage from "../../assets/images/left-image.png"; // 이미지 경로를 맞춰주세요
 import "../../assets/css/Header.css";
 
 function Header() {
   const navigate = useNavigate();
-  const [activeDropdown, setActiveDropdown] = useState(null);
-  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-  const lastScrollY = useRef(0);
-  const dropdownRef = useRef(null);
-  const ToAllofYearEnd = () => {
-    navigate("/allofYearEnd");
-  };
+  const numberRef = useRef(null);
 
   const ToInquiryYearEnd = () => {
     navigate("/inquiryYearEnd");
   };
 
-  const toggleDropdown = (dropdown) => {
-    if (activeDropdown === dropdown) {
-      setActiveDropdown(null);
-    } else {
-      setActiveDropdown(dropdown);
-    }
-  };
-
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setActiveDropdown(null);
-    }
+  const ToAllofYearEnd = () => {
+    navigate("/allofYearEnd");
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+    const el = numberRef.current;
+    if (!el) return;
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > lastScrollY.current) {
-        setIsHeaderVisible(false);
-      } else {
-        setIsHeaderVisible(true);
+    const number = "123000"; // 표시할 숫자 설정
+    const type = "slide"; // 애니메이션 유형 설정
+
+    RollingNum(el, number, type);
+
+    function RollingNum(el, number, type) {
+      const speed = 100;
+      const delay = 300;
+      const num = number.toString().split("");
+
+      num.forEach((item, i) => {
+        const classId = `num-idx-${i}-${item}`;
+        const slideStyle =
+          type === "slide" ? "transition: margin-top .3s ease-in-out;" : "";
+        el.innerHTML += `<div class="num ${classId}" style="${slideStyle}" data-text="${item}">
+                                    <div class="num-list">${
+                                      Array.from(
+                                        { length: 10 },
+                                        (_, k) => k
+                                      ).join(" ") +
+                                      " " +
+                                      item
+                                    }</div>
+                                </div>`;
+
+        setTimeout(() => {
+          numAnimate(`.${classId}`, item);
+        }, delay * i);
+      });
+
+      function numAnimate(selector, targetNum) {
+        const el = document.querySelector(selector);
+        const numList = el.querySelector(".num-list");
+        let n = 0;
+        const numInterval = setInterval(() => {
+          numList.style.marginTop = `-${n * 30}px`;
+          if (n >= 10) {
+            clearInterval(numInterval);
+            const finalPosition =
+              targetNum === "," ? 10 : parseInt(targetNum, 10);
+            numList.style.marginTop = `-${finalPosition * 30}px`;
+          }
+          n++;
+        }, speed);
       }
-      lastScrollY.current = window.scrollY;
-      setActiveDropdown(null); // 스크롤 시 드롭다운 메뉴 닫기
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    }
   }, []);
 
   return (
-    <header
-      className={`header ${isHeaderVisible ? "visible" : "hidden"} ${
-        activeDropdown ? "dropdown-active" : ""
-      }`}
-    >
+    <header className="header visible">
       <Link to="/">
         <Logo className="logo" />
       </Link>
-      <nav className="nav" ref={dropdownRef}>
+      <nav className="nav">
         <ul className="nav-list">
-          <li
-            className={`nav-item ${
-              activeDropdown === "inquiry" ? "dropdown-active" : ""
-            }`}
-            onClick={() => toggleDropdown("inquiry")}
-          >
+          <li className="nav-item">
             <span>연말정산</span>
-            {activeDropdown === "inquiry" && (
-              <div className="dropdown-menu">
-                <div className="dropdown-container">
-                  <div className="dropdown-left">
-                    {/* <img
-                      src={LeftImage}
-                      alt="Left Content"
-                      className="left-image"
-                    /> */}
-                    <button
-                      className="inquiry-button"
-                      onClick={ToInquiryYearEnd}
-                    >
-                      한눈에 조회하기
-                    </button>
+            <div className="dropdown-menu">
+              <div className="dropdown-container">
+                <div className="dropdown-left">
+                  <span>
+                    연말정산, 올해 얼마
+                    <br /> 받을 수 있을까?
+                  </span>
+                  <div className="header-money-box">
+                    <div className="header-money">
+                      <span ref={numberRef} className="number">
+                        0
+                      </span>
+                    </div>
                   </div>
-                  <div className="dropdown-right">
-                    <div className="dropdown-column">
-                      <span className="menu-title">연말정산 공제</span>
-                      <ul className="dropdown-submenu">
-                        <li className="dropdown-item">카드 공제 혜택</li>
-                        <li className="dropdown-item">의료 공제 혜택</li>
-                        <li className="dropdown-item">
-                          월세 및 부대 비용 공제 혜택
-                        </li>
-                        <li className="dropdown-item">중소기업 공제 혜택</li>
-                        <li className="dropdown-item">근로세액 및 IRP 혜택</li>
-                      </ul>
-                    </div>
-                    <div className="dropdown-column">
-                      <span className="menu-title">연말정산 상세 정보</span>
-                      <ul className="dropdown-submenu">
-                        <li className="dropdown-item" onClick={ToAllofYearEnd}>
-                          연말정산의 모든 것
-                        </li>
-                      </ul>
-                    </div>
+                  <button
+                    className="inquiry-button"
+                    onClick={() => navigate("/inquiryYearEnd")}
+                  >
+                    한눈에 조회하기
+                  </button>
+                </div>
+                <div className="dropdown-right">
+                  <div className="dropdown-column">
+                    <span className="menu-title">연말정산 공제</span>
+                    <ul className="dropdown-submenu">
+                      <li className="dropdown-item">카드 공제 혜택</li>
+                      <li className="dropdown-item">의료 공제 혜택</li>
+                      <li className="dropdown-item">
+                        월세 및 부대 비용 공제 혜택
+                      </li>
+                      <li className="dropdown-item">중소기업 공제 혜택</li>
+                      <li className="dropdown-item">근로세액 및 IRP 혜택</li>
+                    </ul>
+                  </div>
+                  <div className="dropdown-column">
+                    <span className="menu-title">연말정산 상세 정보</span>
+                    <ul className="dropdown-submenu">
+                      <li className="dropdown-item" onClick={ToAllofYearEnd}>
+                        연말정산의 모든 것
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
-            )}
+            </div>
           </li>
-          <li
-            className={`nav-item ${
-              activeDropdown === "income" ? "dropdown-active" : ""
-            }`}
-            onClick={() => toggleDropdown("income")}
-          >
+          {/* <li className="nav-item">
             <span>금융소득</span>
-            {activeDropdown === "income" && (
-              <div className="dropdown-menu">
-                <div className="dropdown-container">
-                  <div className="dropdown-left">
-                    {/* <img
-                      src={LeftImage}
-                      alt="Left Content"
-                      className="left-image"
-                    /> */}
-                    <button className="inquiry-button">
-                      대상자 여부 조회하기
-                    </button>
+            <div className="dropdown-menu">
+              <div className="dropdown-container">
+                <div className="dropdown-left">
+                  <button className="inquiry-button">
+                    대상자 여부 조회하기
+                  </button>
+                </div>
+                <div className="dropdown-right">
+                  <div className="dropdown-column">
+                    <span className="menu-title">금융소득 조회</span>
+                    <ul className="dropdown-submenu">
+                      <li className="dropdown-item">나의 금융소득 조회</li>
+                      <li className="dropdown-item">
+                        금융소득 종합과세 대상자 알림 신청
+                      </li>
+                    </ul>
                   </div>
-                  <div className="dropdown-right">
-                    <div className="dropdown-column">
-                      <span className="menu-title">금융소득 조회</span>
-                      <ul className="dropdown-submenu">
-                        <li className="dropdown-item">나의 금융소득 조회</li>
-                        <li className="dropdown-item">
-                          금융소득 종합과세 대상자 알림 신청
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="dropdown-column">
-                      <span className="menu-title">금융소득 상식과 꿀팁</span>
-                      <ul className="dropdown-submenu">
-                        <li className="dropdown-item">금융소득의 모든 것</li>
-                        <li className="dropdown-item">
-                          금융소득 종합과세 VS 분리과세
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="dropdown-column">
-                      <span className="menu-title">세테크 시작하기</span>
-                      <ul className="dropdown-submenu">
-                        <li className="dropdown-item">나의 금융소득 분석</li>
-                        <li className="dropdown-item">절세 솔루션 안내</li>
-                      </ul>
-                    </div>
+                  <div className="dropdown-column">
+                    <span className="menu-title">금융소득 상식과 꿀팁</span>
+                    <ul className="dropdown-submenu">
+                      <li className="dropdown-item">금융소득의 모든 것</li>
+                      <li className="dropdown-item">
+                        금융소득 종합과세 VS 분리과세
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="dropdown-column">
+                    <span className="menu-title">세테크 시작하기</span>
+                    <ul className="dropdown-submenu">
+                      <li className="dropdown-item">나의 금융소득 분석</li>
+                      <li className="dropdown-item">절세 솔루션 안내</li>
+                    </ul>
                   </div>
                 </div>
               </div>
-            )}
+            </div>
           </li>
-          <li
-            className={`nav-item ${
-              activeDropdown === "product" ? "dropdown-active" : ""
-            }`}
-            onClick={() => toggleDropdown("product")}
-          >
+          <li className="nav-item">
             <span>절세상품</span>
-            {activeDropdown === "product" && (
-              <div className="dropdown-menu">
-                <div className="dropdown-container">
-                  <div className="dropdown-left">
-                    {/* <img
-                      src={LeftImage}
-                      alt="Left Content"
-                      className="left-image"
-                    /> */}
-                    <button className="inquiry-button">한눈에 조회하기</button>
+            <div className="dropdown-menu">
+              <div className="dropdown-container">
+                <div className="dropdown-right">
+                  <div className="dropdown-column">
+                    <span className="menu-title">예적금</span>
+                    <ul className="dropdown-submenu">
+                      <li className="dropdown-item">상품/가입</li>
+                    </ul>
                   </div>
-                  <div className="dropdown-right">
-                    <div className="dropdown-column">
-                      <span className="menu-title">연말정산 공제</span>
-                      <ul className="dropdown-submenu">
-                        <li className="dropdown-item">카드 공제 혜택</li>
-                        <li className="dropdown-item">의료 공제 혜택</li>
-                        <li className="dropdown-item">
-                          월세 및 부대 비용 공제 혜택
-                        </li>
-                        <li className="dropdown-item">중소기업 공제 혜택</li>
-                        <li className="dropdown-item">근로세액 및 IRP 혜택</li>
-                      </ul>
-                    </div>
-                    <div className="dropdown-column">
-                      <span className="menu-title">연말정산 상세 정보</span>
-                      <ul className="dropdown-submenu">
-                        <li className="dropdown-item">연말정산의 모든 것</li>
-                      </ul>
-                    </div>
+                  <div className="dropdown-column">
+                    <span className="menu-title">ISA</span>
+                    <ul className="dropdown-submenu">
+                      <li className="dropdown-item">ISA 상품/가입</li>
+                      <li className="dropdown-item">ISA 조회/입금</li>
+                    </ul>
+                  </div>
+                  <div className="dropdown-column">
+                    <span className="menu-title">펀드</span>
+                    <ul className="dropdown-submenu">
+                      <li className="dropdown-item">연금저축펀드 상품</li>
+                      <li className="dropdown-item">연금펀드 통합 신규</li>
+                      <li className="dropdown-item">연금펀드 입금</li>
+                    </ul>
+                  </div>
+                  <div className="dropdown-column">
+                    <span className="menu-title">절세 상식과 꿀팁</span>
+                    <ul className="dropdown-submenu">
+                      <li className="dropdown-item">ISA 계좌의 모든 것</li>
+                      <li className="dropdown-item">연금저축의 모든 것</li>
+                    </ul>
                   </div>
                 </div>
               </div>
-            )}
-          </li>
+            </div>
+          </li> */}
         </ul>
       </nav>
     </header>

@@ -1,7 +1,4 @@
 .home-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   overflow: hidden;
 }
 
@@ -137,5 +134,59 @@
   border-radius: 12px;
   background-color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.deduction-result-container {
+  width: 40%;
+  margin: auto;
+  padding: 70px;
+}
+
+.total-refund {
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.refund-details {
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.refund-detail-item span {
+  font-weight: bold;
+}
+.refund-detail-item {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ececec;
+  padding: 25px 0;
+  font-weight: bold;
+}
+
+.refund-detail-item:last-child {
+  border-bottom: none;
+}
+
+.details-container {
+  background-color: #f9fafb;
+  padding: 20px;
+  color: #757575;
+  font-size: 13px;
+}
+
+.deduction-detail-container {
+  background-color: #f3f4f6;
+  padding: 30px;
+  font-weight: bold;
+  margin-top: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.deduction-detail-item {
+  display: flex;
+  justify-content: space-between;
   padding: 10px;
 }

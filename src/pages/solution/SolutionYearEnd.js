@@ -5,8 +5,13 @@ import PersonDetails from "./PersonDetails";
 import HouseDetails from "./HouseDetails";
 import BusinessDetails from "./BusinessDetails";
 import IrpDetails from "./IrpDetails";
+import { useNavigate } from "react-router-dom";
 
 const SolutionYearEnd = () => {
+  const navigate = useNavigate();
+  const ToResult = () => {
+    navigate("/yearend/solution/result");
+  };
   return (
     <div className="solution-detail-container">
       <div className="summary">
@@ -24,7 +29,7 @@ const SolutionYearEnd = () => {
       <HouseDetails />
       <BusinessDetails />
       <IrpDetails />
-      <button>결과 확인하기</button>
+      <button onClick={ToResult}>결과 확인하기</button>
     </div>
   );
 };
