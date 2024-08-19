@@ -13,6 +13,7 @@ import ResultYearEnd from "./pages/inquiry/result/ResultYearEnd";
 import RefundDetailsYearEnd from "./pages/inquiry/RefundDetailsYearEnd";
 import SolutionYearEnd from "./pages/solution/SolutionYearEnd";
 import DeductionResultYearEnd from "./pages/inquiry/result/DeductionResultYearEnd";
+import InquiryFinancialIncome from "./pages/inquiry/InquiryFinancialIncome";
 
 function App() {
   return (
@@ -27,6 +28,10 @@ function App() {
           <Route path="/signup2" element={<Signup2 />} />
           <Route path="/allofYearEnd" element={<AllofYearEnd />} />
           <Route path="/inquiryYearEnd" element={<InquiryYearEnd />} />
+          <Route
+            path="/inquiryFinancialIncome"
+            element={<InquiryFinancialIncome />}
+          />
           <Route path="/inquiryYearEnd/result" element={<ResultYearEnd />} />
           <Route
             path="/yearend/refundDetails"

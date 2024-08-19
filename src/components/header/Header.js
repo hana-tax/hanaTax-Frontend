@@ -1,15 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/svg/하나은행로고.svg";
+import { ReactComponent as Person } from "../../assets/svg/금융소득/금융소득_사람.svg";
 import "../../assets/css/Header.css";
 
 function Header() {
   const navigate = useNavigate();
   const numberRef = useRef(null);
-
-  const ToInquiryYearEnd = () => {
-    navigate("/inquiryYearEnd");
-  };
 
   const ToAllofYearEnd = () => {
     navigate("/allofYearEnd");
@@ -122,12 +119,21 @@ function Header() {
               </div>
             </div>
           </li>
-          {/* <li className="nav-item">
+
+          <li className="nav-item">
             <span>금융소득</span>
             <div className="dropdown-menu">
               <div className="dropdown-container">
                 <div className="dropdown-left">
-                  <button className="inquiry-button">
+                  <span>
+                    나는 금융소득 종합과세
+                    <br /> 대상자일까?
+                  </span>
+                  <Person />
+                  <button
+                    className="inquiry-button"
+                    onClick={() => navigate("/inquiryFinancialIncome")}
+                  >
                     대상자 여부 조회하기
                   </button>
                 </div>
@@ -197,7 +203,7 @@ function Header() {
                 </div>
               </div>
             </div>
-          </li> */}
+          </li>
         </ul>
       </nav>
     </header>

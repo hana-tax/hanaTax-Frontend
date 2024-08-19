@@ -12,10 +12,19 @@
   flex-direction: column;
   margin-left: 120px;
 }
+
+.left-container h1 {
+  margin-bottom: 20px;
+}
+
 .right-container {
   margin-left: 20px;
   animation: bounce 1s infinite;
   animation-delay: 0.1s;
+}
+
+.right-container-without-animation {
+  margin-left: 20px;
 }
 
 .description-button {

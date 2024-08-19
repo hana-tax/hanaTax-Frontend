@@ -76,7 +76,7 @@ li {
 
 .header-money-box {
   background-color: #fff;
-  width: 90%;
+  width: 30%;
   height: 50px;
   padding: 20px;
   display: flex;
@@ -130,6 +130,7 @@ li {
   cursor: pointer;
   border-radius: 11px;
   font-weight: bold;
+  margin-top: -15px;
 }
 
 .inquiry-button:hover {
@@ -197,7 +198,7 @@ li {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999; /* Make sure it's below the dropdown but above other content */
+  z-index: 999;
 }
 
 .num {
