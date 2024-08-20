@@ -43,7 +43,7 @@ const InquiryFinancialIncome = () => {
   const handleInquiryClick = () => {
     setLoading(true);
     setTimeout(() => {
-      navigate("/inquiryYearEnd/result");
+      navigate("/inquiryFinancialIncome/result");
     }, 2000);
   };
 

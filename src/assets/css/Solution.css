@@ -93,6 +93,7 @@ select:focus {
   padding: 30px;
   font-size: 14px;
   background-color: #ececec;
+  border-radius: 0 0 20px 20px;
 }
 
 .person-body {
@@ -235,6 +236,7 @@ label {
   padding: 30px;
   background-color: #ececec;
   color: #000;
+  border-radius: 0 0 20px 20px;
 }
 
 .deduction-body p {
@@ -352,6 +354,7 @@ input[type="radio"]:checked {
 .irp-body {
   padding: 20px 30px;
   background-color: #ececec;
+  border-radius: 0 0 20px 20px;
 }
 
 .irp-body p {
@@ -445,4 +448,201 @@ input[type="radio"]:checked {
   margin-top: 7px;
   width: 250px;
   justify-content: space-between;
+}
+
+.interest-dispersion-container {
+  width: 90%;
+  max-width: 400px;
+  border-radius: 20px;
+  border: 2px solid #e3e3e3;
+  margin: 20px;
+  cursor: pointer;
+  color: #aaaaaa;
+  padding: 10px 0;
+}
+
+.interest-dispersion-body {
+  padding: 30px;
+  font-size: 14px;
+  background-color: #ececec;
+  border-radius: 0 0 20px 20px;
+}
+
+.interest-dispersion-body .card-box p {
+  color: #000;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.interest-dispersion-body .card-box .text span {
+  font-size: 13px;
+}
+
+.family-card-body {
+  padding: 30px;
+  font-size: 14px;
+  background-color: #ececec;
+  border-radius: 0 0 20px 20px;
+}
+
+.family-card-body span {
+  color: #000;
+  font-weight: bold;
+  font-size: 17px;
+}
+
+.family-radio {
+  display: flex;
+  color: #000;
+  justify-content: flex-end;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.total-income {
+  background-color: #fff;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  margin-top: 10px;
+}
+
+.total-income-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.total-income-item span {
+  font-size: 14px;
+  color: #757575;
+}
+
+.after-gift {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.after-gift span {
+  font-size: 14px;
+  margin-top: 10px;
+  color: #757575;
+}
+
+.deduction-total-text {
+  text-align: center;
+  color: #fd0606;
+  font-weight: bold;
+}
+
+.info-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.total-income span {
+  font-size: 14px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.other-income-dispersion-body {
+  background-color: hsl(0, 0%, 100%);
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  display: flex;
+}
+.other-income-dispersion-body span {
+  color: #757575;
+  font-size: 13px;
+}
+
+.dispersion3-icon {
+  width: 80px;
+  height: 80px;
+}
+
+.tax-free-dispersion-body {
+  background-color: hsl(0, 0%, 100%);
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.tax-free-dispersion-body span {
+  color: #757575;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.details {
+  background-color: #f2f4f6;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  display: flex;
+  margin-top: 20px;
+  padding: 5px;
+}
+
+.detail-heading-box {
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  border-radius: 3px;
+}
+
+.detail-heading-box span {
+  color: #000;
+  font-size: 12px;
+}
+
+.pin-detail {
+  width: 70px;
+}
+.star-detail {
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  margin-top: 5px;
+}
+
+.dispersion-num-box {
+  background-color: #fff;
+  border: 0.6px solid #7684ff;
+  border-radius: 3px;
+  padding: 2px 5px;
+  margin-right: 8px;
+}
+
+.dispersion-num-box .dispersion-num {
+  font-weight: bold;
+  color: #7684ff;
+}
+
+.num-p-box {
+  display: flex;
+  align-items: center;
+}
+
+.tax-free-dispersion-body button {
+  background-color: #fff;
+  border: 1px solid #7684ff;
+  color: #7684ff;
+  font-size: 12px;
+  font-family: "Pretandard-Regular";
+  width: 130px;
+  padding: 8px 0;
+}
+
+.account-make-btn-box {
+  display: flex;
+  justify-content: center;
 }

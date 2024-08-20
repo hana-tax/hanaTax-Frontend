@@ -17,6 +17,11 @@
   margin-bottom: 20px;
 }
 
+.left h1 span {
+  font-size: 40px;
+  color: #18cd8c;
+}
+
 .right-container {
   margin-left: 20px;
   animation: bounce 1s infinite;
