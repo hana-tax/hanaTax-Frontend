@@ -36,7 +36,7 @@ const ResultFinancialIncome = () => {
   }, [targetAmount]);
 
   const ToRefundDetails = () => {
-    navigate("/yearend/refundDetails");
+    navigate("/financialIncome/refundDetails");
   };
 
   return (

@@ -11,11 +11,13 @@ import AllofYearEnd from "./pages/Allof/allofYearEnd";
 import InquiryYearEnd from "./pages/inquiry/InquiryYearEnd";
 import ResultYearEnd from "./pages/inquiry/result/ResultYearEnd";
 import RefundDetailsYearEnd from "./pages/inquiry/RefundDetailsYearEnd";
+import RefundDetailsFinancialIncome from "./pages/inquiry/RefundDetailsFinancialIncome";
 import SolutionYearEnd from "./pages/solution/SolutionYearEnd";
 import DeductionResultYearEnd from "./pages/inquiry/result/DeductionResultYearEnd";
 import InquiryFinancialIncome from "./pages/inquiry/InquiryFinancialIncome";
 import ResultFinancialIncome from "./pages/inquiry/result/ResultFinancialIncome";
 import SolutionFinancialIncome from "./pages/solution/SolutionFinancialIncome";
+import MyReport from "./pages/Report/MyReport";
 
 function App() {
   return (
@@ -43,6 +45,10 @@ function App() {
             path="/yearend/refundDetails"
             element={<RefundDetailsYearEnd />}
           />
+          <Route
+            path="/financialIncome/refundDetails"
+            element={<RefundDetailsFinancialIncome />}
+          />
           <Route path="/yearend/solution" element={<SolutionYearEnd />} />
           <Route
             path="/financialIncome/solution"
@@ -52,6 +58,7 @@ function App() {
             path="/yearend/solution/result"
             element={<DeductionResultYearEnd />}
           />
+          <Route path="/financialIncome/myReport" element={<MyReport />} />
         </Routes>
       </div>
     </Router>
