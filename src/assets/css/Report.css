@@ -1,0 +1,112 @@
+.my-report-container {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 8px;
+  padding: 20px;
+  margin: auto;
+}
+
+.my-report-container .my-fi-box {
+  background-color: #18cd8c;
+  padding: 15px 20px;
+  color: white;
+  font-weight: bold;
+  border-radius: 20px;
+  font-size: 18px;
+}
+
+.my-fi-box span {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.my-report-container p {
+  font-weight: bold;
+  margin-left: 40px;
+}
+
+.select-year {
+  margin-right: 50px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.income-row,
+.total-row,
+.trend-row {
+  display: flex;
+  justify-content: space-around;
+  margin: 10px 0;
+  align-items: center;
+}
+
+.income-label,
+.total-label,
+.trend-label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #b3b3b3;
+}
+
+.income-value,
+.total-value,
+.trend-change {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.trend-change {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 50px;
+}
+
+.total-row {
+  color: #18cd8c;
+}
+
+hr {
+  margin: 10px 0;
+}
+
+.trend-change {
+  font-size: 12px;
+  color: #aaaaaa;
+}
+
+.arrow-right-icon {
+  margin-left: -150px;
+  width: 22px;
+}
+
+.income-total-box {
+  margin-top: 50px;
+}
+
+.fi-sum-text {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+}
+
+.fi-sum-text .trend-change {
+  padding-left: 40px;
+}
+
+.fi-sum-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-tooltip {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 0px 10px 10px 10px;
+  font-size: 14px;
+}
+
+.tooltip-box {
+  display: flex;
+  justify-content: space-between;
+}
