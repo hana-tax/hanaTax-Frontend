@@ -18,6 +18,7 @@ import InquiryFinancialIncome from "./pages/inquiry/InquiryFinancialIncome";
 import ResultFinancialIncome from "./pages/inquiry/result/ResultFinancialIncome";
 import SolutionFinancialIncome from "./pages/solution/SolutionFinancialIncome";
 import MyReport from "./pages/Report/MyReport";
+import ProductList from "./pages/product/예적금/ProductList";
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
             element={<DeductionResultYearEnd />}
           />
           <Route path="/financialIncome/myReport" element={<MyReport />} />
+          <Route path="/productlist" element={<ProductList />} />
         </Routes>
       </div>
     </Router>

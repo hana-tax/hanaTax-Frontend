@@ -175,7 +175,12 @@ function Header() {
                   <div className="dropdown-column">
                     <span className="menu-title">예적금</span>
                     <ul className="dropdown-submenu">
-                      <li className="dropdown-item">상품/가입</li>
+                      <li
+                        className="dropdown-item"
+                        onClick={() => navigate("/productlist")}
+                      >
+                        상품/가입
+                      </li>
                     </ul>
                   </div>
                   <div className="dropdown-column">

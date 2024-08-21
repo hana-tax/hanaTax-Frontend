@@ -1,0 +1,119 @@
+.product-list-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  padding: 20px;
+  margin: auto;
+  flex-direction: column;
+}
+
+.product-card {
+  width: 230px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  position: relative;
+  padding: 20px 20px 0px 20px;
+}
+
+.product-card img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+.product-card-header {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 5px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.product-arrow-right-icon {
+  width: 18px;
+  color: #000;
+  margin-left: 5px;
+}
+
+.product-rate-info-box {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 0px;
+}
+
+.product-rate-info-box span {
+  font-size: 14px;
+  color: #838383;
+}
+
+.card-rate {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.card-info {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.type-indicator {
+  padding: 5px 10px;
+  background-color: white;
+  border: 1px solid #a9cd18;
+  border-radius: 20px;
+  font-size: 12px;
+  width: 30px;
+  color: #a9cd18;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.product-list-box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.product-tab-container {
+  display: flex;
+  align-items: flex-start; /* 왼쪽 정렬 */
+  width: 100%;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  transition: color 0.3s;
+  width: 100%;
+}
+
+.tab.active {
+  color: #18cd8c;
+  font-weight: bold;
+  border-bottom: 3px solid #18cd8c;
+}
+
+.tab:not(.active) {
+  color: #999;
+  border-bottom: 1px solid #999;
+}
+
+.underline {
+  width: 100%;
+  height: 2px;
+  background-color: #18cd8c;
+  margin-top: 5px;
+}
+
+.product-icon {
+  margin-top: -40px;
+  margin-left: 100px;
+}
