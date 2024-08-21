@@ -5,6 +5,7 @@ import { ReactComponent as Pig } from "../../../assets/svg/연말정산/piggy-ba
 import { ReactComponent as Coin } from "../../../assets/svg/coin.svg";
 import { ReactComponent as Account } from "../../../assets/svg/절세상품/isa-account.svg";
 import { ReactComponent as Money } from "../../../assets/svg/금융소득/money-hand.svg";
+import { useNavigate } from "react-router-dom";
 const products = {
   savings: [
     {
@@ -48,6 +49,7 @@ const products = {
 };
 
 const ProductList = () => {
+  const navigate = useNavigate();
   const [selectedType, setSelectedType] = useState("savings"); // 기본 선택은 '예금'
   return (
     <div className="product-list-container">

@@ -19,6 +19,8 @@ import ResultFinancialIncome from "./pages/inquiry/result/ResultFinancialIncome"
 import SolutionFinancialIncome from "./pages/solution/SolutionFinancialIncome";
 import MyReport from "./pages/Report/MyReport";
 import ProductList from "./pages/product/예적금/ProductList";
+import ProductDetails from "./pages/product/예적금/ProductDetails";
+import IsaProductDetails from "./pages/product/ISA/ProductDetails";
 
 function App() {
   return (
@@ -61,6 +63,8 @@ function App() {
           />
           <Route path="/financialIncome/myReport" element={<MyReport />} />
           <Route path="/productlist" element={<ProductList />} />
+          <Route path="/productlist/product" element={<ProductDetails />} />
+          <Route path="/isa/product" element={<IsaProductDetails />} />
         </Routes>
       </div>
     </Router>
