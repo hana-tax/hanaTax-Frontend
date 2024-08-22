@@ -374,3 +374,34 @@ h1 {
   color: #a6a2a2;
   margin-top: 10px;
 }
+
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+  margin-right: 29px; /* 차트와의 간격 조정 */
+}
+
+.tooltip {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  left: 100px; /* 말풍선 위치 조정 */
+  top: 50%;
+  transform: translateY(200%);
+  color: #7684ff;
+}
+
+.triangle {
+  position: absolute;
+  left: 233px;
+  margin-top: 158px;
+  width: 0;
+  height: 0;
+  border-top: 13px solid transparent;
+  border-bottom: 13px solid transparent;
+  border-left: 18px solid #ccc;
+  background-color: #fff;
+}
