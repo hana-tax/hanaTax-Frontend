@@ -276,3 +276,21 @@ h1 {
   text-align: center;
   margin-top: 60px;
 }
+
+.invest-point1-container {
+  padding: 20px;
+}
+
+.details-section {
+  margin-top: 20px;
+}
+
+.isa-options label {
+  display: block;
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.isa-options input[type="radio"] {
+  margin-right: 10px;
+}

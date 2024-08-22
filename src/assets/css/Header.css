@@ -74,47 +74,54 @@ li {
   color: #000;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .header-money-box {
   background-color: #fff;
-  width: 30%;
   height: 50px;
-  padding: 20px;
+  padding: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   border-radius: 10px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-  overflow: hidden; /* 넘치는 부분 숨기기 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  animation: fadeIn 0.5s ease-out; /* 애니메이션 적용 */
+  margin-top: 20px;
+  margin-bottom: 45px;
 }
 
 .header-money {
-  font-size: 2em; /* 숫자 크기 조정 */
+  font-size: 1.9em;
   position: relative;
+  animation: fadeIn 0.5s ease-out; /* 숫자에도 애니메이션 적용 */
 }
 
-.number {
-  display: inline-block;
-  animation: roll 1s infinite; /* 애니메이션 적용 */
-}
-
-/* 롤링 애니메이션 정의 */
-@keyframes roll {
-  0% {
+@keyframes scrollQuestion {
+  0%,
+  100% {
     transform: translateY(0);
   }
-  25% {
-    transform: translateY(-100%); /* 위로 이동 */
-  }
   50% {
-    transform: translateY(-200%); /* 또 위로 이동 */
+    transform: translateY(-100%);
   }
-  75% {
-    transform: translateY(-300%); /* 계속 위로 이동 */
-  }
-  100% {
-    transform: translateY(0); /* 원래 위치로 돌아오기 */
-  }
+}
+
+.question {
+  display: inline-block;
+  width: 20px; /* 너비 설정 */
+  height: 30px; /* 높이 설정 */
+  font-size: 20px; /* 글자 크기 설정 */
+  text-align: center;
+  animation: scrollQuestion 2s infinite linear; /* 애니메이션 적용 */
 }
 
 .left-image {
@@ -212,4 +219,8 @@ li {
   display: block;
   line-height: 30px;
   transition: margin-top 0.3s ease-in-out;
+}
+
+.won-unit {
+  font-size: 0.8em;
 }

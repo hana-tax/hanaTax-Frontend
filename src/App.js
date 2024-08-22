@@ -21,6 +21,9 @@ import MyReport from "./pages/Report/MyReport";
 import ProductList from "./pages/product/예적금/ProductList";
 import ProductDetails from "./pages/product/예적금/ProductDetails";
 import IsaProductDetails from "./pages/product/ISA/ProductDetails";
+import InvestPoint1 from "./pages/product/ISA/InvestPoint1";
+import InvestPoint2 from "./pages/product/ISA/InvestPoint2";
+import InvestPoint3 from "./pages/product/ISA/InvestPoint3";
 
 function App() {
   return (
@@ -65,6 +68,9 @@ function App() {
           <Route path="/productlist" element={<ProductList />} />
           <Route path="/productlist/product" element={<ProductDetails />} />
           <Route path="/isa/product" element={<IsaProductDetails />} />
+          <Route path="/isa/product/investPoint1" element={<InvestPoint1 />} />
+          <Route path="/isa/product/investPoint2" element={<InvestPoint2 />} />
+          <Route path="/isa/product/investPoint3" element={<InvestPoint3 />} />
         </Routes>
       </div>
     </Router>

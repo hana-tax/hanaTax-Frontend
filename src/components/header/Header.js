@@ -1,67 +1,17 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/svg/하나은행로고.svg";
-import { ReactComponent as Person } from "../../assets/svg/금융소득/금융소득_사람.svg";
 import "../../assets/css/Header.css";
+import { ReactComponent as Person } from "../../assets/svg/금융소득/금융소득_사람.svg";
 
 function Header() {
   const navigate = useNavigate();
-  const numberRef = useRef(null);
-
   const ToAllofYearEnd = () => {
-    navigate("/allofYearEnd");
+    navigate("/allofyearend");
   };
 
   useEffect(() => {
-    const el = numberRef.current;
-    if (!el) return;
-
-    const number = "123000"; // 표시할 숫자 설정
-    const type = "slide"; // 애니메이션 유형 설정
-
-    RollingNum(el, number, type);
-
-    function RollingNum(el, number, type) {
-      const speed = 100;
-      const delay = 300;
-      const num = number.toString().split("");
-
-      num.forEach((item, i) => {
-        const classId = `num-idx-${i}-${item}`;
-        const slideStyle =
-          type === "slide" ? "transition: margin-top .3s ease-in-out;" : "";
-        el.innerHTML += `<div class="num ${classId}" style="${slideStyle}" data-text="${item}">
-                                    <div class="num-list">${
-                                      Array.from(
-                                        { length: 10 },
-                                        (_, k) => k
-                                      ).join(" ") +
-                                      " " +
-                                      item
-                                    }</div>
-                                </div>`;
-
-        setTimeout(() => {
-          numAnimate(`.${classId}`, item);
-        }, delay * i);
-      });
-
-      function numAnimate(selector, targetNum) {
-        const el = document.querySelector(selector);
-        const numList = el.querySelector(".num-list");
-        let n = 0;
-        const numInterval = setInterval(() => {
-          numList.style.marginTop = `-${n * 30}px`;
-          if (n >= 10) {
-            clearInterval(numInterval);
-            const finalPosition =
-              targetNum === "," ? 10 : parseInt(targetNum, 10);
-            numList.style.marginTop = `-${finalPosition * 30}px`;
-          }
-          n++;
-        }, speed);
-      }
-    }
+    new RollingNum(".header-money", "?????", "slide"); // 초기 값은 ?????로 설정
   }, []);
 
   return (
@@ -81,11 +31,7 @@ function Header() {
                     <br /> 받을 수 있을까?
                   </span>
                   <div className="header-money-box">
-                    <div className="header-money">
-                      <span ref={numberRef} className="number">
-                        0
-                      </span>
-                    </div>
+                    <div className="header-money"></div>
                   </div>
                   <button
                     className="inquiry-button"
@@ -218,6 +164,60 @@ function Header() {
       </nav>
     </header>
   );
+}
+
+function RollingNum(className, number, type) {
+  const speed = 100;
+  const delay = 300;
+  const el = document.querySelector(className);
+
+  // 애니메이션 반복을 위한 함수
+  const animateNumbers = () => {
+    const num = number.split("");
+    el.innerHTML = ""; // 초기화
+
+    num.forEach((item, i) => {
+      const classId = `num-idx-${i}-${item === "?" ? "question" : item}`; // ?를 처리
+      const slideStyle = "transition: margin .3s";
+
+      el.innerHTML += `<span class="num ${classId}" data-text="${item}">
+              <span class="num-list" style="${
+                type === "slide" ? slideStyle : ""
+              }">0 1 2 3 4 5 6 7 8 9 ${item === "?" ? "&#63;" : ""}</span>
+          </span>`;
+
+      setTimeout(() => {
+        numAnimate(`.${classId}`);
+      }, delay * i);
+    });
+
+    el.innerHTML += `<span class="won-unit">₩</span>`;
+  };
+
+  const numAnimate = (unit) => {
+    const el = document.querySelector(className).querySelector(unit);
+    const numList = el.querySelector(".num-list");
+    const dataText = el.getAttribute("data-text");
+    let pos = dataText === "?" ? 10 : dataText; // ?에 대한 처리를 추가
+    let n = 0;
+
+    const numInterval = setInterval(() => {
+      numList.style.marginTop = `-${n * 30}px`;
+      if (n >= 10) {
+        clearInterval(numInterval);
+        numList.style.marginTop = `-${pos * 30}px`; // 현재 숫자 위치로 설정
+      }
+      n++;
+    }, speed);
+  };
+
+  // 처음 애니메이션 실행
+  animateNumbers();
+
+  // 3초 후에 애니메이션 반복
+  setInterval(() => {
+    animateNumbers();
+  }, 3000 + delay * number.length); // 3초 + 애니메이션에 필요한 시간
 }
 
 export default Header;
