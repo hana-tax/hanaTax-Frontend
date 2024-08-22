@@ -405,3 +405,34 @@ h1 {
   border-left: 18px solid #ccc;
   background-color: #fff;
 }
+
+.table-container {
+  margin-top: 20px;
+  border-collapse: collapse;
+  width: 100%;
+  background-color: #fff;
+  font-weight: 100;
+}
+
+.table-container th,
+.table-container td {
+  padding: 10px;
+  border: 1px solid #dddddd;
+  text-align: left;
+}
+
+.table-container th {
+  background-color: #e8e8e8;
+  text-align: center;
+}
+
+/* ISA 열에 스타일 적용 */
+table tr td:nth-child(2) {
+  border: 1px solid #2f9ecd;
+  background-color: #eaf5fa;
+}
+
+table th:nth-child(2) {
+  background-color: #2f9ecd;
+  color: white;
+}
