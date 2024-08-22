@@ -85,11 +85,17 @@ const ProductList = () => {
             </div>
             <div className="product-rate-info-box">
               <span>금리(연)</span>
-              <div className="card-rate">{product.rate}</div>
+              <div className="card-rate">
+                {product.rate}
+                <span style={{ fontSize: "0.7em", color: "#000" }}>%</span>
+              </div>
             </div>
             <div className="product-rate-info-box">
               <span>가입기간</span>
-              <div className="card-info">{product.duration}</div>
+              <div className="card-info">
+                {product.duration}
+                <span style={{ fontSize: "0.7em", color: "#000" }}>개월</span>
+              </div>
               <div className="product-icon">
                 <product.icon style={{ width: "150px", height: "100px" }} />
               </div>

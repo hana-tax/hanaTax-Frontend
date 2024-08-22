@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../../assets/css/Product.css";
 import "react-custom-alert/dist/index.css";
@@ -6,6 +6,11 @@ import { ReactComponent as Char } from "../../../assets/svg/절세상품/pig-coi
 import { ReactComponent as Isa1 } from "../../../assets/svg/절세상품/isa1.svg";
 import { ReactComponent as Isa2 } from "../../../assets/svg/절세상품/isa2.svg";
 import { ReactComponent as Isa3 } from "../../../assets/svg/절세상품/isa3.svg";
+import { ReactComponent as Interest } from "../../../assets/svg/금리.svg";
+import { ReactComponent as Product } from "../../../assets/svg/상품안내.svg";
+import { ReactComponent as Agree } from "../../../assets/svg/약관동의.svg";
+import { ReactComponent as Notice } from "../../../assets/svg/유의사항.svg";
+import { ReactComponent as ArrowDown } from "../../../assets/svg/arrow-down.svg";
 
 const investmentPoints = [
   {
@@ -30,6 +35,21 @@ const investmentPoints = [
 
 const ProductDetails = () => {
   const navigate = useNavigate();
+  // 각 항목의 펼침 상태를 관리하는 상태
+  const [openSections, setOpenSections] = useState({
+    savings: false,
+    goalSetting: false,
+    accountManagement: false,
+    tips: false,
+  });
+
+  // 항목 클릭 핸들러
+  const toggleSection = (section) => {
+    setOpenSections((prev) => ({
+      ...prev,
+      [section]: !prev[section],
+    }));
+  };
 
   const handleCardClick = (path) => {
     navigate(path);
@@ -71,6 +91,36 @@ const ProductDetails = () => {
             ))}
           </div>
         </div>
+      </div>
+      <div className="product-info-container">
+        <h1>ISA</h1>
+        <div className="underline" style={{ backgroundColor: "#000" }}></div>
+        {[
+          { id: "savings", label: "상품안내", svg: Product },
+          { id: "goalSetting", label: "상품유형 비교", svg: Interest },
+          { id: "accountManagement", label: "유의사항", svg: Notice },
+          { id: "tips", label: "약관 및 상품설명서", svg: Agree },
+        ].map((item) => (
+          <div key={item.id} className="item">
+            <button
+              className="item-header"
+              onClick={() => toggleSection(item.id)}
+            >
+              <div className="product-svg-text">
+                <item.svg style={{ width: "25px", marginRight: "50px" }} />
+                {item.label}
+              </div>
+              <ArrowDown
+                className={openSections[item.id] ? "rotate-icon" : ""}
+              />
+            </button>
+            {openSections[item.id] && (
+              <div className="item-content">
+                <p>여기에 {item.label}에 대한 세부 정보를 표시합니다.</p>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );

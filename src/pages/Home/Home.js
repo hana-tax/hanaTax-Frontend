@@ -6,6 +6,12 @@ import "react-custom-alert/dist/index.css";
 import { ReactComponent as Char1 } from "../../assets/svg/연말정산/연말정산_배경.svg";
 import { ReactComponent as Char2 } from "../../assets/svg/금융소득/금융소득_배경.svg";
 import { ReactComponent as Char3 } from "../../assets/svg/절세상품/절세상품_배경.svg";
+import { ReactComponent as Menu1 } from "../../assets/svg/account-inquiry.svg";
+import { ReactComponent as Menu2 } from "../../assets/svg/transfer.svg";
+import { ReactComponent as Menu3 } from "../../assets/svg/yearend-inquiry.svg";
+import { ReactComponent as Menu4 } from "../../assets/svg/transfer-details.svg";
+import { ReactComponent as Menu5 } from "../../assets/svg/my-fi.svg";
+import { ReactComponent as Menu6 } from "../../assets/svg/account-make.svg";
 
 const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -88,6 +94,32 @@ const Home = () => {
             onClick={() => setCurrentIndex(index)}
           ></div>
         ))}
+      </div>
+      <div className="side-menu">
+        <div className="menu-item">
+          <Menu1 className="menu-icon" />
+          <span className="menu-text">전체계좌조회</span>
+        </div>
+        <div className="menu-item">
+          <Menu2 className="menu-icon" />
+          <span className="menu-text">이체</span>
+        </div>
+        <div className="menu-item">
+          <Menu3 className="menu-icon" />
+          <span className="menu-text">연말정산조회</span>
+        </div>
+        <div className="menu-item">
+          <Menu4 className="menu-icon" />
+          <span className="menu-text">거래내역조회</span>
+        </div>
+        <div className="menu-item">
+          <Menu5 className="menu-icon" />
+          <span className="menu-text">금융소득분석</span>
+        </div>
+        <div className="menu-item">
+          <Menu6 className="menu-icon" />
+          <span className="menu-text">계좌개설</span>
+        </div>
       </div>
       <ToastContainer floatingTime={5000} />
     </div>

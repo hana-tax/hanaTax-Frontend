@@ -104,3 +104,37 @@
   width: 30px; /* 현재 활성화된 dot은 길게 */
   border-radius: 15px; /* 길게 하면서 양 끝을 둥글게 유지 */
 }
+
+.side-menu {
+  position: fixed;
+  top: 25%;
+  right: 3%;
+  width: 200px;
+  background-color: #fff;
+  padding: 30px 20px 0px 20px;
+  border-radius: 20px;
+  display: flex;
+  flex-wrap: wrap; /* 항목들을 여러 줄로 나열 */
+  align-items: center;
+}
+
+.menu-item {
+  display: flex;
+  width: 50%;
+  align-items: center;
+  margin-bottom: 30px;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.menu-icon {
+  margin-bottom: 5px; /* 아이콘과 텍스트 간의 간격 */
+}
+
+.menu-text {
+  font-size: 14px;
+  color: #333;
+  text-align: center; /* 텍스트를 중앙에 위치 */
+  font-weight: bold;
+}
