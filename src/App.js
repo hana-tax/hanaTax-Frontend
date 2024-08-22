@@ -24,6 +24,7 @@ import IsaProductDetails from "./pages/product/ISA/ProductDetails";
 import InvestPoint1 from "./pages/product/ISA/InvestPoint1";
 import InvestPoint2 from "./pages/product/ISA/InvestPoint2";
 import InvestPoint3 from "./pages/product/ISA/InvestPoint3";
+import PensionProductDetails from "./pages/product/연금저축/ProductDetails";
 
 function App() {
   return (
@@ -68,6 +69,7 @@ function App() {
           <Route path="/productlist" element={<ProductList />} />
           <Route path="/productlist/product" element={<ProductDetails />} />
           <Route path="/isa/product" element={<IsaProductDetails />} />
+          <Route path="/pension/product" element={<PensionProductDetails />} />
           <Route path="/isa/product/investPoint1" element={<InvestPoint1 />} />
           <Route path="/isa/product/investPoint2" element={<InvestPoint2 />} />
           <Route path="/isa/product/investPoint3" element={<InvestPoint3 />} />

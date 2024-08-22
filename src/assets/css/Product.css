@@ -486,3 +486,23 @@ table th:nth-child(2) {
   display: flex;
   align-items: center;
 }
+
+.pension-box {
+  display: flex;
+  flex-direction: column;
+  padding: 50px 150px;
+  text-align: center;
+  align-items: center;
+}
+
+.pension-button {
+  color: #fff;
+  font-family: "Pretandard-Regular";
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #18cd8c;
+  width: 25%;
+  font-weight: bold;
+  font-size: 17px;
+}

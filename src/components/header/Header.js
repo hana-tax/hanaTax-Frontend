@@ -144,7 +144,12 @@ function Header() {
                   <div className="dropdown-column">
                     <span className="menu-title">펀드</span>
                     <ul className="dropdown-submenu">
-                      <li className="dropdown-item">연금저축펀드 상품</li>
+                      <li
+                        className="dropdown-item"
+                        onClick={() => navigate("/pension/product")}
+                      >
+                        연금저축펀드 상품
+                      </li>
                       <li className="dropdown-item">연금펀드 통합 신규</li>
                       <li className="dropdown-item">연금펀드 입금</li>
                     </ul>
