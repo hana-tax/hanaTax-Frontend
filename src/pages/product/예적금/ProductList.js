@@ -50,6 +50,9 @@ const products = {
 
 const ProductList = () => {
   const navigate = useNavigate();
+  const ToProductDetail = () => {
+    navigate("/productlist/product");
+  };
   const [selectedType, setSelectedType] = useState("savings"); // 기본 선택은 '예금'
   return (
     <div className="product-list-container">
@@ -73,6 +76,7 @@ const ProductList = () => {
             className="product-card"
             key={product.name}
             style={{ backgroundColor: product.bgColor }}
+            onClick={ToProductDetail}
           >
             <div className="type-indicator">{product.type}</div>
             <div className="product-card-header">
