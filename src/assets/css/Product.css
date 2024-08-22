@@ -278,19 +278,99 @@ h1 {
 }
 
 .invest-point1-container {
+  font-weight: bold;
+  flex-direction: column;
+  justify-content: center;
+  width: 80%;
+  max-width: 800px;
   padding: 20px;
+  display: flex;
+  margin: auto;
 }
 
 .details-section {
   margin-top: 20px;
+  display: flex;
+  padding: 0px 50px 50px 50px;
+  flex-direction: column;
 }
 
-.isa-options label {
-  display: block;
-  margin: 10px 0;
-  font-size: 16px;
+.details-section p {
+  font-size: 20px;
 }
 
-.isa-options input[type="radio"] {
-  margin-right: 10px;
+.details-section span {
+  font-size: 18px;
+}
+
+.invest-point1-box {
+  background-color: #ededee;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.invest-point1-formula {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.minus-product {
+  padding: 10px;
+  color: #fff;
+  background-color: #0fc9ba;
+  min-width: 130px;
+  text-align: center;
+}
+
+.plus-product {
+  padding: 10px;
+  color: #fff;
+  background-color: #099a96;
+  min-width: 130px;
+  text-align: center;
+}
+
+.non-tax-product {
+  padding: 10px;
+  color: #fff;
+  background-color: #7684ff;
+  min-width: 130px;
+  text-align: center;
+  margin-left: 50px;
+}
+
+.low-tax-product {
+  padding: 10px;
+  color: #fff;
+  background-color: #2f9ecd;
+  min-width: 130px;
+  text-align: center;
+  margin-left: 1px;
+}
+
+.real-income-product {
+  padding: 10px;
+  color: #fff;
+  background-color: #18cd8c;
+  min-width: 130px;
+  text-align: center;
+}
+
+.circle-icon {
+  width: 20px;
+  margin: 0 10px;
+}
+
+.invest-point1-formula-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.tax-description {
+  text-align: center;
+  font-size: 15px;
+  color: #a6a2a2;
+  margin-top: 10px;
 }
