@@ -62,7 +62,12 @@ const ProductDetails = () => {
           <h1>
             ISA 상품안내 <br /> 투자와 절세를 한번에!
           </h1>
-          <button className="isa-inquiry-button">가입하기</button>
+          <button
+            className="isa-inquiry-button"
+            onClick={() => navigate("/isa/product/join")}
+          >
+            가입하기
+          </button>
         </div>
         <div className="isa-right-container">
           <Char style={{ marginLeft: "40px", marginTop: "50px" }} />
