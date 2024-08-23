@@ -808,11 +808,13 @@ table th:nth-child(2) {
   color: #757575;
   font-weight: bold;
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
 }
 
 .join-info-divider {
   width: 0.3px;
-  height: 160px;
+  height: 230px;
   background-color: black;
   margin: 0 10px;
 }
@@ -820,6 +822,7 @@ table th:nth-child(2) {
 .join-info-desc-box {
   display: flex;
   flex-direction: column;
+  margin-left: 10px;
 }
 
 .join-info-custom-input {
@@ -848,4 +851,18 @@ table th:nth-child(2) {
 
   justify-content: center;
   align-items: center;
+}
+
+.join-info-text-password {
+  display: flex;
+  flex-direction: column;
+}
+
+.money-select {
+  background-color: #fff;
+  color: #ccc;
+  border: 1px solid #ccc;
+  padding: 3px;
+  width: 55px;
+  margin-right: 5px;
 }

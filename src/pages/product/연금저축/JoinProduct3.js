@@ -4,7 +4,7 @@ import "../../../assets/css/Product.css";
 import Modal from "react-modal";
 import { ReactComponent as Check } from "../../../assets/svg/check-circle.svg";
 
-function JoinProduct4() {
+function JoinProduct3() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [allChecked, setAllChecked] = useState(false);
@@ -24,94 +24,81 @@ function JoinProduct4() {
       <div className="progress-steps">
         <button className="step">1</button>
         <button className="step">2</button>
-        <button className="step">3</button>
-        <button className="step active">4. 가입확인</button>
-        <button className="step">5</button>
+        <button className="step active">3. 가입확인</button>
+        <button className="step">4.</button>
       </div>
       <div className="agreement-product-section">
         <div className="join-product-container">
           <h2>가입정보</h2>
           <div className="join-info-container">
             <div className="join-info-name-box">
-              <div className="join-info-name">모델 포트폴리오명</div>
-              <div className="join-info-name">납입가능 총 한도</div>
-              <div className="join-info-name">연도별 납입한도</div>
-              <div className="join-info-name">신규금액</div>
+              <div className="join-info-name">상품명</div>
+              <div className="join-info-name">적립기간</div>
+              <div className="join-info-name">연간납입한도</div>
+              <div className="join-info-name">연결계좌번호</div>
             </div>
-            <div
-              className="join-info-divider"
-              style={{ height: "160px" }}
-            ></div>
+            <div className="join-info-divider"></div>
             <div className="join-info-desc-box">
-              <div className="join-info-desc">하나 일임형 ISA 최저위험</div>
-              <div className="join-info-desc" style={{ color: "red" }}>
-                100,000,000원
-              </div>
-              <div className="join-info-desc">20,000,000원 이내</div>
+              <div className="join-info-desc">하나 연금저축펀드계좌</div>
               <div className="join-info-desc">
+                {" "}
                 <input
                   type="text"
-                  placeholder="최소 10,000원"
+                  placeholder="최소 60개월 이상"
                   className="join-info-custom-input"
-                  style={{ marginRight: "5px" }}
-                />{" "}
-                원
+                  style={{
+                    width: "250px",
+                    marginRight: "10px",
+                    border: "none",
+                    backgroundColor: "#FFFCFC",
+                    borderBottom: "0.5px solid #ccc",
+                    fontSize: "15px",
+                  }}
+                />
+                개월
+              </div>
+              <div className="join-info-desc">
+                {" "}
+                <input
+                  type="text"
+                  placeholder="최소 100만원 이상, 원단위"
+                  className="join-info-custom-input"
+                  style={{
+                    width: "250px",
+                    marginRight: "10px",
+                    border: "none",
+                    backgroundColor: "#FFFCFC",
+                    borderBottom: "0.5px solid #ccc",
+                    fontSize: "15px",
+                  }}
+                />
+                <span style={{ marginRight: "20px" }}>원</span>
+                <div className="money-select-box">
+                  <button className="money-select">1000만</button>
+                  <button className="money-select">500만</button>
+                  <button className="money-select">100만</button>
+                  <button className="money-select">10만</button>
+                </div>
+              </div>
+              <div className="join-info-desc">
+                <div className="join-info-text-password">
+                  <input
+                    type="text"
+                    placeholder="0000000-00-000000"
+                    className="join-info-custom-input"
+                    style={{ marginBottom: "10px" }}
+                  />
+                  <input
+                    type="password"
+                    placeholder="비밀번호 입력"
+                    className="join-info-custom-input"
+                    style={{ width: "80px", textAlign: "center" }}
+                  />
+                </div>
               </div>
             </div>
           </div>
-          <h2>출금정보</h2>
-          <div className="withdrawal-info">
-            <div className="widthdrawal-input-text">
-              <input
-                type="text"
-                placeholder="0000000-00-000000"
-                className="join-info-custom-input"
-                style={{ marginRight: "40px" }}
-              />
-              <div>
-                출금가능금액{" "}
-                <span style={{ color: "#2965FF", fontWeight: "bold" }}>
-                  {availableAmount.toLocaleString()}
-                </span>
-                원
-              </div>
-            </div>
-            <input
-              type="password"
-              placeholder="비밀번호 입력"
-              className="join-info-custom-input"
-              style={{ width: "80px", textAlign: "center" }}
-            />
-          </div>
-          <h2>계약기간 정보</h2>
-          <div className="withdrawal-info">
-            <div className="widthdrawal-input-text">
-              <input
-                type="text"
-                placeholder="36개월~960개월, 월단위"
-                className="join-info-custom-input"
-                style={{
-                  width: "340px",
-                  marginRight: "10px",
-                  border: "none",
-                  backgroundColor: "#FFFCFC",
-                  borderBottom: "0.5px solid #ccc",
-                  fontSize: "15px",
-                }}
-              />
-              개월
-            </div>
-            <div style={{ margin: "0 auto" }}>
-              <span className="contract-desc">
-                • 가입 후 36개월 경과시 언제든지 중도해지 하더라도 비과세 혜택을
-                받을 수 있습니다. <br />
-              </span>
-              <span className="contract-desc">
-                • 계약만기시 자동해약으로 인한 손실이 발생할 수 있으니
-                계약기간을 충분히 지정하여 주시기 바랍니다.
-              </span>
-            </div>
-          </div>
+
           <h2>신규 계좌 비밀번호</h2>
           <div className="withdrawal-info">
             <div className="widthdrawal-input-text">
@@ -176,4 +163,4 @@ function JoinProduct4() {
   );
 }
 
-export default JoinProduct4;
+export default JoinProduct3;

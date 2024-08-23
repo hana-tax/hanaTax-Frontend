@@ -29,6 +29,9 @@ import IsaJoin from "./pages/product/ISA/JoinProduct";
 import IsaJoin2 from "./pages/product/ISA/JoinProduct2";
 import IsaJoin3 from "./pages/product/ISA/JoinProduct3";
 import IsaJoin4 from "./pages/product/ISA/JoinProduct4";
+import PensionJoin from "./pages/product/연금저축/JoinProduct";
+import PensionJoin2 from "./pages/product/연금저축/JoinProduct2";
+import PensionJoin3 from "./pages/product/연금저축/JoinProduct3";
 
 function App() {
   return (
@@ -81,6 +84,9 @@ function App() {
           <Route path="/isa/product/join2" element={<IsaJoin2 />} />
           <Route path="/isa/product/join3" element={<IsaJoin3 />} />
           <Route path="/isa/product/join4" element={<IsaJoin4 />} />
+          <Route path="/pension/product/join" element={<PensionJoin />} />
+          <Route path="/pension/product/join2" element={<PensionJoin2 />} />
+          <Route path="/pension/product/join3" element={<PensionJoin3 />} />
         </Routes>
       </div>
     </Router>

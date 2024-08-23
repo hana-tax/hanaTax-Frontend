@@ -37,7 +37,12 @@ const ProductDetails = () => {
           자유롭게 운영하는 <span style={{ color: "#18CD8C" }}>연금저축</span>
         </h1>
         <PensionIcon style={{ marginLeft: "30px" }} />
-        <button className="pension-button">가입하기</button>
+        <button
+          className="pension-button"
+          onClick={() => navigate("/pension/product/join")}
+        >
+          가입하기
+        </button>
       </div>
 
       <div className="product-info-container">
