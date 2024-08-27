@@ -9,15 +9,37 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    toast.success("김하나님, 반가워요!");
-    console.log("아이디:", username, "비밀번호:", password);
 
-    setIsSubmitted(true);
-    setTimeout(() => {
-      navigate("/");
-    }, 500);
+    try {
+      const response = await fetch("http://localhost:8080/api/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: username,
+          password: password,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("로그인 실패");
+      }
+
+      const data = await response.json();
+      const userName = data.name; // 이름 가져오기
+      toast.success(`${userName}님, 반가워요!`); // 이름으로 메시지 표시
+
+      setIsSubmitted(true);
+      setTimeout(() => {
+        navigate("/");
+      }, 500);
+    } catch (error) {
+      toast.error("로그인 중 오류가 발생했습니다.");
+      console.error("로그인 오류:", error);
+    }
   };
 
   const handleSignup = (e) => {
