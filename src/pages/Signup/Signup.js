@@ -36,11 +36,18 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const fullEmail = `${formData.email}@${formData.domain}`;
-    console.log(fullEmail);
 
     setIsSubmitted(true);
     setTimeout(() => {
-      navigate("/signup2");
+      navigate("/signup2", {
+        state: {
+          username: formData.username,
+          password: formData.password,
+          name: formData.name,
+          email: fullEmail,
+          phoneNumber: formData.phoneNumber,
+        },
+      });
     }, 300);
   };
 

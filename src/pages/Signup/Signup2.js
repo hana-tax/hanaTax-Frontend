@@ -3,9 +3,13 @@ import { motion } from "framer-motion";
 import "../../assets/css/Signup.css";
 import { ToastContainer, toast } from "react-custom-alert";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useDaumPostcodePopup } from "react-daum-postcode";
 
 const Signup2 = () => {
   const navigate = useNavigate();
+  const open = useDaumPostcodePopup();
+
   const [formData, setFormData] = useState({
     zipcode: "",
     address: "",
@@ -43,7 +47,6 @@ const Signup2 = () => {
 
   const handleResidentNumberBackChange = (e) => {
     const value = e.target.value;
-
     const maskedValue =
       value.length > 0 ? value[0] + "*".repeat(value.length - 1) : "";
     setFormData((prevData) => ({
@@ -52,9 +55,8 @@ const Signup2 = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     const isValidBirthDate = (year, month, day) => {
       const date = new Date(year, month - 1, day);
       return (
@@ -75,13 +77,51 @@ const Signup2 = () => {
       return;
     }
 
-    toast.success("회원가입이 완료되었습니다.");
-    setTimeout(() => {
-      navigate("/");
-    }, 2000);
+    const residentNumber = `${
+      formData.residentNumberFront
+    }-${formData.residentNumberBack.replace(/\*/g, "")}`;
+
+    const dataToSubmit = {
+      id: formData.id,
+      password: formData.password,
+      name: formData.name,
+      residentNumber: residentNumber,
+      phoneNumber: formData.phoneNumber,
+      email: formData.email,
+      zipCode: formData.zipcode,
+      address: formData.address,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/user/signup",
+        dataToSubmit
+      );
+      if (response.data.success) {
+        toast.success("회원가입이 완료되었습니다.");
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      } else {
+        toast.error("회원가입에 실패했습니다. 다시 시도해주세요.");
+      }
+    } catch (error) {
+      toast.error("서버 오류가 발생했습니다. 나중에 다시 시도해주세요.");
+    }
   };
 
-  // 애니메이션 설정
+  const handleAddressSearch = () => {
+    open({
+      onComplete: (data) => {
+        setFormData((prevData) => ({
+          ...prevData,
+          zipcode: data.zonecode,
+          address: data.address,
+        }));
+      },
+    });
+  };
+
   const pageVariants = {
     initial: { opacity: 0, x: -100 },
     in: { opacity: 1, x: 0 },
@@ -116,7 +156,9 @@ const Signup2 = () => {
             required
             readOnly
           />
-          <button type="button">검색하기</button>
+          <button type="button" onClick={handleAddressSearch}>
+            검색하기
+          </button>
         </div>
 
         <input
