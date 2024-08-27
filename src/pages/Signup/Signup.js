@@ -8,6 +8,7 @@ const Signup = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
+    name: "",
     confirmPassword: "",
     email: "",
     phoneNumber: "",
@@ -93,6 +94,15 @@ const Signup = () => {
           name="confirmPassword"
           placeholder="비밀번호 재입력"
           value={formData.confirmPassword}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          type="text"
+          name="name"
+          placeholder="이름"
+          value={formData.name}
           onChange={handleChange}
           required
         />
