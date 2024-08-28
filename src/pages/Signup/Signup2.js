@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import "../../assets/css/Signup.css";
 import { ToastContainer, toast } from "react-custom-alert";
@@ -9,6 +10,8 @@ import { useDaumPostcodePopup } from "react-daum-postcode";
 const Signup2 = () => {
   const navigate = useNavigate();
   const open = useDaumPostcodePopup();
+  const location = useLocation();
+  const { id, password, name, email, phoneNumber } = location.state || {};
 
   const [formData, setFormData] = useState({
     zipcode: "",
@@ -82,22 +85,25 @@ const Signup2 = () => {
     }-${formData.residentNumberBack.replace(/\*/g, "")}`;
 
     const dataToSubmit = {
-      id: formData.id,
-      password: formData.password,
-      name: formData.name,
+      id,
+      password,
+      name,
       residentNumber: residentNumber,
-      phoneNumber: formData.phoneNumber,
-      email: formData.email,
-      zipCode: formData.zipcode,
+      phoneNumber,
+      email,
+      zipCode: parseInt(formData.zipcode, 10),
       address: formData.address,
     };
+
+    console.log(dataToSubmit);
 
     try {
       const response = await axios.post(
         "http://localhost:8080/api/user/signup",
         dataToSubmit
       );
-      if (response.data.success) {
+      console.log(response);
+      if (response.status === 200) {
         toast.success("회원가입이 완료되었습니다.");
         setTimeout(() => {
           navigate("/");

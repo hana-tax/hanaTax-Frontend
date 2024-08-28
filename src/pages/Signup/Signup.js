@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [message, setMessage] = useState("");
   const [formData, setFormData] = useState({
-    username: "",
+    id: "",
     password: "",
     name: "",
     confirmPassword: "",
@@ -36,12 +37,12 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const fullEmail = `${formData.email}@${formData.domain}`;
-
+    console.log("Form Data on Submit:", formData); // 추가된 로그
     setIsSubmitted(true);
     setTimeout(() => {
       navigate("/signup2", {
         state: {
-          username: formData.username,
+          id: formData.id,
           password: formData.password,
           name: formData.name,
           email: fullEmail,
@@ -62,6 +63,25 @@ const Signup = () => {
     duration: 0.3,
   };
 
+  const checkId = async () => {
+    const response = await fetch("http://localhost:8080/api/user/idcheck", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: formData.id }),
+    });
+    console.log(response);
+
+    const data = await response.json();
+    console.log(data.exist);
+    if (data.exist) {
+      setMessage("아이디가 중복되었습니다.");
+    } else {
+      setMessage("사용 가능한 아이디입니다.");
+    }
+  };
+
   return (
     <motion.div
       className="form-container"
@@ -78,13 +98,28 @@ const Signup = () => {
         <div id="info__id">
           <input
             type="text"
-            name="username"
+            name="id"
             placeholder="아이디 입력 (6~20자)"
-            value={formData.username}
+            value={formData.id}
             onChange={handleChange}
             required
           />
-          <button type="button">중복 확인</button>
+          <button type="button" onClick={checkId}>
+            중복 확인
+          </button>
+          {message && (
+            <span
+              style={{
+                color:
+                  message === "아이디가 중복되었습니다." ? "#FA1212" : "gray",
+                fontSize: "13px",
+                position: "relative",
+                top: "-15px",
+              }}
+            >
+              {message}
+            </span>
+          )}
         </div>
 
         <input
