@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Header from "./components/header/Header";
 import Login from "./pages/Login/Login";
@@ -32,16 +32,26 @@ import IsaJoin4 from "./pages/product/ISA/JoinProduct4";
 import PensionJoin from "./pages/product/연금저축/JoinProduct";
 import PensionJoin2 from "./pages/product/연금저축/JoinProduct2";
 import PensionJoin3 from "./pages/product/연금저축/JoinProduct3";
+import KakaoRedirectPage from "./pages/Login/kakao/KakaoRedirectPage";
+import NaverRedirectPage from "./pages/Login/naver/NaverRedirectPage";
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <div>
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/loginForm" element={<LoginForm />} />
+          <Route
+            path="/oauth/redirected/kakao"
+            element={<KakaoRedirectPage />}
+          />
+          <Route
+            path="/oauth/redirected/naver"
+            element={<NaverRedirectPage />}
+          />
           <Route path="/signup" element={<Signup />} />
           <Route path="/signup2" element={<Signup2 />} />
           <Route path="/allofYearEnd" element={<AllofYearEnd />} />
@@ -89,7 +99,7 @@ function App() {
           <Route path="/pension/product/join3" element={<PensionJoin3 />} />
         </Routes>
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }
 
