@@ -1,18 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/svg/하나은행로고.svg";
 import "../../assets/css/Header.css";
 import { ReactComponent as Person } from "../../assets/svg/금융소득/금융소득_사람.svg";
+import useStore from "../../store/useStore";
+import { ReactComponent as Login } from "../../assets/svg/login_user.svg";
 
 function Header() {
+  const { isLoggedIn, user } = useStore();
   const navigate = useNavigate();
+  const [dropdownVisible, setDropdownVisible] = useState(false);
   const ToAllofYearEnd = () => {
     navigate("/allofyearend");
   };
+  // const state = useStore.getState();
+  // console.log(state);
 
-  useEffect(() => {
-    new RollingNum(".header-money", "?????", "slide"); // 초기 값은 ?????로 설정
-  }, []);
+  // useEffect(() => {
+  //   new RollingNum(".header-money", "?????", "slide"); // 초기 값은 ?????로 설정
+  // }, []);
 
   return (
     <header className="header visible">
@@ -30,9 +36,9 @@ function Header() {
                     연말정산, 올해 얼마
                     <br /> 받을 수 있을까?
                   </span>
-                  <div className="header-money-box">
+                  {/* <div className="header-money-box">
                     <div className="header-money"></div>
-                  </div>
+                  </div> */}
                   <button
                     className="inquiry-button"
                     onClick={() => navigate("/inquiryYearEnd")}
@@ -166,63 +172,108 @@ function Header() {
             </div>
           </li>
         </ul>
+        <div className="login-user-mycontainer">
+          {isLoggedIn && (
+            <div
+              className="login-user-box"
+              onClick={() => setDropdownVisible(!dropdownVisible)}
+              style={{ cursor: "pointer" }}
+            >
+              <Login />
+              <span style={{ marginLeft: "5px", textDecoration: "underline" }}>
+                {user.name} 님
+              </span>
+              <div
+                className="dropdown-mymenu"
+                style={{ display: dropdownVisible ? "block" : "none" }}
+              >
+                <div className="profile-box">
+                  <Login />
+                  <span
+                    style={{
+                      marginTop: "5px",
+                      marginBottom: "5px",
+                      fontSize: "14px",
+                    }}
+                  >
+                    {user.name}님 안녕하세요
+                  </span>
+                  <div className="my-profile-update-box">내 정보 수정</div>
+                  <div className="my-profile-underline"></div>
+                </div>
+                <ul className="dropdown-mymenu-ul">
+                  <li
+                    className="dropdown-mymenu-item"
+                    onClick={() => {
+                      setDropdownVisible(false);
+                      navigate("/profile");
+                    }}
+                  >
+                    설정
+                  </li>
+                  <li className="dropdown-mymenu-item">로그아웃</li>
+                </ul>
+              </div>
+            </div>
+          )}
+        </div>
       </nav>
     </header>
   );
 }
 
-function RollingNum(className, number, type) {
-  const speed = 100;
-  const delay = 300;
-  const el = document.querySelector(className);
+// function RollingNum(className, number, type) {
+//   const speed = 100;
+//   const delay = 300;
+//   const el = document.querySelector(className);
 
-  // 애니메이션 반복을 위한 함수
-  const animateNumbers = () => {
-    const num = number.split("");
-    el.innerHTML = ""; // 초기화
+//   // 애니메이션 반복을 위한 함수
+//   const animateNumbers = () => {
+//     const num = number.split("");
+//     el.innerHTML = ""; // 초기화
 
-    num.forEach((item, i) => {
-      const classId = `num-idx-${i}-${item === "?" ? "question" : item}`; // ?를 처리
-      const slideStyle = "transition: margin .3s";
+//     num.forEach((item, i) => {
+//       const classId = `num-idx-${i}-${item === "?" ? "question" : item}`; // ?를 처리
+//       const slideStyle = "transition: margin .3s";
 
-      el.innerHTML += `<span class="num ${classId}" data-text="${item}">
-              <span class="num-list" style="${
-                type === "slide" ? slideStyle : ""
-              }">0 1 2 3 4 5 6 7 8 9 ${item === "?" ? "&#63;" : ""}</span>
-          </span>`;
+//       el.innerHTML += `<span class="num ${classId}" data-text="${item}">
+//               <span class="num-list" style="${
+//                 type === "slide" ? slideStyle : ""
+//               }">0 1 2 3 4 5 6 7 8 9 ${item === "?" ? "&#63;" : ""}</span>
+//           </span>`;
 
-      setTimeout(() => {
-        numAnimate(`.${classId}`);
-      }, delay * i);
-    });
+//       setTimeout(() => {
+//         numAnimate(`.${classId}`);
+//       }, delay * i);
+//     });
 
-    el.innerHTML += `<span class="won-unit">₩</span>`;
-  };
+//     el.innerHTML += `<span class="won-unit">₩</span>`;
+//   };
 
-  const numAnimate = (unit) => {
-    const el = document.querySelector(className).querySelector(unit);
-    const numList = el.querySelector(".num-list");
-    const dataText = el.getAttribute("data-text");
-    let pos = dataText === "?" ? 10 : dataText; // ?에 대한 처리를 추가
-    let n = 0;
+//   const numAnimate = (unit) => {
+//     const el = document.querySelector(className).querySelector(unit);
+//     const numList = el.querySelector(".num-list");
+//     const dataText = el.getAttribute("data-text");
+//     let pos = dataText === "?" ? 10 : dataText; // ?에 대한 처리를 추가
+//     let n = 0;
 
-    const numInterval = setInterval(() => {
-      numList.style.marginTop = `-${n * 30}px`;
-      if (n >= 10) {
-        clearInterval(numInterval);
-        numList.style.marginTop = `-${pos * 30}px`; // 현재 숫자 위치로 설정
-      }
-      n++;
-    }, speed);
-  };
+//     const numInterval = setInterval(() => {
+//       numList.style.marginTop = `-${n * 30}px`;
+//       if (n >= 10) {
+//         clearInterval(numInterval);
+//         numList.style.marginTop = `-${pos * 30}px`; // 현재 숫자 위치로 설정
+//       }
+//       n++;
+//     }, speed);
+//   };
 
-  // 처음 애니메이션 실행
-  animateNumbers();
+//   // 처음 애니메이션 실행
+//   animateNumbers();
 
-  // 3초 후에 애니메이션 반복
-  setInterval(() => {
-    animateNumbers();
-  }, 3000 + delay * number.length); // 3초 + 애니메이션에 필요한 시간
-}
+//   // 3초 후에 애니메이션 반복
+//   setInterval(() => {
+//     animateNumbers();
+//   }, 3000 + delay * number.length); // 3초 + 애니메이션에 필요한 시간
+// }
 
 export default Header;

@@ -2,9 +2,16 @@ import React, { useState } from "react";
 import "../../assets/css/Login.css";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-custom-alert";
+import useStore from "../../store/useStore";
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const { login, logout, isLoggedIn, user } = useStore((state) => ({
+    login: state.login,
+    logout: state.logout,
+    isLoggedIn: state.isLoggedIn,
+    user: state.user,
+  }));
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -18,6 +25,7 @@ const LoginForm = () => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include", // 쿠키를 포함하여 요청
         body: JSON.stringify({
           id: username,
           password: password,
@@ -31,11 +39,9 @@ const LoginForm = () => {
       const data = await response.json();
       const userName = data.name; // 이름 가져오기
       toast.success(`${userName}님, 반가워요!`); // 이름으로 메시지 표시
-
+      login({ id: username, name: userName });
       setIsSubmitted(true);
-      setTimeout(() => {
-        navigate("/");
-      }, 500);
+      navigate("/");
     } catch (error) {
       toast.error("로그인 중 오류가 발생했습니다.");
       console.error("로그인 오류:", error);
@@ -45,6 +51,29 @@ const LoginForm = () => {
   const handleSignup = (e) => {
     e.preventDefault();
     navigate("/signup");
+  };
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/user/logout", {
+        method: "POST",
+        credentials: "include", // 쿠키를 포함하여 요청
+      });
+
+      if (response.status === 200) {
+        console.log(response);
+
+        toast.success("로그아웃 되었습니다.");
+        logout();
+
+        setTimeout(() => {
+          navigate("/");
+        }, 2000); // 2초 후에 페이지 이동
+      }
+    } catch (error) {
+      toast.error("로그아웃 중 오류가 발생했습니다.");
+      console.error("로그아웃 오류:", error);
+    }
   };
 
   return (
@@ -59,7 +88,6 @@ const LoginForm = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
-
             <input
               type="password"
               placeholder="비밀번호"
@@ -71,7 +99,7 @@ const LoginForm = () => {
             로그인
           </button>
         </div>
-        <a href="#" className="signup-link" onClick={handleSignup}>
+        <a href="/" className="signup-link" onClick={handleSignup}>
           회원가입
         </a>
       </form>

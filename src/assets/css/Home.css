@@ -138,3 +138,9 @@
   text-align: center; /* 텍스트를 중앙에 위치 */
   font-weight: bold;
 }
+
+.login-user-box {
+  display: flex;
+  align-items: center;
+  margin-left: 350px;
+}

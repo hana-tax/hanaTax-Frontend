@@ -224,3 +224,63 @@ li {
 .won-unit {
   font-size: 0.8em;
 }
+
+.dropdown-mymenu {
+  display: none;
+  position: absolute;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fffcfc;
+  margin-top: 275px;
+  width: 130px;
+  z-index: 1000;
+  font-size: 13px;
+  padding: 10px;
+}
+
+.dropdown-mymenu-ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-mymenu-item {
+  color: gray; /* 글씨 색상 */
+  padding: 8px 0;
+  cursor: pointer;
+  margin-left: 10px;
+  text-decoration: underline; /* textDecoration 적용 */
+}
+
+.dropdown-mymenu-item:hover {
+  color: black;
+}
+
+.login-user-mycontainer {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-box {
+  display: flex;
+  flex-direction: column;
+  /* padding: 20px; */
+  justify-content: center;
+  align-items: center;
+}
+
+.my-profile-update-box {
+  background-color: #f2f4f6;
+  width: 60%;
+  font-size: 12px;
+  color: #757575;
+  text-align: center;
+  padding: 4px;
+  border-radius: 6px;
+}
+
+.my-profile-underline {
+  width: 100%;
+  height: 0.3px;
+  background-color: #ccc;
+  margin: 15px;
+}
