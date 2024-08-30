@@ -3,6 +3,7 @@ import React from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Header from "./components/header/Header";
+import Footer from "./components/footer/Footer";
 import Login from "./pages/Login/Login";
 import LoginForm from "./pages/Login/LoginForm";
 import Signup from "./pages/Signup/Signup";
@@ -98,6 +99,7 @@ function App() {
           <Route path="/pension/product/join2" element={<PensionJoin2 />} />
           <Route path="/pension/product/join3" element={<PensionJoin3 />} />
         </Routes>
+        <Footer />
       </div>
     </BrowserRouter>
   );

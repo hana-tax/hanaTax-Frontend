@@ -55,14 +55,17 @@
 .box1 .left-section h1 {
   color: #333;
   font-weight: bold;
+  font-family: "Pretendard-Bold";
 }
 
 .box2 .left-section h1 {
   color: #444;
+  font-family: "Pretendard-Bold";
 }
 
 .box3 .left-section h1 {
   color: #555;
+  font-family: "Pretendard-Bold";
 }
 
 .left-section {
@@ -107,7 +110,7 @@
 
 .side-menu {
   position: fixed;
-  top: 25%;
+  top: 19%;
   right: 3%;
   width: 200px;
   background-color: #fff;
@@ -143,4 +146,130 @@
   display: flex;
   align-items: center;
   margin-left: 350px;
+}
+
+.second-container p {
+  font-size: 24px;
+  font-family: "Pretendard-SemiBold";
+}
+
+.second-container .service {
+  display: flex;
+  flex-direction: column;
+  background-color: #f4f7fc;
+  border-radius: 15px;
+  padding: 20px;
+  width: 350px;
+  margin: 0 30px;
+  text-align: center;
+}
+
+.second-container .service p {
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.service-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.second-container {
+  padding: 30px 150px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.three-container {
+  background-color: #eff4fe;
+  height: 500px;
+  padding: 30px 150px;
+}
+
+.text-right-arrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.three-container-text span {
+  color: #4562fd;
+  font-family: "Pretendard-Bold";
+}
+.three-container-text p {
+  font-size: 25px;
+  font-family: "Pretendard-Bold";
+}
+
+.baro-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  padding: 0px 330px 0px 100px;
+  position: relative;
+  z-index: 100;
+}
+
+.baro-box {
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: bold;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 110px;
+  height: 110px;
+  transition: background-color 0.7s, transform 0.7s, opacity 0.3s; /* opacity 전환 추가 */
+}
+
+.baro-box:hover {
+  background-color: #4562fd; /* Change to desired hover color */
+  color: white;
+  transform: scale(1.15); /* Slightly increase size */
+  z-index: 2; /* Bring hovered box to the front */
+}
+
+/* hover된 박스를 제외한 나머지 박스에만 투명도 적용 */
+.baro-box:hover ~ .baro-box,
+.baro-box:hover ~ .baro-box {
+  opacity: 0.5; /* Make non-hovered boxes dim */
+}
+
+.baro-box:not(:hover) {
+  opacity: 1; /* 기본 상태에서 불투명하게 설정 */
+  transition: opacity 0.3s; /* Smooth transition for opacity */
+}
+
+.baro-circle {
+  background-color: #f1f8ff;
+  border-radius: 50%;
+  width: 70px;
+}
+
+.hand-phone {
+  position: absolute;
+  top: 970px;
+  left: 720px;
+}
+
+.triangle-exclude {
+  position: absolute;
+  top: 840px;
+  right: 100px;
+}
+
+.circle-exclude {
+  position: absolute;
+  top: 1200px;
+  left: 100px;
 }

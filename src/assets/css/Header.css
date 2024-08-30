@@ -6,6 +6,7 @@
   background-color: #fffcfc;
   height: 60px;
   position: relative;
+  font-family: "hana-Regular";
 }
 
 ul,
@@ -97,6 +98,7 @@ li {
   animation: fadeIn 0.5s ease-out; /* 애니메이션 적용 */
   margin-top: 20px;
   margin-bottom: 45px;
+  font-family: "Pretendard-Regular";
 }
 
 .header-money {
@@ -259,6 +261,7 @@ li {
 .login-user-mycontainer {
   position: relative;
   display: inline-block;
+  font-family: "Pretendard-Regular";
 }
 
 .profile-box {

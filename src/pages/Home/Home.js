@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-custom-alert";
 import "../../assets/css/Home.css";
 import "react-custom-alert/dist/index.css";
+import { motion } from "framer-motion";
 import { ReactComponent as Char1 } from "../../assets/svg/연말정산/연말정산_배경.svg";
 import { ReactComponent as Char2 } from "../../assets/svg/금융소득/금융소득_배경.svg";
 import { ReactComponent as Char3 } from "../../assets/svg/절세상품/절세상품_배경.svg";
@@ -13,6 +14,17 @@ import { ReactComponent as Menu4 } from "../../assets/svg/transfer-details.svg";
 import { ReactComponent as Menu5 } from "../../assets/svg/my-fi.svg";
 import { ReactComponent as Menu6 } from "../../assets/svg/account-make.svg";
 import useStore from "../../store/useStore";
+import { ReactComponent as Right } from "../../assets/svg/arrow-right.svg";
+import { ReactComponent as Account } from "../../assets/svg/account.svg";
+import { ReactComponent as Inquiry } from "../../assets/svg/inquiry.svg";
+import { ReactComponent as Card } from "../../assets/svg/card.svg";
+import { ReactComponent as PieChart } from "../../assets/svg/piechart.svg";
+import { ReactComponent as Calculator } from "../../assets/svg/calculator.svg";
+import { ReactComponent as Piechart } from "../../assets/svg/piechart.svg";
+import { ReactComponent as InquiryYearEnd } from "../../assets/svg/inquiryYearEnd.svg";
+import { ReactComponent as Phone } from "../../assets/svg/phone-hand.svg";
+import { ReactComponent as Triangle } from "../../assets/svg/triangle-exclude.svg";
+import { ReactComponent as Circle } from "../../assets/svg/circle-exclude.svg";
 
 const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -68,43 +80,44 @@ const Home = () => {
   };
 
   return (
-    <div className="homepage-container">
-      <div
-        className="slider"
-        style={{
-          transform: `translateX(-${currentIndex * 100}%)`,
-        }}
-      >
-        {boxes.map((box, index) => {
-          const SvgComponent = box.SvgComponent;
-          return (
+    <div>
+      <div className="homepage-container">
+        <div
+          className="slider"
+          style={{
+            transform: `translateX(-${currentIndex * 100}%)`,
+          }}
+        >
+          {boxes.map((box, index) => {
+            const SvgComponent = box.SvgComponent;
+            return (
+              <div
+                key={index}
+                className={`main-box ${box.className}`}
+                style={{ background: box.background }}
+              >
+                <div className="left-section">
+                  <h1>{box.title1}</h1>
+                  <h1>{box.title2}</h1>
+                  <button className="start-button" onClick={handleStartClick}>
+                    시작하기
+                  </button>
+                </div>
+                <SvgComponent className="char" />
+              </div>
+            );
+          })}
+        </div>
+        <div className="navigation-dots">
+          {boxes.map((_, index) => (
             <div
               key={index}
-              className={`main-box ${box.className}`}
-              style={{ background: box.background }}
-            >
-              <div className="left-section">
-                <h1>{box.title1}</h1>
-                <h1>{box.title2}</h1>
-                <button className="start-button" onClick={handleStartClick}>
-                  시작하기
-                </button>
-              </div>
-              <SvgComponent className="char" />
-            </div>
-          );
-        })}
-      </div>
-      <div className="navigation-dots">
-        {boxes.map((_, index) => (
-          <div
-            key={index}
-            className={`dot ${currentIndex === index ? "active" : ""}`}
-            onClick={() => setCurrentIndex(index)}
-          ></div>
-        ))}
-      </div>
-      <div className="side-menu">
+              className={`dot ${currentIndex === index ? "active" : ""}`}
+              onClick={() => setCurrentIndex(index)}
+            ></div>
+          ))}
+        </div>
+        {/* <div className="side-menu">
         <div className="menu-item">
           <Menu1 className="menu-icon" />
           <span className="menu-text">전체계좌조회</span>
@@ -129,7 +142,91 @@ const Home = () => {
           <Menu6 className="menu-icon" />
           <span className="menu-text">계좌개설</span>
         </div>
+      </div> */}
       </div>
+      <div className="second-container">
+        <p>이런 서비스 어때요?</p>
+        <div className="service-container">
+          <div className="service">
+            <span>온라인으로 빠르게!</span>
+            <div classeName="text-right-arrow">
+              <p>
+                연말정산 공제혜택 <Right style={{ marginLeft: "5px" }} />
+              </p>
+            </div>
+          </div>
+          <div className="service">
+            <span>온라인으로 빠르게!</span>
+            <div classeName="text-right-arrow">
+              <p>
+                종합과세대상자 확인 <Right style={{ marginLeft: "5px" }} />
+              </p>
+            </div>
+          </div>
+          <div className="service">
+            <span>온라인으로 빠르게!</span>
+            <div classeName="text-right-arrow">
+              <p>
+                세금 계산기 <Right style={{ marginLeft: "5px" }} />
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="three-container">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false }}
+          transition={{
+            ease: "easeInOut",
+            duration: 1,
+          }}
+          className="three-container-text"
+        >
+          <span>바로바로서비스</span>
+          <p>
+            금융에 필요한 <br />
+            서비스를 만나보세요
+          </p>
+        </motion.div>
+        <div className="baro-container">
+          {[
+            { component: <Account />, label: "잔액조회" },
+            { component: <Inquiry />, label: "거래내역조회" },
+            { component: <PieChart />, label: "금융소득 분석" },
+            { component: <Calculator />, label: "세금계산" },
+            { component: <InquiryYearEnd />, label: "연말정산조회" },
+            { component: <Card />, label: "계좌개설" },
+          ].map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false }}
+              transition={{
+                ease: "easeInOut",
+                duration: 1,
+              }}
+              whileHover={{
+                scale: 1.05,
+                transition: {
+                  duration: 0.1, // 호버 애니메이션 속도 조정
+                  ease: "easeInOut", // 호버 애니메이션의 이징
+                },
+              }}
+              className="baro-box"
+            >
+              <div className="baro-circle">{item.component}</div>
+              {item.label}
+            </motion.div>
+          ))}
+        </div>
+        <Phone className="hand-phone" />
+        <Triangle className="triangle-exclude" />
+        <Circle className="circle-exclude" />
+      </div>
+
       <ToastContainer floatingTime={5000} />
     </div>
   );

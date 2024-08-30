@@ -5,6 +5,46 @@
   font-weight: 400;
   font-style: normal;
 }
+@font-face {
+  font-family: "Pretendard-Bold";
+  src: url("./assets/font/pretendard/Pretendard-Bold.woff");
+}
+@font-face {
+  font-family: "Pretendard-SemiBold";
+  src: url("./assets/font/pretendard/Pretendard-SemiBold.woff");
+}
+@font-face {
+  font-family: "Pretendard-Thin";
+  src: url("./assets/font/pretendard/Pretendard-Thin.woff");
+}
+@font-face {
+  font-family: "Pretendard-ExtraBold";
+  src: url("./assets/font/pretendard/Pretendard-ExtraBold.woff");
+}
+@font-face {
+  font-family: "hana-bold";
+  src: url("./assets/font/hana/Hana2-Bold.ttf");
+}
+@font-face {
+  font-family: "hana-cm";
+  src: url("./assets/font/hana/Hana2-CM.ttf");
+}
+@font-face {
+  font-family: "hana-heavy";
+  src: url("./assets/font/hana/Hana2-Heavy.ttf");
+}
+@font-face {
+  font-family: "hana-light";
+  src: url("./assets/font/hana/Hana2-Light.ttf");
+}
+@font-face {
+  font-family: "hana-medium";
+  src: url("./assets/font/hana/Hana2-Medium.ttf");
+}
+@font-face {
+  font-family: "hana-regular";
+  src: url("./assets/font/hana/Hana2-Regular.ttf");
+}
 body {
   font-family: "Pretendard-Regular";
   margin: 0;
