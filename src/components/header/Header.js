@@ -5,20 +5,43 @@ import "../../assets/css/Header.css";
 import { ReactComponent as Person } from "../../assets/svg/금융소득/금융소득_사람.svg";
 import useStore from "../../store/useStore";
 import { ReactComponent as Login } from "../../assets/svg/login_user.svg";
+import { ToastContainer, toast } from "react-custom-alert";
 
 function Header() {
-  const { isLoggedIn, user } = useStore();
+  const { isLoggedIn, user, logout } = useStore();
   const navigate = useNavigate();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const ToAllofYearEnd = () => {
     navigate("/allofyearend");
   };
-  // const state = useStore.getState();
-  // console.log(state);
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/user/logout", {
+        method: "POST",
+        credentials: "include", // 쿠키를 포함하여 요청
+      });
 
-  // useEffect(() => {
-  //   new RollingNum(".header-money", "?????", "slide"); // 초기 값은 ?????로 설정
-  // }, []);
+      if (response.status === 200) {
+        console.log(response);
+
+        toast.success("로그아웃 되었습니다.");
+        logout();
+
+        setTimeout(() => {
+          navigate("/");
+        }, 2000); // 2초 후에 페이지 이동
+      }
+    } catch (error) {
+      toast.error("로그아웃 중 오류가 발생했습니다.");
+      console.error("로그아웃 오류:", error);
+    }
+  };
+  const state = useStore.getState();
+  console.log(state);
+
+  useEffect(() => {
+    new RollingNum(".header-money", "?????", "slide"); // 초기 값은 ?????로 설정
+  }, []);
 
   return (
     <header className="header visible">
@@ -36,12 +59,21 @@ function Header() {
                     연말정산, 올해 얼마
                     <br /> 받을 수 있을까?
                   </span>
-                  {/* <div className="header-money-box">
+                  <div className="header-money-box">
                     <div className="header-money"></div>
-                  </div> */}
+                  </div>
                   <button
                     className="inquiry-button"
-                    onClick={() => navigate("/inquiryYearEnd")}
+                    onClick={() => {
+                      if (isLoggedIn) {
+                        navigate("/inquiryYearEnd");
+                      } else {
+                        toast.warning("로그인이 필요한 서비스입니다.");
+                        setTimeout(() => {
+                          navigate("/login");
+                        }, 2000); // 2초 후에 로그인 페이지로 이동
+                      }
+                    }}
                   >
                     한눈에 조회하기
                   </button>
@@ -84,7 +116,16 @@ function Header() {
                   <Person />
                   <button
                     className="inquiry-button"
-                    onClick={() => navigate("/inquiryFinancialIncome")}
+                    onClick={() => {
+                      if (isLoggedIn) {
+                        navigate("/inquiryFinancialIncome");
+                      } else {
+                        toast.warning("로그인이 필요한 서비스입니다.");
+                        setTimeout(() => {
+                          navigate("/login");
+                        }, 2000); // 2초 후에 로그인 페이지로 이동
+                      }
+                    }}
                   >
                     대상자 여부 조회하기
                   </button>
@@ -211,69 +252,72 @@ function Header() {
                   >
                     설정
                   </li>
-                  <li className="dropdown-mymenu-item">로그아웃</li>
+                  <li className="dropdown-mymenu-item" onClick={handleLogout}>
+                    로그아웃
+                  </li>
                 </ul>
               </div>
             </div>
           )}
         </div>
       </nav>
+      <ToastContainer floatingTime={5000} />
     </header>
   );
 }
 
-// function RollingNum(className, number, type) {
-//   const speed = 100;
-//   const delay = 300;
-//   const el = document.querySelector(className);
+function RollingNum(className, number, type) {
+  const speed = 100;
+  const delay = 300;
+  const el = document.querySelector(className);
 
-//   // 애니메이션 반복을 위한 함수
-//   const animateNumbers = () => {
-//     const num = number.split("");
-//     el.innerHTML = ""; // 초기화
+  // 애니메이션 반복을 위한 함수
+  const animateNumbers = () => {
+    const num = number.split("");
+    el.innerHTML = ""; // 초기화
 
-//     num.forEach((item, i) => {
-//       const classId = `num-idx-${i}-${item === "?" ? "question" : item}`; // ?를 처리
-//       const slideStyle = "transition: margin .3s";
+    num.forEach((item, i) => {
+      const classId = `num-idx-${i}-${item === "?" ? "question" : item}`; // ?를 처리
+      const slideStyle = "transition: margin .3s";
 
-//       el.innerHTML += `<span class="num ${classId}" data-text="${item}">
-//               <span class="num-list" style="${
-//                 type === "slide" ? slideStyle : ""
-//               }">0 1 2 3 4 5 6 7 8 9 ${item === "?" ? "&#63;" : ""}</span>
-//           </span>`;
+      el.innerHTML += `<span class="num ${classId}" data-text="${item}">
+              <span class="num-list" style="${
+                type === "slide" ? slideStyle : ""
+              }">0 1 2 3 4 5 6 7 8 9 ${item === "?" ? "&#63;" : ""}</span>
+          </span>`;
 
-//       setTimeout(() => {
-//         numAnimate(`.${classId}`);
-//       }, delay * i);
-//     });
+      setTimeout(() => {
+        numAnimate(`.${classId}`);
+      }, delay * i);
+    });
 
-//     el.innerHTML += `<span class="won-unit">₩</span>`;
-//   };
+    el.innerHTML += `<span class="won-unit">₩</span>`;
+  };
 
-//   const numAnimate = (unit) => {
-//     const el = document.querySelector(className).querySelector(unit);
-//     const numList = el.querySelector(".num-list");
-//     const dataText = el.getAttribute("data-text");
-//     let pos = dataText === "?" ? 10 : dataText; // ?에 대한 처리를 추가
-//     let n = 0;
+  const numAnimate = (unit) => {
+    const el = document.querySelector(className).querySelector(unit);
+    const numList = el.querySelector(".num-list");
+    const dataText = el.getAttribute("data-text");
+    let pos = dataText === "?" ? 10 : dataText; // ?에 대한 처리를 추가
+    let n = 0;
 
-//     const numInterval = setInterval(() => {
-//       numList.style.marginTop = `-${n * 30}px`;
-//       if (n >= 10) {
-//         clearInterval(numInterval);
-//         numList.style.marginTop = `-${pos * 30}px`; // 현재 숫자 위치로 설정
-//       }
-//       n++;
-//     }, speed);
-//   };
+    const numInterval = setInterval(() => {
+      numList.style.marginTop = `-${n * 30}px`;
+      if (n >= 10) {
+        clearInterval(numInterval);
+        numList.style.marginTop = `-${pos * 30}px`; // 현재 숫자 위치로 설정
+      }
+      n++;
+    }, speed);
+  };
 
-//   // 처음 애니메이션 실행
-//   animateNumbers();
+  // 처음 애니메이션 실행
+  animateNumbers();
 
-//   // 3초 후에 애니메이션 반복
-//   setInterval(() => {
-//     animateNumbers();
-//   }, 3000 + delay * number.length); // 3초 + 애니메이션에 필요한 시간
-// }
+  // 3초 후에 애니메이션 반복
+  setInterval(() => {
+    animateNumbers();
+  }, 3000 + delay * number.length); // 3초 + 애니메이션에 필요한 시간
+}
 
 export default Header;

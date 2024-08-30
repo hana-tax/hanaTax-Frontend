@@ -12,10 +12,15 @@ import { ReactComponent as Menu3 } from "../../assets/svg/yearend-inquiry.svg";
 import { ReactComponent as Menu4 } from "../../assets/svg/transfer-details.svg";
 import { ReactComponent as Menu5 } from "../../assets/svg/my-fi.svg";
 import { ReactComponent as Menu6 } from "../../assets/svg/account-make.svg";
+import useStore from "../../store/useStore";
 
 const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
+
+  const { isLoggedIn } = useStore((state) => ({
+    isLoggedIn: state.isLoggedIn,
+  }));
 
   const boxes = [
     {
@@ -52,10 +57,14 @@ const Home = () => {
   }, [boxes.length]);
 
   const handleStartClick = () => {
-    toast.warning("로그인이 필요한 서비스입니다."); // 경고 메시지를 표시
-    setTimeout(() => {
-      navigate("/Login");
-    }, 2000);
+    if (!isLoggedIn) {
+      toast.warning("로그인이 필요한 서비스입니다."); // 경고 메시지를 표시
+      setTimeout(() => {
+        navigate("/Login");
+      }, 2000);
+    } else {
+      navigate("/inquiryYearEnd");
+    }
   };
 
   return (

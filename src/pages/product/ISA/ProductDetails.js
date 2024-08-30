@@ -11,6 +11,8 @@ import { ReactComponent as Product } from "../../../assets/svg/상품안내.svg"
 import { ReactComponent as Agree } from "../../../assets/svg/약관동의.svg";
 import { ReactComponent as Notice } from "../../../assets/svg/유의사항.svg";
 import { ReactComponent as ArrowDown } from "../../../assets/svg/arrow-down.svg";
+import useStore from "../../../store/useStore";
+import { ToastContainer, toast } from "react-custom-alert";
 
 const investmentPoints = [
   {
@@ -34,6 +36,7 @@ const investmentPoints = [
 ];
 
 const ProductDetails = () => {
+  const { isLoggedIn } = useStore();
   const navigate = useNavigate();
   // 각 항목의 펼침 상태를 관리하는 상태
   const [openSections, setOpenSections] = useState({
@@ -64,7 +67,16 @@ const ProductDetails = () => {
           </h1>
           <button
             className="isa-inquiry-button"
-            onClick={() => navigate("/isa/product/join")}
+            onClick={() => {
+              if (isLoggedIn) {
+                navigate("/isa/product/join");
+              } else {
+                toast.warning("로그인이 필요한 서비스입니다.");
+                setTimeout(() => {
+                  navigate("/login");
+                }, 2000); // 2초 후에 로그인 페이지로 이동
+              }
+            }}
           >
             가입하기
           </button>
@@ -127,6 +139,7 @@ const ProductDetails = () => {
           </div>
         ))}
       </div>
+      <ToastContainer floatingTime={5000} />
     </div>
   );
 };

@@ -2,8 +2,12 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-custom-alert";
+import useStore from "../../../store/useStore";
 
 const NaverRedirectPage = () => {
+  const { login } = useStore((state) => ({
+    login: state.login,
+  }));
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -17,6 +21,7 @@ const NaverRedirectPage = () => {
         const data = response.data; // 이름 가져오기
         console.log(data);
         toast.success(`${data}님, 반가워요!`);
+        login({ name: data });
         setTimeout(() => {
           navigate("/");
         }, 2000); // 2초 후에 페이지 이동
@@ -32,7 +37,7 @@ const NaverRedirectPage = () => {
     const searchParams = new URLSearchParams(location.search);
     const code = searchParams.get("code"); // 카카오는 Redirect 시키면서 code를 쿼리 스트링으로 준다.
     if (code) {
-      alert("CODE = " + code);
+      // alert("CODE = " + code);
       console.log(code);
       handleOAuthNaver(code);
     }
