@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../../assets/css/Product.css";
 import { ReactComponent as ArrowRight } from "../../../assets/svg/arrow-right.svg";
 import { ReactComponent as Pig } from "../../../assets/svg/연말정산/piggy-bank.svg";
@@ -6,54 +6,50 @@ import { ReactComponent as Coin } from "../../../assets/svg/coin.svg";
 import { ReactComponent as Account } from "../../../assets/svg/절세상품/isa-account.svg";
 import { ReactComponent as Money } from "../../../assets/svg/금융소득/money-hand.svg";
 import { useNavigate } from "react-router-dom";
-const products = {
-  savings: [
-    {
-      name: "3·6·9 정기예금",
-      rate: "3.00",
-      duration: "12",
-      type: "예금",
-      icon: Pig,
-    },
-    {
-      name: "고단위 플러스(금리연동형)",
-      rate: "2.60",
-      duration: "12",
-      type: "예금",
-      icon: Coin,
-    },
-    {
-      name: "고단위 플러스(금리확정형)",
-      rate: "2.80",
-      duration: "60",
-      type: "예금",
-      icon: Coin,
-    },
-  ],
-  deposits: [
-    {
-      name: "펫사랑 적금",
-      rate: "2.80",
-      duration: "12",
-      type: "적금",
-      icon: Account,
-    },
-    {
-      name: "급여하나 월복리 적금",
-      rate: "5.65",
-      duration: "12",
-      type: "적금",
-      icon: Money,
-    },
-  ],
-};
+import axios from "axios";
 
 const ProductList = () => {
   const navigate = useNavigate();
+  const [products, setProducts] = useState({ savings: [], deposits: [] });
+  const [selectedType, setSelectedType] = useState("savings"); // 기본 선택은 '예금'
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/api/product/deposit/list"
+        );
+        if (response.status === 200) {
+          const depositProducts = response.data.map((product) => ({
+            name: product.depositName,
+            rate: `${product.minInterestRate}~${product.maxInterestRate}`,
+            duration: `${product.minPeriod}~${product.maxPeriod}`,
+            type: product.depositType === 1 ? "예금" : "적금",
+            icon: product.depositType === 1 ? Account : Coin,
+          }));
+
+          // 예금과 적금을 분리하여 상태에 저장
+          const savings = depositProducts.filter(
+            (product) => product.type === "예금"
+          );
+          const deposits = depositProducts.filter(
+            (product) => product.type === "적금"
+          );
+
+          setProducts({ savings, deposits });
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   const ToProductDetail = () => {
     navigate("/productlist/product");
   };
-  const [selectedType, setSelectedType] = useState("savings"); // 기본 선택은 '예금'
+
   return (
     <div className="product-list-container">
       <div className="product-tab-container">
@@ -71,11 +67,13 @@ const ProductList = () => {
         </button>
       </div>
       <div className="product-list-box">
-        {products[selectedType].map((product) => (
+        {(selectedType === "savings"
+          ? products.savings
+          : products.deposits
+        ).map((product) => (
           <div
             className="product-card"
             key={product.name}
-            style={{ backgroundColor: product.bgColor }}
             onClick={ToProductDetail}
           >
             <div className="type-indicator">{product.type}</div>
