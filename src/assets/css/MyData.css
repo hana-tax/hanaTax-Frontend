@@ -1,0 +1,283 @@
+.mydata-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.icon-row {
+  display: flex;
+  justify-content: center;
+  padding: 0 40px;
+}
+
+.icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #808080; /* 비활성화 상태 색상 */
+  margin: 20px 50px;
+}
+
+.icon p {
+  font-size: 17px;
+  font-family: "Pretendard-Bold";
+  color: #000;
+}
+
+.icon.active {
+}
+
+.icon-circle {
+  background-color: #f0f0f0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  padding-top: 20px;
+  padding: 20px 150px;
+}
+
+.input-text {
+  margin: 5px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 40%;
+}
+
+.form-label {
+  display: flex;
+  height: 55px;
+  align-items: center;
+}
+
+.myDataButton {
+  background-color: #34aaa7;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 14%;
+  font-family: "Pretendard-Regular";
+  margin-left: 250px;
+  margin-top: 50px;
+}
+
+.mydata-text {
+  display: flex;
+  flex-direction: column;
+  background-color: #f8fbfd;
+  padding: 30px 50px;
+}
+
+.mydata-text h1 {
+  font-family: "Pretendard-Bold";
+}
+
+.mydata-text span {
+  color: #898989;
+}
+.big-circle {
+  background-color: rgba(52, 170, 167, 0.32); /* 기본 색상 */
+  border-radius: 50%;
+  width: 130px;
+  height: 130px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.small-circle {
+  background-color: #34aaa7; /* 활성화된 상태의 색상 */
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+}
+
+.circle-container {
+  display: flex;
+}
+
+.icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 50px;
+}
+
+.icon.active .big-circle {
+  background-color: rgba(52, 170, 167, 0.32); /* 활성화된 큰 원 색상 */
+}
+
+.icon.active .small-circle {
+  background-color: #34aaa7; /* 활성화된 작은 원 색상 */
+}
+
+.icon:not(.active) .big-circle {
+  background-color: #f2f2f2; /* 비활성화된 큰 원 색상 */
+}
+
+.icon:not(.active) .small-circle {
+  background-color: #c2c2c2; /* 비활성화된 작은 원 색상 */
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+.asset-selection-container {
+  padding: 20px;
+}
+
+.asset-selection-header {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.asset-type-tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd; /* 전체 탭 아래의 밑줄 */
+}
+
+.asset-tab {
+  flex: 1;
+  padding: 10px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #000;
+  text-align: center;
+}
+
+.asset-tab.active {
+  font-weight: bold;
+  border-bottom: 2px solid black; /* 활성화된 탭 아래의 밑줄 */
+}
+
+.search-bar {
+  margin-bottom: 20px;
+}
+
+.search-input-wrapper {
+  position: relative;
+  width: 355px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  fill: #ccc; /* 아이콘 색상 */
+  margin-left: 160px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 10px 10px 35px; /* 왼쪽 padding을 아이콘 크기만큼 조정 */
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-family: "Pretendard-Regular";
+  box-sizing: border-box; /* padding 포함한 전체 크기를 유지 */
+  margin-left: 160px;
+}
+
+.search-input::placeholder {
+  margin-left: 100px;
+  color: #999;
+}
+
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 150px;
+}
+
+.card-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 110px;
+  height: 110px;
+  background-color: #f7f7f7;
+  border-radius: 15px;
+  color: #000;
+  font-family: "Pretendard-Bold";
+  justify-content: center;
+  transition: all 0.3s;
+  margin: 10px;
+}
+
+.card-button.selected {
+  border: 2px solid #099a96;
+  background-color: #fff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-button p {
+  font-size: 14px;
+  text-align: center;
+  color: #000;
+}
+
+.card-button p.active {
+  font-weight: bold;
+  background-color: #fff;
+  border: 2px solid #099a96;
+}
+
+.all-select-box {
+  border: 1px solid #898989;
+  background-color: #fff;
+  color: #898989;
+  border-radius: 20px;
+  padding: 5px;
+  width: 70px;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-left: 160px;
+}
+
+.mydata-asset-button {
+  color: white;
+  background-color: #099a96;
+  border-radius: 10px;
+  border: none;
+  font-family: "Pretendard-Regular";
+  padding: 10px 40px;
+  font-size: 17px;
+}
+
+.asset-button-box {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.mydata2-container {
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+}
+
+.mydata2-container h2 {
+  padding: 10px 40px;
+}

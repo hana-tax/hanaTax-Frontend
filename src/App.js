@@ -35,6 +35,9 @@ import PensionJoin2 from "./pages/product/연금저축/JoinProduct2";
 import PensionJoin3 from "./pages/product/연금저축/JoinProduct3";
 import KakaoRedirectPage from "./pages/Login/kakao/KakaoRedirectPage";
 import NaverRedirectPage from "./pages/Login/naver/NaverRedirectPage";
+import MyData1 from "./pages/myData/MyData1";
+import MyData2 from "./pages/myData/MyData2";
+import MyData3 from "./pages/myData/MyData3";
 
 function App() {
   return (
@@ -98,6 +101,9 @@ function App() {
           <Route path="/pension/product/join" element={<PensionJoin />} />
           <Route path="/pension/product/join2" element={<PensionJoin2 />} />
           <Route path="/pension/product/join3" element={<PensionJoin3 />} />
+          <Route path="/myData1" element={<MyData1 />} />
+          <Route path="/myData2" element={<MyData2 />} />
+          <Route path="/myData3" element={<MyData3 />} />
         </Routes>
         <Footer />
       </div>

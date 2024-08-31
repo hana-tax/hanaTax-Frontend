@@ -179,7 +179,7 @@
 
 .second-container {
   padding: 30px 150px;
-  height: 300px;
+  height: 400px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -254,22 +254,23 @@
   background-color: #f1f8ff;
   border-radius: 50%;
   width: 70px;
+  margin-bottom: 10px;
 }
 
 .hand-phone {
   position: absolute;
-  top: 970px;
+  top: 1070px;
   left: 720px;
 }
 
 .triangle-exclude {
   position: absolute;
-  top: 840px;
+  top: 940px;
   right: 100px;
 }
 
 .circle-exclude {
   position: absolute;
-  top: 1200px;
+  top: 1300px;
   left: 100px;
 }
