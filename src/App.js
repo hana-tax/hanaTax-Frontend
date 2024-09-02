@@ -88,7 +88,7 @@ function App() {
           />
           <Route path="/financialIncome/myReport" element={<MyReport />} />
           <Route path="/productlist" element={<ProductList />} />
-          <Route path="/productlist/product" element={<ProductDetails />} />
+          <Route path="/productlist/product/:id" element={<ProductDetails />} />
           <Route path="/isa/product" element={<IsaProductDetails />} />
           <Route path="/pension/product" element={<PensionProductDetails />} />
           <Route path="/isa/product/investPoint1" element={<InvestPoint1 />} />

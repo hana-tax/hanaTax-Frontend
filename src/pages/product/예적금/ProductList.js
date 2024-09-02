@@ -21,9 +21,13 @@ const ProductList = () => {
         );
         if (response.status === 200) {
           const depositProducts = response.data.map((product) => ({
+            id: product.depositId,
             name: product.depositName,
             rate: `${product.minInterestRate}~${product.maxInterestRate}`,
-            duration: `${product.minPeriod}~${product.maxPeriod}`,
+            duration:
+              product.minPeriod !== null
+                ? `${product.minPeriod}~${product.maxPeriod}`
+                : `${product.maxPeriod}`,
             type: product.depositType === 1 ? "예금" : "적금",
             icon: product.depositType === 1 ? Account : Coin,
           }));
@@ -46,8 +50,8 @@ const ProductList = () => {
     fetchProducts();
   }, []);
 
-  const ToProductDetail = () => {
-    navigate("/productlist/product");
+  const ToProductDetail = (id) => {
+    navigate(`/productlist/product/${id}`);
   };
 
   return (
@@ -73,8 +77,8 @@ const ProductList = () => {
         ).map((product) => (
           <div
             className="product-card"
-            key={product.name}
-            onClick={ToProductDetail}
+            key={product.id}
+            onClick={() => ToProductDetail(product.id)}
           >
             <div className="type-indicator">{product.type}</div>
             <div className="product-card-header">
