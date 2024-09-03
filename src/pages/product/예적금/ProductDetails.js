@@ -19,12 +19,14 @@ import Loading from "../Loading";
 import { ReactComponent as ProtectProduct } from "../../../assets/svg/예금보호금융상품.svg";
 import Modal from "react-modal";
 import { ReactComponent as Warning } from "../../../assets/svg/warning.svg";
+import productStore from "../../../store/productStore";
 
 Modal.setAppElement("#root");
 
 const ProductDetails = () => {
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const { isLoggedIn } = useStore();
+  const { setProductDetails } = productStore();
   const navigate = useNavigate();
   const { id } = useParams(); // URL에서 ID 가져오기
   console.log(id);
@@ -55,6 +57,12 @@ const ProductDetails = () => {
       );
       if (response.status === 200) {
         setProduct(response.data); // 상품 정보 상태에 저장
+        const productData = response.data;
+        setProductDetails(
+          id,
+          productData.minInterestRate,
+          productData.maxInterestRate
+        );
         console.log(response);
       }
     } catch (error) {

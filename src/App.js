@@ -30,6 +30,8 @@ import IsaJoin from "./pages/product/ISA/JoinProduct";
 import IsaJoin2 from "./pages/product/ISA/JoinProduct2";
 import IsaJoin3 from "./pages/product/ISA/JoinProduct3";
 import IsaJoin4 from "./pages/product/ISA/JoinProduct4";
+import DepositJoin from "./pages/product/예적금/JoinProduct";
+import DepositJoin2 from "./pages/product/예적금/JoinProduct2";
 import PensionJoin from "./pages/product/연금저축/JoinProduct";
 import PensionJoin2 from "./pages/product/연금저축/JoinProduct2";
 import PensionJoin3 from "./pages/product/연금저축/JoinProduct3";
@@ -101,6 +103,8 @@ function App() {
           <Route path="/pension/product/join" element={<PensionJoin />} />
           <Route path="/pension/product/join2" element={<PensionJoin2 />} />
           <Route path="/pension/product/join3" element={<PensionJoin3 />} />
+          <Route path="/deposit/product/join" element={<DepositJoin />} />
+          <Route path="/deposit/product/join2" element={<DepositJoin2 />} />
           <Route path="/myData1" element={<MyData1 />} />
           <Route path="/myData2" element={<MyData2 />} />
           <Route path="/myData3" element={<MyData3 />} />

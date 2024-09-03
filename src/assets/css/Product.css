@@ -682,6 +682,7 @@ h1 {
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
+  margin-right: 40px;
 }
 
 .prev-button {
@@ -917,4 +918,137 @@ h1 {
   padding: 10px 30px;
   display: flex;
   align-items: center;
+}
+
+.form-group {
+  margin-bottom: 50px;
+  margin-right: 40px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: #333;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.input-select-group {
+  display: flex;
+}
+
+.input-field {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.select-field {
+  flex: 0 0 100px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.option-button {
+  padding: 5px 10px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  color: #afafaf;
+}
+
+.option-button:hover {
+  background-color: #ddd;
+}
+
+.balance-info {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+.balance-amount {
+  color: #099a96;
+  font-weight: bold;
+}
+
+.inputter__flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 200px;
+}
+
+.num-button__flex {
+  width: 55px;
+  height: 55px;
+  margin: 5px;
+  font-size: 23px;
+  text-align: center;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.num-button__flex:hover {
+  background-color: #e0e0e0;
+}
+
+.num-button__flex:active {
+  transform: scale(0.95);
+}
+
+.password-container {
+  width: 100%;
+  padding: 10px;
+  font-size: 20px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+  text-align: center;
+  background-color: #18cd8c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #14a96f;
+}
+
+.submit-button:active {
+  transform: scale(0.95);
+}
+
+.withdrawal-keypad {
+  display: flex;
+}
+
+.keypad-container {
+  margin-left: 50px;
 }
