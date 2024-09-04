@@ -1,15 +1,47 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import "../../../assets/css/Product.css";
+import axios from "axios";
 import Modal from "react-modal";
+import useAuthStore from "../../../store/useStore";
 import { ReactComponent as Check } from "../../../assets/svg/check-circle.svg";
 
 function JoinProduct4() {
   const navigate = useNavigate();
-  const { id } = useParams();
   const [allChecked, setAllChecked] = useState(false);
+  const [accounts, setAccounts] = useState([]);
+  const [period, setPeriod] = useState("");
+  const [amount, setAmount] = useState("");
+  const user = useAuthStore((state) => state.user);
   const [isApplicationModalOpen, setIsApplicationModalOpen] = useState(false);
-  const availableAmount = 120189; // 출금가능금액
+  const [selectedAccount, setSelectedAccount] = useState("");
+  const [balance, setBalance] = useState(0);
+  const [inputPassword, setInputPassword] = useState(""); // 입력된 비밀번호
+  const [newInputPassword, setNewInputPassword] = useState(""); // 입력된 비밀번호
+  const [errorMessage, setErrorMessage] = useState("");
+  const location = useLocation();
+  const selectedPortfolio = location.state?.selectedPortfolio;
+
+  useEffect(() => {
+    const fetchAccounts = async () => {
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/api/account/depositList",
+          {
+            id: user.id,
+          }
+        );
+        setAccounts(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Failed to fetch accounts", error);
+      }
+    };
+
+    if (user) {
+      fetchAccounts();
+    }
+  }, [user]);
 
   const openApplicationModal = () => {
     setIsApplicationModalOpen(true);
@@ -17,6 +49,79 @@ function JoinProduct4() {
 
   const closeApplicationModal = () => {
     setIsApplicationModalOpen(false);
+  };
+
+  const handlePasswordChange = (e) => {
+    setInputPassword(e.target.value); // 입력된 비밀번호를 업데이트
+  };
+  const handleNewPasswordChange = (e) => {
+    setNewInputPassword(e.target.value); // 입력된 비밀번호를 업데이트
+  };
+
+  const handleAmountChange = (e) => {
+    const value = e.target.value.replace(/,/g, ""); // 입력된 값에서 쉼표 제거
+    if (!isNaN(value)) {
+      setAmount(Number(value)); // 숫자로 변환하여 상태 업데이트
+    }
+  };
+  const handleAccountChange = (e) => {
+    const accountNo = e.target.value;
+    setSelectedAccount(accountNo);
+
+    // 선택한 계좌의 잔액을 업데이트
+    const selected = accounts.find(
+      (account) => account.depositAccountId === accountNo
+    );
+    if (selected) {
+      setBalance(selected.balance);
+    }
+  };
+
+  const handleNextButtonClick = async () => {
+    const createDate = new Date().toISOString().split("T")[0];
+    const expirationDate = new Date();
+    expirationDate.setMonth(expirationDate.getMonth() + parseInt(period, 10));
+    const formattedExpirationDate = expirationDate.toISOString().split("T")[0];
+    console.log(inputPassword);
+    console.log(amount);
+    console.log(createDate);
+    console.log(formattedExpirationDate);
+    console.log(selectedPortfolio.portfolioId);
+    console.log(user.id);
+    const postData = {
+      isaAccountDto: {
+        accountPasswd: inputPassword,
+        accountStatus: 6, //6 계좌 정상
+        balance: amount,
+        createDate: createDate,
+        expirationDate: formattedExpirationDate,
+        portfolioId: selectedPortfolio ? selectedPortfolio.portfolioId : 0,
+        sum: amount,
+        id: user.id,
+        accountType: 4, // isa 계좌
+      },
+      joinHistoryDTO: {
+        accountType: 4, // isa 계좌
+        joinAccount: amount,
+        joinDate: createDate,
+        expirationDate: formattedExpirationDate,
+        interest: 0, // null 값
+        interestMethod: 0, // null 값
+        joinStatus: 14, // 가입 상태: 정상
+        id: user.id,
+      },
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/product/isa/signup",
+        postData
+      );
+      console.log("Signup successful:", response.data);
+      openApplicationModal();
+    } catch (error) {
+      console.error("Failed to sign up for the product", error);
+    }
   };
 
   return (
@@ -43,7 +148,12 @@ function JoinProduct4() {
               style={{ height: "160px" }}
             ></div>
             <div className="join-info-desc-box">
-              <div className="join-info-desc">하나 일임형 ISA 최저위험</div>
+              <div className="join-info-desc">
+                {" "}
+                {selectedPortfolio
+                  ? selectedPortfolio.portfolioName
+                  : "포트폴리오가 선택되지 않았습니다."}
+              </div>
               <div className="join-info-desc" style={{ color: "red" }}>
                 100,000,000원
               </div>
@@ -51,9 +161,12 @@ function JoinProduct4() {
               <div className="join-info-desc">
                 <input
                   type="text"
-                  placeholder="최소 10,000원"
+                  placeholder="최소 100,000원"
                   className="join-info-custom-input"
                   style={{ marginRight: "5px" }}
+                  id="amount"
+                  value={`${amount.toLocaleString()}`}
+                  onChange={handleAmountChange}
                 />{" "}
                 원
               </div>
@@ -62,16 +175,28 @@ function JoinProduct4() {
           <h2>출금정보</h2>
           <div className="withdrawal-info">
             <div className="widthdrawal-input-text">
-              <input
-                type="text"
-                placeholder="0000000-00-000000"
-                className="join-info-custom-input"
-                style={{ marginRight: "40px" }}
-              />
+              <select
+                className="select-field"
+                onChange={handleAccountChange}
+                value={selectedAccount}
+              >
+                <option value="">계좌 선택</option>
+                {accounts.map((account) => (
+                  <option
+                    key={account.depositAccountId}
+                    value={account.depositAccountId}
+                  >
+                    {account.depositAccountId}
+                  </option>
+                ))}
+              </select>
               <div>
                 출금가능금액{" "}
-                <span style={{ color: "#2965FF", fontWeight: "bold" }}>
-                  {availableAmount.toLocaleString()}
+                <span
+                  className="balance-amount"
+                  style={{ color: "#2965FF", fontWeight: "bold" }}
+                >
+                  {balance.toLocaleString()}
                 </span>
                 원
               </div>
@@ -81,7 +206,13 @@ function JoinProduct4() {
               placeholder="비밀번호 입력"
               className="join-info-custom-input"
               style={{ width: "80px", textAlign: "center" }}
+              onChange={handlePasswordChange}
             />
+            {errorMessage && (
+              <div style={{ color: "red", marginTop: "10px" }}>
+                {errorMessage}
+              </div>
+            )}
           </div>
           <h2>계약기간 정보</h2>
           <div className="withdrawal-info">
@@ -90,6 +221,9 @@ function JoinProduct4() {
                 type="text"
                 placeholder="36개월~960개월, 월단위"
                 className="join-info-custom-input"
+                id="period"
+                value={period}
+                onChange={(e) => setPeriod(e.target.value)}
                 style={{
                   width: "340px",
                   marginRight: "10px",
@@ -120,6 +254,7 @@ function JoinProduct4() {
                 type="password"
                 className="join-info-custom-input"
                 style={{ width: "80px", marginLeft: "30px" }}
+                onChange={handleNewPasswordChange}
               />
             </div>
             비밀번호 확인
@@ -136,7 +271,7 @@ function JoinProduct4() {
         <button className="prev-button" onClick={() => navigate(-1)}>
           이전
         </button>
-        <button className="next-button" onClick={openApplicationModal}>
+        <button className="next-button" onClick={handleNextButtonClick}>
           다음
         </button>
       </div>

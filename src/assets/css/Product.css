@@ -731,11 +731,15 @@ h1 {
 .choice-checkbox-box {
   display: flex;
   color: #757575;
+  flex-wrap: wrap;
+  width: 80%;
 }
 
 .checkbox-box label {
   display: flex;
   align-items: center;
+  box-sizing: border-box;
+  margin-bottom: 10px;
 }
 
 .join-product-checkbox {
@@ -784,6 +788,7 @@ h1 {
   display: flex;
   padding: 5px 10px;
   justify-content: space-between;
+  flex-direction: column;
 }
 
 .modal-portfolio-name {
@@ -801,6 +806,12 @@ h1 {
   flex-direction: column;
   margin-top: 20px;
   font-size: 15px;
+}
+
+.modal-portfolio-name-text {
+  display: flex;
+  justify-content: space-between;
+  margin: 3px 0;
 }
 
 .withdrawal-info {
@@ -1004,6 +1015,9 @@ h1 {
   background-color: #f9f9f9;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .num-button__flex:hover {

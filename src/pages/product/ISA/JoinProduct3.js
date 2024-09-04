@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../../../assets/css/Product.css";
 import Modal from "react-modal";
+import { ReactComponent as DownloadIcon } from "../../../assets/svg/download.svg";
 
 function JoinProduct3() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [allChecked, setAllChecked] = useState(false);
   const [isApplicationModalOpen, setIsApplicationModalOpen] = useState(false);
+  const [portfolios, setPortfolios] = useState([]);
+  const [selectedPortfolio, setSelectedPortfolio] = useState(null);
 
   const openApplicationModal = () => {
     setIsApplicationModalOpen(true);
@@ -15,6 +18,14 @@ function JoinProduct3() {
 
   const closeApplicationModal = () => {
     setIsApplicationModalOpen(false);
+    if (selectedPortfolio) {
+      const portfolio = portfolios.find(
+        (p) => p.portfolioId === parseInt(selectedPortfolio)
+      );
+      navigate("/isa/product/join4", {
+        state: { selectedPortfolio: portfolio },
+      });
+    }
   };
   const [checks, setChecks] = useState({
     term: false,
@@ -56,15 +67,59 @@ function JoinProduct3() {
     );
   }, [checks]);
 
+  useEffect(() => {
+    // 포트폴리오 리스트를 가져오는 API 호출
+    const fetchPortfolios = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:8080/api/product/isa/portfolioList"
+        );
+        const data = await response.json();
+        setPortfolios(data);
+      } catch (error) {
+        console.error("Error fetching portfolios:", error);
+      }
+    };
+
+    fetchPortfolios();
+  }, []);
+
   const handleRadioChange = (event) => {
-    if (event.target.checked) {
-      openApplicationModal();
-    }
+    setSelectedPortfolio(event.target.value);
   };
 
   const handleApplicationSubmit = () => {
     // 신청 처리 로직 추가
     closeApplicationModal();
+  };
+
+  const base64ToBlob = (base64, type = "application/pdf") => {
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type });
+  };
+
+  // 파일 다운로드 함수
+  const downloadFile = (event, portfolio) => {
+    event.preventDefault();
+
+    const data = portfolio.description; // DB에서 가져온 포트폴리오 설명서 Blob 데이터
+    const blob = base64ToBlob(data); // Base64 디코딩 후 Blob 생성
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    const fileName = `${portfolio.portfolioName}_설명서.pdf`; // 파일 이름 설정
+
+    link.href = url;
+    link.setAttribute("download", fileName); // 파일 다운로드
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
   };
 
   return (
@@ -175,56 +230,19 @@ function JoinProduct3() {
             선택
           </div>
           <div className="choice-checkbox-box">
-            <label>
-              <input
-                type="radio"
-                name="portfolio"
-                value="yes"
-                style={{ marginRight: "20px" }}
-                onChange={handleRadioChange}
-              />{" "}
-              하나 일임형 ISA 최저위험
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="portfolio"
-                value="no"
-                style={{ marginRight: "20px" }}
-                onChange={handleRadioChange}
-              />{" "}
-              하나 일임형 ISA 저위험
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="portfolio"
-                value="no"
-                style={{ marginRight: "20px" }}
-                onChange={handleRadioChange}
-              />{" "}
-              하나 일임형 ISA 중위험
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="portfolio"
-                value="no"
-                style={{ marginRight: "20px" }}
-                onChange={handleRadioChange}
-              />{" "}
-              하나 일임형 ISA 고위험
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="portfolio"
-                value="no"
-                style={{ marginRight: "20px" }}
-                onChange={handleRadioChange}
-              />{" "}
-              하나 일임형 ISA 최고위험
-            </label>
+            {portfolios.map((portfolio) => (
+              <label key={portfolio.portfolioId}>
+                <input
+                  type="radio"
+                  name="portfolio"
+                  value={portfolio.portfolioId}
+                  style={{ marginRight: "20px" }}
+                  onChange={handleRadioChange}
+                  onClick={openApplicationModal} // 모달 열기
+                />{" "}
+                {portfolio.portfolioName}
+              </label>
+            ))}
             <Modal
               isOpen={isApplicationModalOpen}
               onRequestClose={closeApplicationModal}
@@ -238,23 +256,61 @@ function JoinProduct3() {
                 <br />
                 ISA(일임형)에 가입하시겠습니까?
               </span>
-              <div className="modal-portfolio-box">
-                <div className="modal-portfolio">
-                  <div className="modal-portfolio-name">모델 포트폴리오명</div>
-                  <div className="modal-portfolio-text">
-                    하나 일임형 ISA 최저위험
-                  </div>
+              {selectedPortfolio && (
+                <div className="modal-portfolio-box">
+                  {portfolios
+                    .filter(
+                      (portfolio) =>
+                        portfolio.portfolioId === parseInt(selectedPortfolio)
+                    )
+                    .map((portfolio) => (
+                      <div
+                        key={portfolio.portfolioId}
+                        className="modal-portfolio"
+                      >
+                        <div className="modal-portfolio-name-text">
+                          <div className="modal-portfolio-name">
+                            모델 포트폴리오명
+                          </div>
+                          <div className="modal-portfolio-text">
+                            {portfolio.portfolioName}
+                          </div>
+                        </div>
+
+                        <div className="modal-portfolio-name-text">
+                          <div className="modal-portfolio-name">
+                            최저신규가능금액
+                          </div>
+                          <div className="modal-portfolio-text">
+                            {portfolio.minAccount.toLocaleString()}원 이상
+                          </div>
+                        </div>
+
+                        <div className="modal-portfolio-name-text">
+                          <div className="modal-portfolio-name">
+                            후취 수수료
+                          </div>
+                          <div className="modal-portfolio-text">
+                            {portfolio.commission}%
+                          </div>
+                        </div>
+                        <div className="modal-portfolio-name-text">
+                          <div className="modal-portfolio-name">
+                            포트폴리오 설명서
+                          </div>
+                          <div className="modal-portfolio-text">
+                            <DownloadIcon
+                              onClick={(event) =>
+                                downloadFile(event, portfolio)
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                 </div>
-                <div className="modal-portfolio">
-                  <div className="modal-portfolio-name">최저신규가능금액</div>
-                  <div className="modal-portfolio-text">10,000원</div>
-                </div>
-                <div className="modal-portfolio">
-                  <div className="modal-portfolio-name">후취 수수료</div>
-                  <div className="modal-portfolio-text">0.1%</div>
-                </div>
-              </div>
-              <div className="btns" style={{ marginTop: "20px" }}>
+              )}
+              <div className="btns">
                 <button
                   className="button-close"
                   onClick={closeApplicationModal}

@@ -23,6 +23,7 @@ function JoinProduct2() {
   const { productId, minInterestRate, maxInterestRate } = productStore();
   const [showKeypad, setShowKeypad] = useState(false); // 키패드 표시 여부
   const [isReadOnly, setIsReadOnly] = useState(false); // readOnly 상태 관리
+  const [tempPassword, setTempPassword] = useState("");
 
   useEffect(() => {
     const fetchAccounts = async () => {
@@ -140,25 +141,12 @@ function JoinProduct2() {
 
   const toggleKeypad = () => {
     setShowKeypad((prev) => !prev); // 키패드 토글
-    setIsReadOnly((prev) => !prev); // readOnly 상태 토글
   };
 
-  const handleKeypadInput = (value) => {
-    setPassword((prev) => {
-      // 기존의 비밀번호 상태에 새로 입력된 숫자를 추가
-      if (prev.length < 4) {
-        const newPassword = prev + value; // 새 비밀번호 생성
-        if (newPassword.length === 4) {
-          setShowKeypad(false); // 4자리 입력 시 키패드를 자동으로 닫음
-          setIsReadOnly(false); // readOnly 상태 해제
-        }
-        console.log(prev);
-        console.log(value);
-        console.log(newPassword);
-        return newPassword; // 새로운 비밀번호 반환
-      }
-      return prev; // 4자리가 이미 입력된 경우 이전 상태 반환
-    });
+  const handleKeypadSubmit = (enteredPassword) => {
+    setPassword(enteredPassword); // 4자리 비밀번호 설정
+    setShowKeypad(false);
+    setIsReadOnly(true);
   };
 
   return (
@@ -271,6 +259,12 @@ function JoinProduct2() {
             <span className="balance-amount">{balance.toLocaleString()}원</span>
           </div>
         </div>
+        <input
+          type="password"
+          placeholder="비밀번호 입력"
+          className="join-info-custom-input"
+          style={{ width: "80px", textAlign: "center" }}
+        />
       </div>
       <h2>신규 계좌 비밀번호</h2>
       <div className="withdrawal-keypad">
@@ -283,8 +277,8 @@ function JoinProduct2() {
               style={{ width: "80px", marginLeft: "30px" }}
               value={password}
               onChange={handlePasswordChange}
-              onClick={toggleKeypad} // 키패드 토글
-              readOnly={isReadOnly} // 키패드 활성화 시 readOnly
+              onClick={toggleKeypad}
+              readOnly={isReadOnly}
               placeholder="4자리 입력"
             />
             <Mouse style={{ marginLeft: "15px" }} onClick={toggleKeypad} />
@@ -302,7 +296,7 @@ function JoinProduct2() {
         {showKeypad && (
           <div className="keypad-container">
             <Inputter
-              onPasswordChange={handleKeypadInput} // 키패드 입력 처리
+              onPasswordChange={handleKeypadSubmit} // 키패드 입력 처리
               closeKeypad={toggleKeypad} // 키패드 닫기
             />
           </div>

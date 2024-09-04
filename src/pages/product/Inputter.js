@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import "../../assets/css/Product.css";
-const PASSWORD_MAX_LENGTH = 8;
+
+const PASSWORD_MAX_LENGTH = 4;
 
 const shuffle = (nums) => {
   let num_length = nums.length;
@@ -13,36 +14,28 @@ const shuffle = (nums) => {
   return nums;
 };
 
-const Inputter = ({ onPasswordChange, closeKeypad }) => {
+const Inputter = ({ onPasswordSubmit, closeKeypad }) => {
   let nums_init = Array.from({ length: 10 }, (v, k) => k);
   const [nums, setNums] = useState(nums_init);
   const [password, setPassword] = useState("");
 
   const handlePasswordChange = useCallback(
     (num) => {
-      if (password.length === PASSWORD_MAX_LENGTH) {
-        return;
-      }
+      if (password.length === PASSWORD_MAX_LENGTH) return;
       const newPassword = password + num.toString();
       setPassword(newPassword);
-      onPasswordChange(newPassword); // 부모 컴포넌트로 비밀번호 전달
     },
-    [password, onPasswordChange]
+    [password]
   );
 
   const erasePasswordOne = useCallback(() => {
-    const newPassword = password.slice(
-      0,
-      password.length === 0 ? 0 : password.length - 1
-    );
+    const newPassword = password.slice(0, password.length - 1);
     setPassword(newPassword);
-    onPasswordChange(newPassword); // 부모 컴포넌트로 비밀번호 전달
-  }, [password, onPasswordChange]);
+  }, [password]);
 
   const erasePasswordAll = useCallback(() => {
     setPassword("");
-    onPasswordChange(""); // 부모 컴포넌트로 비밀번호 전달
-  }, [onPasswordChange]);
+  }, []);
 
   const shuffleNums = useCallback(
     (num) => {
@@ -54,11 +47,11 @@ const Inputter = ({ onPasswordChange, closeKeypad }) => {
   );
 
   const onClickSubmitButton = () => {
-    if (password.length === 0) {
-      alert("비밀번호를 입력 후 눌러주세요!");
-    } else {
-      alert(password + "을 입력하셨습니다.");
+    if (password.length === PASSWORD_MAX_LENGTH) {
+      onPasswordSubmit(password); // Submit 버튼 클릭 시, 부모로 비밀번호 전달
       closeKeypad(); // 키패드 닫기
+    } else {
+      alert("비밀번호는 4자리여야 합니다.");
     }
   };
 
@@ -69,20 +62,20 @@ const Inputter = ({ onPasswordChange, closeKeypad }) => {
           <button
             className="num-button__flex spread-effect fantasy-font__2_3rem"
             value={n}
-            onClick={() => shuffleNums(n)} // 화살표 함수로 전달
-            key={n} // 숫자 값을 고유한 key로 사용
+            onClick={() => shuffleNums(n)}
+            key={n}
           >
             {n}
           </button>
         ))}
         <button
-          className="num-button__flex spread-effect fantasy-font__2_3rem"
+          className="num-button__flex spread-effect"
           onClick={erasePasswordAll}
         >
           X
         </button>
         <button
-          className="num-button__flex spread-effect fantasy-font__2_3rem"
+          className="num-button__flex spread-effect"
           onClick={erasePasswordOne}
         >
           ←
