@@ -263,8 +263,7 @@ function JoinProduct2() {
         </button>
         <button
           className={`next-button ${allChecked ? "" : "disabled"}`}
-          onClick={() => allChecked && navigate("/pension/product/join3")}
-          disabled={!allChecked}
+          onClick={() => navigate("/pension/product/join3")}
         >
           다음
         </button>

@@ -816,6 +816,7 @@ h1 {
 
 .withdrawal-info {
   margin-left: 30px;
+  padding: 20px 0;
 }
 .widthdrawal-input-text {
   display: flex;
@@ -962,7 +963,7 @@ h1 {
 }
 
 .select-field {
-  flex: 0 0 100px;
+  /* flex: 0 0 100px; */
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -1065,4 +1066,18 @@ h1 {
 
 .keypad-container {
   margin-left: 50px;
+}
+
+.join-info-account {
+  display: flex;
+  align-items: center;
+}
+
+.invest-info-modal p {
+  font-size: 17px;
+  color: #000;
+}
+
+.invest-info-modal span {
+  font-size: 18px;
 }

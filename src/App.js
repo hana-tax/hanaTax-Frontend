@@ -40,6 +40,7 @@ import NaverRedirectPage from "./pages/Login/naver/NaverRedirectPage";
 import MyData1 from "./pages/myData/MyData1";
 import MyData2 from "./pages/myData/MyData2";
 import MyData3 from "./pages/myData/MyData3";
+import InvestAnalysis from "./pages/product/투자성향분석/InvestAnalysis";
 
 function App() {
   return (
@@ -100,6 +101,7 @@ function App() {
           <Route path="/isa/product/join2" element={<IsaJoin2 />} />
           <Route path="/isa/product/join3" element={<IsaJoin3 />} />
           <Route path="/isa/product/join4" element={<IsaJoin4 />} />
+          <Route path="/investAnalysis" element={<InvestAnalysis />} />
           <Route path="/pension/product/join" element={<PensionJoin />} />
           <Route path="/pension/product/join2" element={<PensionJoin2 />} />
           <Route path="/pension/product/join3" element={<PensionJoin3 />} />

@@ -12,6 +12,7 @@ import { ReactComponent as Agree } from "../../../assets/svg/약관동의.svg";
 import { ReactComponent as Notice } from "../../../assets/svg/유의사항.svg";
 import { ReactComponent as ArrowDown } from "../../../assets/svg/arrow-down.svg";
 import useStore from "../../../store/useStore";
+import Modal from "react-modal";
 import { ToastContainer, toast } from "react-custom-alert";
 
 const investmentPoints = [
@@ -37,7 +38,14 @@ const investmentPoints = [
 
 const ProductDetails = () => {
   const { isLoggedIn } = useStore();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    navigate("/investAnalysis");
+  };
+
   // 각 항목의 펼침 상태를 관리하는 상태
   const [openSections, setOpenSections] = useState({
     savings: false,
@@ -69,7 +77,8 @@ const ProductDetails = () => {
             className="isa-inquiry-button"
             onClick={() => {
               if (isLoggedIn) {
-                navigate("/isa/product/join");
+                setIsModalOpen(true);
+                //navigate("/isa/product/join");
               } else {
                 toast.warning("로그인이 필요한 서비스입니다.");
                 setTimeout(() => {
@@ -140,6 +149,37 @@ const ProductDetails = () => {
         ))}
       </div>
       <ToastContainer floatingTime={5000} />
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="투자성향 분석 안내 모달"
+        className="modal"
+        overlayClassName="overlay-modal"
+        style={{ width: "300px" }}
+      >
+        <div className="invest-info-modal">
+          <p>
+            금융소비자보호법에 따라 손님의{" "}
+            <span style={{ color: "#18CD8C", fontSize: "17px" }}>
+              투자성향분석이 꼭 필요하며, 분석 결과에 적합한 상품만 조회 및
+              가입이 가능합니다.
+            </span>
+          </p>
+          <span style={{ color: "#757575", fontSize: "16px" }}>
+            지금 성향분석을 하시겠습니까?
+          </span>
+        </div>
+
+        <div className="btns" style={{ marginTop: "20px" }}>
+          <button
+            className="modal-confirm-btn"
+            style={{ padding: "10px 80px" }}
+            onClick={closeModal}
+          >
+            확인(투자자 정보 제공)
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 };

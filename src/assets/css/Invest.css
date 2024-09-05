@@ -1,0 +1,104 @@
+.invest-analysis {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+}
+
+.invest-analysis-header {
+  background-color: #e8e8e8;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.invest-analysis-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.invest-analysis-text span {
+  font-size: 18px;
+  padding: 5px;
+  color: #a0a0a0;
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.invest-analysis-progress-bar {
+  height: 10px;
+  background-color: #e1e1e1;
+  border-radius: 5px;
+  flex-grow: 1; /* 진행바가 남은 공간을 차지하도록 설정 */
+}
+
+.question-container h2 {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.option input {
+  margin-right: 10px;
+}
+
+.option.selected {
+  background-color: rgba(9, 154, 150, 0.15); /* 15% 투명도 */
+  border-color: #00acc1;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.previous-button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.remaining {
+  font-size: 14px;
+  color: #666;
+}
+
+.invest-analysis-btn {
+  display: flex;
+  align-items: center;
+  background-color: #d1d1d1;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  width: 100%;
+  font-size: 15px;
+  margin: 20px 0;
+  color: #fff;
+  font-family: "PRETENDARD-BOLD";
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
