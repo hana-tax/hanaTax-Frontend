@@ -44,7 +44,9 @@ const ProductDetails = () => {
           className="pension-button"
           onClick={() => {
             if (isLoggedIn) {
-              navigate("/pension/product/join");
+              navigate("/investAnalysis", {
+                state: { accountType: "pension" },
+              });
             } else {
               toast.warning("로그인이 필요한 서비스입니다.");
               setTimeout(() => {

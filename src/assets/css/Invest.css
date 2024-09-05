@@ -27,15 +27,25 @@
   display: flex;
   align-items: center;
   font-size: 14px;
+  justify-content: space-between;
   color: #666;
   margin-bottom: 10px;
+}
+
+.progress-info {
+  flex-shrink: 0;
 }
 
 .invest-analysis-progress-bar {
   height: 10px;
   background-color: #e1e1e1;
   border-radius: 5px;
-  flex-grow: 1; /* 진행바가 남은 공간을 차지하도록 설정 */
+  position: relative;
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  margin-left: 20px;
+  transition: width 0.5s ease;
 }
 
 .question-container h2 {
@@ -101,4 +111,93 @@ form {
   justify-content: center;
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
+
+.invest-analysis-progress-little-bar {
+  height: 10px;
+  background-color: #099a96;
+  border-radius: 5px;
+  transition: width 0.5s ease;
+  position: relative;
+}
+
+.face-icon {
+  transition: transform 0.5s ease; /* FaceIcon의 이동 애니메이션 */
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%); /* 중앙 정렬 */
+  transition: left 0.5s ease; /* FaceIcon의 이동 애니메이션 */
+}
+.result-content {
+  font-size: 10px;
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 7px;
+  background-color: #f7f8f9;
+}
+
+.result-content p {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.result-label {
+  width: 130px; /* 고정 너비로 제목과 값을 정렬 */
+  font-weight: bold;
+  text-align: left;
+  font-size: 12px;
+}
+
+.result-value {
+  flex: 1; /* 답변이 제목과 같은 위치에서 시작 */
+  text-align: left;
+  font-size: 12px;
+  color: #757575;
+}
+
+.result-info p {
+  color: #b8c1c8;
+  font-size: 13px;
+}
+
+.invest-analysis-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid #ccc;
+  background: #fff;
+  overflow: auto;
+  border-radius: 20px;
+  outline: none;
+  padding: 30px;
+  text-align: center;
+  width: 400px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.modal-buttons .invest-analysis-btn {
+  padding: 10px 20px;
+  background-color: #099a96;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal-buttons .invest-analysis-btn:first-child {
+  background-color: #d1d1d1;
+}
+
+.modal-buttons .invest-analysis-btn:hover {
+  opacity: 0.8;
 }

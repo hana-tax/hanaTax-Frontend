@@ -43,7 +43,7 @@ const ProductDetails = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    navigate("/investAnalysis");
+    navigate("/investAnalysis", { state: { accountType: "ISA" } });
   };
 
   // 각 항목의 펼침 상태를 관리하는 상태
