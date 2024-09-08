@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../../../assets/css/Product.css";
+import { ReactComponent as Info } from "../../../assets/svg/Info.svg";
+import YouTube from "react-youtube";
+import Modal from "react-modal";
 
 function JoinProduct() {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [allChecked, setAllChecked] = useState(false);
   const [checks, setChecks] = useState({
     confirmation: false,
@@ -18,6 +21,14 @@ function JoinProduct() {
       const newChecks = { ...prevChecks, [name]: checked };
       return newChecks;
     });
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   const handleRadioChange = (event) => {
@@ -62,9 +73,36 @@ function JoinProduct() {
                 value="yes"
                 style={{ marginRight: "20px" }}
                 onChange={handleRadioChange}
+                onClick={openModal}
               />{" "}
               예
             </label>
+            <Modal
+              isOpen={isModalOpen}
+              onRequestClose={closeModal}
+              contentLabel="계좌 개설 완료 모달"
+              className="modal"
+              overlayClassName="overlay-modal"
+              style={{ width: "300px" }}
+            >
+              <div className="warning-text">
+                <p style={{ marginTop: "15px" }}>
+                  고객님은 투자상품 신규 후 1개월 이내 대출 예정이시거나 또는
+                  대출 거래 후 1개월 이내 투자상품 신규 예정으로, 금융투자상품
+                  신규 가입이 불가합니다.
+                </p>
+              </div>
+
+              <div className="btns" style={{ marginTop: "20px" }}>
+                <button
+                  className="button-close"
+                  onClick={closeModal}
+                  style={{ padding: "12px 50px" }}
+                >
+                  닫기
+                </button>
+              </div>
+            </Modal>
             <label>
               <input
                 type="radio"
@@ -79,8 +117,19 @@ function JoinProduct() {
         </div>
       </div>
       <div className="agreement-product-container">
-        <span>금융소비자 구분</span>
-
+        <div className="span-info">
+          <span>금융소비자 구분</span>
+          <div className="info-icon" style={{ marginLeft: "10px" }}>
+            <Info />
+            <div className="info-customer-tooltip">
+              전문금융소비자: 국가, 한국은행, 금융회사, 주권상장법인, 금융상품의
+              유형별로 대통령령으로 정하는 자
+              <br />
+              <br />
+              일반금융소비자: 그 외의 경우
+            </div>
+          </div>
+        </div>
         <div className="join-product-checkbox">
           상품가입 전 고객님이 <span>일반금융소비자</span>인지 &nbsp;{" "}
           <span>전문금융소비자</span>인지 확인하시고 체크해 주시기 바랍니다.
@@ -110,7 +159,25 @@ function JoinProduct() {
       </div>
       <div className="agreement-product-container">
         <span>하나 ISA(일임형) 교육자료</span>
-
+        <div className="video">
+          <YouTube
+            //videoId : https://www.youtube.com/watch?v={videoId} 유튜브 링크의 끝부분에 있는 고유한 아이디
+            videoId="XCrPjiEadJU"
+            opts={{
+              width: "560",
+              height: "315",
+              playerVars: {
+                autoplay: 0, //자동재생 O
+                rel: 0, //관련 동영상 표시하지 않음 (근데 별로 쓸모 없는듯..)
+                modestbranding: 1, // 컨트롤 바에 youtube 로고를 표시하지 않음
+              },
+            }}
+            //이벤트 리스너
+            onEnd={(e) => {
+              e.target.stopVideo(0);
+            }}
+          />
+        </div>
         <div className="join-product-checkbox">
           개인종합자산관리계좌(ISA)는 정부가 개인의 종합적 자산관리를 통한
           재산형성을 지원하려는 목적으로 도입한 제도입니다. 하나의 계좌에 펀드,
