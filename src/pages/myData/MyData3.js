@@ -33,11 +33,16 @@ import { ReactComponent as Nps } from "../../assets/svg/bankLogo/nps.svg";
 import { ReactComponent as Hwell } from "../../assets/svg/bankLogo/hwell.svg";
 import { ReactComponent as Warning } from "../../assets/svg/warning.svg";
 import Modal from "react-modal";
+import axios from "axios";
+import tokenStore from "../../store/tokenStore";
+import useStore from "../../store/useStore";
 
 Modal.setAppElement("#root");
 
 function MyData3() {
-  const [activeTab, setActiveTab] = useState("카드");
+  const [activeTab, setActiveTab] = useState("은행");
+  const { token, setToken, clearToken } = tokenStore();
+  const user = useStore((state) => state.user);
   const [selectedCards, setSelectedCards] = useState({
     카드: [],
     은행: [],
@@ -49,7 +54,7 @@ function MyData3() {
   });
 
   const [searchTerm, setSearchTerm] = useState("");
-  const tabs = ["카드", "은행", "페이", "증권", "보험", "기타금융", "공공기관"];
+  const tabs = ["은행", "카드", "페이", "증권", "보험", "기타금융", "공공기관"];
   const cards = {
     카드: [
       "하나카드",
@@ -58,16 +63,8 @@ function MyData3() {
       "KB국민카드",
       "우리카드",
       "삼성카드",
-      "카카오뱅크",
       "현대카드",
-      "기업은행",
-      "제주은행",
-      "케이뱅크",
       "BC카드",
-      "수협은행",
-      "전북은행",
-      "산업은행",
-      "새마을금고중앙회",
     ],
     은행: [
       "하나은행",
@@ -83,10 +80,9 @@ function MyData3() {
       "산업은행",
       "전북은행",
       "제주은행",
-      "KB저축은행",
-      "수협중앙회",
+      "수협은행",
     ],
-    페이: ["카카오페이", "토스", "네이버페이", "롯데멤버스"],
+    페이: ["카카오페이", "토스", "네이버페이"],
     증권: [
       "하나증권",
       "NH투자증권",
@@ -97,6 +93,9 @@ function MyData3() {
       "신한투자증권",
       "토스증권",
       "메리츠증권",
+      "삼성증권",
+      "카카오페이증권",
+      "IBK투자증권",
     ],
     보험: [
       "하나손해보험",
@@ -111,6 +110,9 @@ function MyData3() {
       "MG손해보험",
       "신한EZ손해보험",
       "IBK연금보험",
+      "메리츠화재",
+      "롯데손해보험",
+      "삼성생명",
     ],
     기타금융: [
       "하나캐피탈",
@@ -122,19 +124,90 @@ function MyData3() {
     ],
     공공기관: ["국민건강보험공단", "국민연금공단"],
   };
-  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
-  const handleApplicationSubmit = () => {
-    setIsConfirmationModalOpen(true);
+  // 자산 매핑 함수
+  const getAssetCode = (assetName) => {
+    const cardMapping = {
+      // 은행 코드
+      우리은행: 134,
+      광주은행: 146,
+      산업은행: 102,
+      기업은행: 103,
+      국민은행: 104,
+      하나은행: 105,
+      수협은행: 107,
+      NH농협은행: 110,
+      신한은행: 126,
+      전북은행: 137,
+      케이뱅크: 189,
+      토스뱅크: 192,
+      농협중앙회: 111,
+      새마을금고중앙회: 145,
+
+      // 증권 코드
+      메리츠증권: 280,
+      미래에셋증권: 238,
+      삼성증권: 240,
+      카카오페이증권: 289,
+      토스증권: 271,
+      KB증권: 218,
+      NH투자증권: 247,
+      신한투자증권: 278,
+      IBK투자증권: 225,
+      키움증권: 264,
+      한국투자증권: 243,
+      하나증권: 270,
+
+      // 보험 코드
+      메리츠화재: 101,
+      롯데손해보험: 193,
+      농협손해보험: 171,
+      신한라이프생명보험: 211,
+      KB라이프생명보험: 219,
+      IBK연금보험: 291,
+      하나생명: 263,
+      삼성생명: 202,
+      하나손해보험: 152,
+      삼성화재: 108,
+      미래에셋생명: 233,
+      KB손해보험: 235,
+      현대해상: 241,
+      MG손해보험: 249,
+      신한EZ손해보험: 255,
+
+      // 공공기관 코드
+      국민건강보험공단: 400,
+      국민연금공단: 401,
+
+      // 카드 코드
+      BC카드: 131,
+      삼성카드: 151,
+      KB국민카드: 121,
+      NH농협카드: 191,
+      현대카드: 161,
+      하나카드: 122,
+      신한카드: 106,
+      우리카드: 117,
+
+      // 기타 금융 코드
+      NH농협캐피탈: 306,
+      KB캐피탈: 308,
+      롯데캐피탈: 303,
+      하나캐피탈: 310,
+      신한캐피탈: 304,
+      IBK캐피탈: 305,
+    };
+
+    return cardMapping[assetName]; // 매핑된 코드 반환
   };
+
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
   const closeConfirmationModal = () => {
     setIsConfirmationModalOpen(false);
   };
   const navigate = useNavigate();
-  const goTo2 = () => {
-    navigate("/myData2");
-  };
+
   const toggleCardSelection = (tab, card) => {
     setSelectedCards((prev) => {
       const isSelected = prev[tab].includes(card);
@@ -160,6 +233,35 @@ function MyData3() {
   const filteredCards = cards[activeTab].filter((card) =>
     card.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleEnroll = async () => {
+    try {
+      // 선택한 자산 코드 매핑
+      const assetCodes = selectedCards[activeTab]
+        .map((card) => getAssetCode(card)) // 자산 이름을 매핑 함수로 전달
+        .filter(Boolean); // 유효한 코드만 필터링
+      console.log(token);
+      console.log(token.accessToken);
+      // POST 요청 보내기
+      const response = await axios.post(
+        "http://localhost:8080/api/mydata/enroll",
+        {
+          userId: "useruser", // 현재 로그인한 userId
+          assetCodes: assetCodes, // 선택한 자산 코드들
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token.accessToken}`, // Bearer 토큰
+          },
+        }
+      );
+      console.log(assetCodes);
+      console.log("연결 요청 성공:", response.data);
+      setIsConfirmationModalOpen(true);
+    } catch (error) {
+      console.error("연결 요청 오류:", error);
+    }
+  };
 
   return (
     <div className="mydata-container">
@@ -288,10 +390,7 @@ function MyData3() {
           ))}
         </div>
         <div className="asset-button-box">
-          <button
-            className="mydata-asset-button"
-            onClick={handleApplicationSubmit}
-          >
+          <button className="mydata-asset-button" onClick={handleEnroll}>
             한번에 연결하기
           </button>
         </div>

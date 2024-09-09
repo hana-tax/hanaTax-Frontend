@@ -6,9 +6,16 @@ import { ReactComponent as Icon3 } from "../../assets/svg/mydata3.svg";
 import { ReactComponent as Icon4 } from "../../assets/svg/mydata4.svg";
 import { useNavigate } from "react-router-dom";
 import Loading from "./Loading"; // Loading 컴포넌트 임포트
+import axios from "axios";
+import tokenStore from "../../store/tokenStore";
 
 function MyData1() {
   const [isLoading, setIsLoading] = useState(true);
+  const [residentNo1, setResidentNo1] = useState("");
+  const [residentNo2, setResidentNo2] = useState("");
+  const [authCode, setAuthCode] = useState("");
+  const { token, setToken, clearToken } = tokenStore();
+
   const navigate = useNavigate();
   const goTo2 = () => {
     navigate("/myData2");
@@ -23,9 +30,71 @@ function MyData1() {
     return () => clearTimeout(timer); // 타이머 정리
   }, []);
 
+  const hashResidentNumber = (residentNumber) => {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(residentNumber);
+
+    return crypto.subtle.digest("SHA-256", data).then((hashBuffer) => {
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray
+        .map((byte) => byte.toString(16).padStart(2, "0"))
+        .join("");
+      return hashHex;
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // 기본 폼 제출 방지
+
+    const userCi = `${residentNo1}${residentNo2}`; // 주민등록번호 합치기
+    console.log(userCi);
+    try {
+      const hashedUserCi = await hashResidentNumber(userCi);
+      const response = await axios.get(
+        `http://localhost:8080/api/mydata/auth/authorize`,
+        {
+          params: { userCi: hashedUserCi }, // 쿼리 파라미터로 주민등록번호 전달
+        }
+      );
+      // console.log(hashedUserCi);
+      console.log(response.data);
+      setAuthCode(response.data); // authCode 상태 업데이트
+      console.log(response.data);
+      await fetchTokens(response.data); // 토큰 요청 함수 호출
+    } catch (error) {
+      console.error("API 요청 오류:", error);
+    }
+  };
+
+  const fetchTokens = async (authCode) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/api/mydata/auth/token`,
+        null,
+        { params: { authCode } }
+      );
+
+      console.log(authCode);
+      const { accessToken, refreshToken } = response.data;
+      setToken({ accessToken, refreshToken });
+
+      goTo2(); // 요청 성공 후 다음 페이지로 이동
+    } catch (error) {
+      console.error("토큰 요청 오류:", error);
+    }
+  };
+
   if (isLoading) {
     return <Loading />; // 로딩 중일 때 Loading 컴포넌트를 보여줌
   }
+
+  const handleInputChange1 = (e) => {
+    setResidentNo1(e.target.value);
+  };
+
+  const handleInputChange2 = (e) => {
+    setResidentNo2(e.target.value);
+  };
 
   return (
     <div className="mydata-container">
@@ -103,6 +172,8 @@ function MyData1() {
                 type="text"
                 placeholder="주민등록번호 앞 6자리"
                 className="input-text"
+                value={residentNo1}
+                onChange={handleInputChange1}
               />
               -
               <input
@@ -110,6 +181,8 @@ function MyData1() {
                 placeholder="주민등록번호 뒤 7자리"
                 className="input-text"
                 style={{ backgroundColor: "#B3B3B3" }}
+                value={residentNo2}
+                onChange={handleInputChange2}
               />
             </div>
           </label>
@@ -122,7 +195,7 @@ function MyData1() {
               className="input-text"
             />
           </label>
-          <button type="submit" className="myDataButton" onClick={goTo2}>
+          <button type="submit" className="myDataButton" onClick={handleSubmit}>
             확인
           </button>
         </form>
