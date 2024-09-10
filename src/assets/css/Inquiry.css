@@ -100,7 +100,7 @@
 
 .income-sum-input-box {
   display: flex;
-  margin: 5px auto;
+  margin: 2px auto;
   justify-content: space-between;
   align-items: center;
 }
@@ -121,6 +121,7 @@
 .income-sum-input-box input {
   flex: 1;
   width: 100px;
+  text-align: right;
 }
 
 .income-sum-input-box span {
@@ -133,4 +134,9 @@
   border: 1px solid #aaaaaa;
   border-radius: 5px;
   height: 23px;
+}
+
+.info-span {
+  display: flex;
+  align-items: center;
 }

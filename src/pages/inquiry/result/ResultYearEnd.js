@@ -9,33 +9,46 @@ import userIcon from "../../../assets/svg/연말정산/user.svg";
 import houseIcon from "../../../assets/svg/연말정산/house.svg";
 import briefcaseIcon from "../../../assets/svg/연말정산/briefcase.svg";
 import piggyBankIcon from "../../../assets/svg/연말정산/piggy-bank.svg";
+import useTaxStore from "../../../store/taxStore";
+import useStore from "../../../store/useStore";
 
 const ResultYearEnd = () => {
   const [amount, setAmount] = useState(0);
   const navigate = useNavigate();
-  const targetAmount = 780000;
+  const estimatedTaxAmount = useTaxStore((state) => state.estimatedTaxAmount);
+  const user = useStore((state) => state.user);
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
+
   const ToSolutionYearEnd = () => {
     navigate("/yearend/solution");
   };
 
   useEffect(() => {
+    if (!user) return;
+
     const duration = 2000;
     const stepTime = 50;
     const steps = duration / stepTime;
-    const increment = targetAmount / steps;
+    const taxAmount = Math.abs(estimatedTaxAmount);
+    const increment = taxAmount / steps;
 
     let currentAmount = 0;
     const interval = setInterval(() => {
       currentAmount += increment;
-      if (currentAmount >= targetAmount) {
-        clearInterval(interval);
-        currentAmount = targetAmount;
-      }
+      currentAmount = Math.min(currentAmount, taxAmount);
       setAmount(Math.floor(currentAmount));
+      if (currentAmount >= taxAmount) {
+        clearInterval(interval);
+      }
     }, stepTime);
 
     return () => clearInterval(interval);
-  }, [targetAmount]);
+  }, [estimatedTaxAmount, user]);
 
   const ToRefundDetails = () => {
     navigate("/yearend/refundDetails");
@@ -46,9 +59,30 @@ const ResultYearEnd = () => {
       <div className="box">
         <div className="left">
           <h1>
-            김하나 님은<br></br>
-            <div className="price">{amount.toLocaleString()} 원</div>받을 수
-            있어요!
+            {user.name} 님은
+            <br />
+            {amount < 0 ? (
+              <span style={{ color: "#18cd8c", fontSize: "30px" }}>
+                {Math.abs(amount).toLocaleString()}
+              </span>
+            ) : (
+              <span style={{ color: "#18cd8c", fontSize: "30px" }}>
+                {amount.toLocaleString()}
+              </span>
+            )}
+            {amount < 0 ? (
+              <>
+                원
+                <br />
+                받을 수 있어요!
+              </>
+            ) : (
+              <>
+                원
+                <br />
+                납부하셔야 합니다.
+              </>
+            )}
           </h1>
 
           <button className="description-button" onClick={ToRefundDetails}>
@@ -69,7 +103,8 @@ const ResultYearEnd = () => {
         <div className="solutions-section">
           <h2>
             13월의 월급을 <span className="highlight">더 많이</span> 받을 수
-            있는 <br></br>방법을 알려드릴게요!
+            있는 <br />
+            방법을 알려드릴게요!
           </h2>
           <div className="slider">
             <div className="slide-track">
