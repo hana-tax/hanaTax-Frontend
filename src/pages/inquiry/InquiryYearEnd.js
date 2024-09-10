@@ -6,6 +6,7 @@ import { ReactComponent as Char } from "../../assets/svg/연말정산/earth.svg"
 import { ReactComponent as ArrowUp } from "../../assets/svg/arrow-up.svg";
 import { ReactComponent as ArrowDown } from "../../assets/svg/arrow-down.svg";
 import Loading from "./Loading";
+import Modal from "react-modal";
 
 const questions = [
   {
@@ -30,10 +31,18 @@ const questions = [
 const InquiryYearEnd = () => {
   const [loading, setLoading] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const navigate = useNavigate();
 
   const handleInquiryClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
     setLoading(true);
+    setIsModalOpen(false);
     setTimeout(() => {
       navigate("/inquiryYearEnd/result");
     }, 2000);
@@ -102,6 +111,45 @@ const InquiryYearEnd = () => {
           ))}
         </div>
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="신청 완료 모달"
+        className="modal"
+        overlayClassName="overlay-modal"
+      >
+        <div>
+          <span style={{ display: "flex" }}>올해 총 급여액을 입력해주세요</span>
+          <div class="income-sum-input-container">
+            <div class="income-sum-input-box">
+              <label>총 급여</label>
+              <input type="text" className="income-sum-input" />
+            </div>
+            <div class="income-sum-calculate">
+              <div class="income-sum-input-box">
+                <label>근로소득공제</label>
+                <span style={{ fontSize: "14px", fontWeight: "normal" }}>
+                  0 원
+                </span>
+              </div>
+              <div class="income-sum-input-box">
+                <label>근로소득금액</label>
+                <span style={{ fontSize: "14px", fontWeight: "normal" }}>
+                  0 원
+                </span>
+              </div>
+            </div>
+            <div class="income-sum-input-box">
+              <label>소득세 기납부세액</label>
+              <input type="text" className="income-sum-input" />
+            </div>
+          </div>
+
+          <button className="modal-confirm-btn" onClick={closeModal}>
+            확인
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 };

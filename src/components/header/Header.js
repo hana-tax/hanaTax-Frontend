@@ -4,11 +4,13 @@ import { ReactComponent as Logo } from "../../assets/svg/하나은행로고.svg"
 import "../../assets/css/Header.css";
 import { ReactComponent as Person } from "../../assets/svg/금융소득/금융소득_사람.svg";
 import useStore from "../../store/useStore";
+import tokenStore from "../../store/tokenStore";
 import { ReactComponent as Login } from "../../assets/svg/login_user.svg";
 import { ToastContainer, toast } from "react-custom-alert";
 
 function Header() {
   const { isLoggedIn, user, logout } = useStore();
+  const { token } = tokenStore((state) => ({ token: state.token }));
   const navigate = useNavigate();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const ToAllofYearEnd = () => {
@@ -65,13 +67,17 @@ function Header() {
                   <button
                     className="inquiry-button"
                     onClick={() => {
-                      if (isLoggedIn) {
-                        navigate("/inquiryYearEnd");
-                      } else {
+                      if (!isLoggedIn) {
                         toast.warning("로그인이 필요한 서비스입니다.");
                         setTimeout(() => {
                           navigate("/login");
                         }, 2000); // 2초 후에 로그인 페이지로 이동
+                      } else {
+                        if (!token) {
+                          navigate("/myData1");
+                        } else {
+                          navigate("/inquiryYearEnd");
+                        }
                       }
                     }}
                   >
@@ -114,16 +120,21 @@ function Header() {
                     <br /> 대상자일까?
                   </span>
                   <Person />
+
                   <button
                     className="inquiry-button"
                     onClick={() => {
-                      if (isLoggedIn) {
-                        navigate("/inquiryFinancialIncome");
-                      } else {
+                      if (!isLoggedIn) {
                         toast.warning("로그인이 필요한 서비스입니다.");
                         setTimeout(() => {
                           navigate("/login");
                         }, 2000); // 2초 후에 로그인 페이지로 이동
+                      } else {
+                        if (!token) {
+                          navigate("/myData1");
+                        } else {
+                          navigate("/inquiryFinancialIncome");
+                        }
                       }
                     }}
                   >
@@ -197,7 +208,7 @@ function Header() {
                       >
                         연금저축펀드 상품
                       </li>
-                      <li className="dropdown-item">연금펀드 통합 신규</li>
+
                       <li className="dropdown-item">연금펀드 입금</li>
                     </ul>
                   </div>

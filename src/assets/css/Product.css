@@ -233,7 +233,6 @@ h1 {
   text-align: center;
   margin: 0 10px;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  font-weight: bold;
 }
 
 .investment-card:hover {
@@ -272,7 +271,6 @@ h1 {
 }
 
 .invest-point1-container {
-  font-weight: bold;
   flex-direction: column;
   justify-content: center;
   width: 80%;
@@ -291,6 +289,7 @@ h1 {
 
 .details-section p {
   font-size: 20px;
+  font-family: "Pretendard-SemiBold";
 }
 
 .details-section span {

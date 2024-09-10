@@ -7,12 +7,6 @@ import { motion } from "framer-motion";
 import { ReactComponent as Char1 } from "../../assets/svg/연말정산/연말정산_배경.svg";
 import { ReactComponent as Char2 } from "../../assets/svg/금융소득/금융소득_배경.svg";
 import { ReactComponent as Char3 } from "../../assets/svg/절세상품/절세상품_배경.svg";
-import { ReactComponent as Menu1 } from "../../assets/svg/account-inquiry.svg";
-import { ReactComponent as Menu2 } from "../../assets/svg/transfer.svg";
-import { ReactComponent as Menu3 } from "../../assets/svg/yearend-inquiry.svg";
-import { ReactComponent as Menu4 } from "../../assets/svg/transfer-details.svg";
-import { ReactComponent as Menu5 } from "../../assets/svg/my-fi.svg";
-import { ReactComponent as Menu6 } from "../../assets/svg/account-make.svg";
 import useStore from "../../store/useStore";
 import { ReactComponent as Right } from "../../assets/svg/arrow-right.svg";
 import { ReactComponent as Account } from "../../assets/svg/account.svg";
@@ -25,10 +19,15 @@ import { ReactComponent as InquiryYearEnd } from "../../assets/svg/inquiryYearEn
 import { ReactComponent as Phone } from "../../assets/svg/phone-hand.svg";
 import { ReactComponent as Triangle } from "../../assets/svg/triangle-exclude.svg";
 import { ReactComponent as Circle } from "../../assets/svg/circle-exclude.svg";
+import tokenStore from "../../store/tokenStore";
+import { BeatLoader } from "react-spinners"; // 로딩 애니메이션
+import { ReactComponent as Char } from "../../assets/svg/hana-char.svg";
 
 const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
   const navigate = useNavigate();
+  const { token } = tokenStore((state) => ({ token: state.token }));
 
   const { isLoggedIn } = useStore((state) => ({
     isLoggedIn: state.isLoggedIn,
@@ -70,17 +69,35 @@ const Home = () => {
 
   const handleStartClick = () => {
     if (!isLoggedIn) {
-      toast.warning("로그인이 필요한 서비스입니다."); // 경고 메시지를 표시
+      toast.warning("로그인이 필요한 서비스입니다.");
       setTimeout(() => {
-        navigate("/Login");
-      }, 2000);
+        navigate("/login");
+      }, 2000); // 2초 후에 로그인 페이지로 이동
     } else {
-      navigate("/inquiryYearEnd");
+      if (!token) {
+        setIsLoading(true); // 로딩 시작
+        setTimeout(() => {
+          navigate("/myData1");
+          setIsLoading(false);
+        }, 2000);
+      } else {
+        navigate("/inquiryYearEnd");
+      }
     }
   };
 
   return (
     <div>
+      {isLoading && (
+        <div className="loading-overlay">
+          <div className="loading-content">
+            <Char />
+            <h3>마이데이터와 함께하는 즐거움</h3>
+            <BeatLoader color="#10B9BE" />
+          </div>
+        </div>
+      )}
+
       <div className="homepage-container">
         <div
           className="slider"
@@ -117,33 +134,8 @@ const Home = () => {
             ></div>
           ))}
         </div>
-        {/* <div className="side-menu">
-        <div className="menu-item">
-          <Menu1 className="menu-icon" />
-          <span className="menu-text">전체계좌조회</span>
-        </div>
-        <div className="menu-item">
-          <Menu2 className="menu-icon" />
-          <span className="menu-text">이체</span>
-        </div>
-        <div className="menu-item">
-          <Menu3 className="menu-icon" />
-          <span className="menu-text">연말정산조회</span>
-        </div>
-        <div className="menu-item">
-          <Menu4 className="menu-icon" />
-          <span className="menu-text">거래내역조회</span>
-        </div>
-        <div className="menu-item">
-          <Menu5 className="menu-icon" />
-          <span className="menu-text">금융소득분석</span>
-        </div>
-        <div className="menu-item">
-          <Menu6 className="menu-icon" />
-          <span className="menu-text">계좌개설</span>
-        </div>
-      </div> */}
       </div>
+
       <div className="second-container">
         <p>이런 서비스 어때요?</p>
         <div className="service-container">

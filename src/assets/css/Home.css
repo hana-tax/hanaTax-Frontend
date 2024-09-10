@@ -254,6 +254,10 @@
   background-color: #f1f8ff;
   border-radius: 50%;
   width: 70px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 10px;
 }
 

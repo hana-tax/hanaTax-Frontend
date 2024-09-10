@@ -21,15 +21,6 @@ function MyData1() {
     navigate("/myData2");
   };
 
-  useEffect(() => {
-    // 2초 후에 로딩 화면을 숨기고 MyData1 화면을 보여줌
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-
-    return () => clearTimeout(timer); // 타이머 정리
-  }, []);
-
   const hashResidentNumber = (residentNumber) => {
     const encoder = new TextEncoder();
     const data = encoder.encode(residentNumber);
@@ -83,10 +74,6 @@ function MyData1() {
       console.error("토큰 요청 오류:", error);
     }
   };
-
-  if (isLoading) {
-    return <Loading />; // 로딩 중일 때 Loading 컴포넌트를 보여줌
-  }
 
   const handleInputChange1 = (e) => {
     setResidentNo1(e.target.value);

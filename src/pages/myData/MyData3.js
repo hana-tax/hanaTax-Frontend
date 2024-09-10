@@ -205,6 +205,7 @@ function MyData3() {
 
   const closeConfirmationModal = () => {
     setIsConfirmationModalOpen(false);
+    navigate("/");
   };
   const navigate = useNavigate();
 
@@ -246,7 +247,7 @@ function MyData3() {
       const response = await axios.post(
         "http://localhost:8080/api/mydata/enroll",
         {
-          userId: "useruser", // 현재 로그인한 userId
+          userId: user.id, // user.id로 수정할것
           assetCodes: assetCodes, // 선택한 자산 코드들
         },
         {
@@ -255,6 +256,7 @@ function MyData3() {
           },
         }
       );
+      console.log(user.id);
       console.log(assetCodes);
       console.log("연결 요청 성공:", response.data);
       setIsConfirmationModalOpen(true);

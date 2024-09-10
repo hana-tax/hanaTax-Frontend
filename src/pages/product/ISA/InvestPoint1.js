@@ -9,7 +9,13 @@ const InvestPoint1 = () => {
       <h1>일반 투자보다 유리한 세제혜택</h1>
       <div className="details-section">
         <p>2단계로 진행되는 ISA의 과세기준 산정 방식</p>
-        <span style={{ color: "#7684ff", marginBottom: "15px" }}>
+        <span
+          style={{
+            color: "#7684ff",
+            marginBottom: "15px",
+            fontFamily: "Pretendard-SemiBold",
+          }}
+        >
           1단계 : 계좌내 손익 통산
         </span>
         <span style={{ color: "#757575" }}>
@@ -35,7 +41,13 @@ const InvestPoint1 = () => {
         </div>
       </div>
       <div className="details-section">
-        <span style={{ color: "#7684ff", marginBottom: "15px" }}>
+        <span
+          style={{
+            color: "#7684ff",
+            marginBottom: "15px",
+            fontFamily: "Pretendard-SemiBold",
+          }}
+        >
           2단계 : 비과세 + 분리과세
         </span>
         <span style={{ color: "#757575" }}>
