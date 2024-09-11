@@ -45,7 +45,7 @@ const CardDetails = () => {
           <ArrowDown className="toggle-arrow" />
         )}{" "}
       </div>
-      {isOpen && (
+      <div className={`card-animation-container ${isOpen ? "open" : ""}`}>
         <div className="card-body">
           <div className="card-box">
             <p>
@@ -104,7 +104,7 @@ const CardDetails = () => {
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };

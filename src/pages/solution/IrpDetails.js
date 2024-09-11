@@ -23,7 +23,7 @@ const IrpDetails = () => {
           <ArrowDown className="toggle-arrow" />
         )}
       </div>
-      {isOpen && (
+      <div className={`card-animation-container ${isOpen ? "open" : ""}`}>
         <div className="irp-body">
           <p>
             소비 패턴 분석 결과, <br />
@@ -56,7 +56,7 @@ const IrpDetails = () => {
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };

@@ -115,11 +115,13 @@ const InquiryYearEnd = () => {
     console.log(`예상세액: ${estimatedTaxAmount.toLocaleString()} 원`);
 
     useTaxStore.getState().setTaxData({
+      totalIncome,
       taxableIncome,
       taxAmount,
       wageIncomeDeduction,
       totalTaxDeduction,
       estimatedTaxAmount,
+      taxPaidValue,
     });
 
     setTimeout(() => {

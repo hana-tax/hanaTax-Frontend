@@ -67,7 +67,7 @@ const HouseDetails = () => {
           <ArrowDown className="toggle-arrow" />
         )}
       </div>
-      {isOpen && (
+      <div className={`card-animation-container ${isOpen ? "open" : ""}`}>
         <div className="deduction-body">
           <p>
             전세 대출 공제 시, <br />약 2,757,600원 돌려 받을 수 있어요!
@@ -127,7 +127,7 @@ const HouseDetails = () => {
             )}
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };

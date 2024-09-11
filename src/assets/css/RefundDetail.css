@@ -10,7 +10,7 @@
   background-color: #18cd8c;
   color: white;
   border-radius: 19px;
-  padding: 10px;
+  padding: 5px 20px 5px 20px;
 }
 
 .refund-summary h1 {
@@ -26,13 +26,18 @@
 .refund-summary p {
   font-size: 14px;
   margin-top: 5px;
-  font-weight: bold;
+}
+
+.refund-summary-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .refund-details {
-  background-color: #ececec;
+  background-color: #f7f8fa;
   border-radius: 19px;
-  padding: 10px;
+  padding: 0px 20px 20px 20px;
   margin-top: 20px;
 }
 
@@ -263,4 +268,9 @@
 
 .modal .warning-icon {
   width: 43px;
+}
+
+.refund-details-box {
+  display: flex;
+  justify-content: space-between;
 }

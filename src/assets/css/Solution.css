@@ -81,6 +81,16 @@ select:focus {
   font-size: 18px;
 }
 
+.card-animation-container {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.card-animation-container.open {
+  max-height: 700px;
+}
+
 .card-box {
   background-color: #fff;
   padding: 10px;
@@ -643,4 +653,59 @@ input[type="radio"]:checked {
 .account-make-btn-box {
   display: flex;
   justify-content: center;
+}
+.toggleSwitch {
+  width: 35px;
+  height: 15px;
+  display: block;
+  position: relative;
+  border-radius: 30px;
+  background-color: rgb(233, 233, 234);
+  box-shadow: 0 0 16px 3px rgba(0, 0, 0 / 15%);
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.toggleSwitch .toggleButton {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 50%;
+  left: -3px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: #fff;
+  transition: all 0.2s ease-in;
+}
+
+input[type="checkbox"]:checked + .toggleSwitch {
+  background-color: rgb(0, 200, 102);
+}
+
+input[type="checkbox"]:checked + .toggleSwitch .toggleButton {
+  left: calc(100% - 28px);
+  background: #fff;
+}
+
+.toggleSwitch,
+.toggleButton {
+  transition: all 0.2s ease-in;
+}
+
+.modal .modal-family-text {
+  display: flex;
+  color: #757575;
+  font-size: 15px;
+  font-family: "PRETENDARD-SEMIBOLD";
+  margin: 20px 10px;
+  text-align: left;
+}
+
+.person-body-text {
+  display: flex;
+  align-items: center;
+}
+
+.basic-deduction-box {
+  padding: 10px;
 }
