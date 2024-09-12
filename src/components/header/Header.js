@@ -272,7 +272,6 @@ function Header() {
           )}
         </div>
       </nav>
-      <ToastContainer floatingTime={5000} />
     </header>
   );
 }

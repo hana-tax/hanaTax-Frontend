@@ -35,6 +35,7 @@ import { ReactComponent as Warning } from "../../assets/svg/warning.svg";
 import Modal from "react-modal";
 import axios from "axios";
 import tokenStore from "../../store/tokenStore";
+import useTaxStore from "../../store/taxStore";
 import useStore from "../../store/useStore";
 
 Modal.setAppElement("#root");
@@ -42,6 +43,8 @@ Modal.setAppElement("#root");
 function MyData3() {
   const [activeTab, setActiveTab] = useState("은행");
   const { token, setToken, clearToken } = tokenStore();
+  const setHouseBalance = useTaxStore((state) => state.setHouseBalance);
+  const setHouseLoanBalance = useTaxStore((state) => state.setHouseLoanBalance);
   const user = useStore((state) => state.user);
   const [selectedCards, setSelectedCards] = useState({
     카드: [],
@@ -237,12 +240,14 @@ function MyData3() {
 
   const handleEnroll = async () => {
     try {
-      // 선택한 자산 코드 매핑
-      const assetCodes = selectedCards[activeTab]
-        .map((card) => getAssetCode(card)) // 자산 이름을 매핑 함수로 전달
+      // 모든 카테고리에서 선택된 자산을 하나의 배열로 병합
+      const assetCodes = Object.keys(selectedCards)
+        .flatMap((tab) => selectedCards[tab].map((card) => getAssetCode(card))) // 각 카테고리에서 선택한 자산을 매핑하여 코드로 변환
         .filter(Boolean); // 유효한 코드만 필터링
+
       console.log(token);
       console.log(token.accessToken);
+
       // POST 요청 보내기
       const response = await axios.post(
         "http://localhost:8080/api/mydata/enroll",
@@ -256,6 +261,25 @@ function MyData3() {
           },
         }
       );
+
+      const accounts = response.data; // 서버에서 반환한 계좌 정보들
+      console.log(accounts); // accounts 전체를 출력하여 배열 구조 확인
+
+      accounts.forEach((account) => {
+        console.log(
+          `계좌 타입: ${account.accountType}, 잔액: ${account.balance}`
+        );
+        if (account.accountType === 23) {
+          setHouseBalance(account.balance); // balance 값을 taxStore에 저장
+          console.log("저장된 balance:", account.balance);
+        }
+        if (account.loanType === 24) {
+          setHouseLoanBalance(account.interest);
+
+          console.log("저장된 balance: ", account.interest);
+        }
+      });
+
       console.log(user.id);
       console.log(assetCodes);
       console.log("연결 요청 성공:", response.data);

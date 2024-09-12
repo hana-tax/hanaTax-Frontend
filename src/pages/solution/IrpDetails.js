@@ -14,13 +14,17 @@ const IrpDetails = () => {
 
   return (
     <div className="card-container">
-      <div className="card-header" onClick={toggleDetails}>
+      <div
+        className="card-header"
+        onClick={toggleDetails}
+        style={{ margin: "-6px" }}
+      >
         <UserIcon />
         <span>연금저축 및 IRP 추가하기</span>
         {isOpen ? (
-          <ArrowUp className="toggle-arrow" />
+          <ArrowUp className="toggle-arrow" style={{ marginRight: "5px" }} />
         ) : (
-          <ArrowDown className="toggle-arrow" />
+          <ArrowDown className="toggle-arrow" style={{ marginRight: "5px" }} />
         )}
       </div>
       <div className={`card-animation-container ${isOpen ? "open" : ""}`}>

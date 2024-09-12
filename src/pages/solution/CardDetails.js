@@ -36,7 +36,11 @@ const CardDetails = () => {
 
   return (
     <div className="card-container">
-      <div className="card-header" onClick={toggleDetails}>
+      <div
+        className="card-header"
+        onClick={toggleDetails}
+        style={{ padding: "10px" }}
+      >
         <CardIcon />
         <span>카드 공제 추가하기</span>
         {isOpen ? (
