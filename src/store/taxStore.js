@@ -9,6 +9,7 @@ const useTaxStore = create((set) => ({
   finalizedTaxAmount: 0, //총 결정세액
   estimatedTaxAmount: 0, //차감징수납부(환급) 예상세액
   taxPaidValue: 0, //기납부 세액
+  wageIncomeAmount: 0, //근로소득금액
 
   houseBalance: 0, // 주택청약예금 연납입금
   setHouseBalance: (newBalance) => set({ houseBalance: newBalance }),

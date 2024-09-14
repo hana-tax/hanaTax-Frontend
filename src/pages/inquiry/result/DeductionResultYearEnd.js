@@ -3,12 +3,14 @@ import "../../../assets/css/InquiryResult.css";
 import { ReactComponent as ArrowUp } from "../../../assets/svg/arrow-up.svg";
 import { ReactComponent as ArrowDown } from "../../../assets/svg/arrow-down.svg";
 import { useNavigate } from "react-router-dom";
+import useTaxStore from "../../../store/taxStore";
 
 const DeductionResultYearEnd = () => {
   const navigate = useNavigate();
-  const [total] = useState("40,000,000");
+  const totalIncome = useTaxStore((state) => state.totalIncome);
+  const wageIncomeAmount = useTaxStore((state) => state.wageIncomeAmount);
   const [detailItems] = useState([
-    { label: "근로소득 공제", amount: "11,250,000" },
+    { label: "근로소득 공제", amount: wageIncomeAmount.toLocaleString() },
     { label: "종합소득 공제", amount: "414,532.5" },
   ]);
   const [isOpen, setIsOpen] = useState(true);
@@ -31,7 +33,7 @@ const DeductionResultYearEnd = () => {
         <h1>연말정산 결과확인</h1>
         <div className="refund-detail-item">
           <span>나의 총급여</span>
-          <span>{total}원</span>
+          <span>{Number(totalIncome).toLocaleString()}원</span>
         </div>
         <div onClick={toggleDetails} className="refund-detail-item">
           나의 공제내역{" "}

@@ -36,6 +36,7 @@ import Modal from "react-modal";
 import axios from "axios";
 import tokenStore from "../../store/tokenStore";
 import useTaxStore from "../../store/taxStore";
+import useCardStore from "../../store/cardStore";
 import useStore from "../../store/useStore";
 
 Modal.setAppElement("#root");
@@ -45,6 +46,10 @@ function MyData3() {
   const { token, setToken, clearToken } = tokenStore();
   const setHouseBalance = useTaxStore((state) => state.setHouseBalance);
   const setHouseLoanBalance = useTaxStore((state) => state.setHouseLoanBalance);
+  const addCreditCard = useCardStore((state) => state.addCreditCard);
+  const addDebitCard = useCardStore((state) => state.addDebitCard);
+  const addDirectCard = useCardStore((state) => state.addDirectCard);
+  const addPrePaidCard = useCardStore((state) => state.addPrePaidCard);
   const user = useStore((state) => state.user);
   const [selectedCards, setSelectedCards] = useState({
     카드: [],
@@ -277,6 +282,20 @@ function MyData3() {
           setHouseLoanBalance(account.interest);
 
           console.log("저장된 balance: ", account.interest);
+        }
+
+        if (account.cardType === 26) {
+          // 신용카드일 경우 추가
+          addCreditCard(account);
+        } else if (account.cardType === 27) {
+          // 체크카드일 경우 추가
+          addDebitCard(account);
+        } else if (account.cardType === 28) {
+          //직불카드
+          addDirectCard(account);
+        } else if (account.cardType === 29) {
+          //선불카드
+          addPrePaidCard(account);
         }
       });
 

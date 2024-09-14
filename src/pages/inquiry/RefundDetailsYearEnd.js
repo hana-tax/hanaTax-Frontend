@@ -9,7 +9,7 @@ const RefundDetailsYearEnd = () => {
   const taxableIncome = useTaxStore((state) => state.taxableIncome);
   const totalIncome = useTaxStore((state) => state.totalIncome);
   const taxAmount = useTaxStore((state) => state.taxAmount);
-  const wageIncomeDeduction = useTaxStore((state) => state.wageIncomeDeduction);
+  const wageIncomeAmount = useTaxStore((state) => state.wageIncomeAmount);
   const totalTaxDeduction = useTaxStore((state) => state.totalTaxDeduction);
   const taxPaidValue = useTaxStore((state) => state.taxPaidValue);
 
@@ -18,7 +18,7 @@ const RefundDetailsYearEnd = () => {
   };
 
   const details = [
-    { title: "근로소득금액", amount: wageIncomeDeduction },
+    { title: "근로소득금액", amount: wageIncomeAmount },
     { title: "과세표준", amount: taxableIncome },
     { title: "산출세액", amount: taxAmount },
     { title: "결합세액", amount: totalTaxDeduction },

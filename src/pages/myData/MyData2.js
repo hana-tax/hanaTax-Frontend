@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../assets/css/MyData.css"; // CSS 파일 임포트
 import { ReactComponent as Icon1 } from "../../assets/svg/mydata1.svg";
 import { ReactComponent as Icon2 } from "../../assets/svg/mydata2.svg";
@@ -8,9 +8,37 @@ import { useNavigate } from "react-router-dom";
 
 function MyData2() {
   const navigate = useNavigate();
+  const [allChecked, setAllChecked] = useState(false);
+  const [term2Checked, setTerm2Checked] = useState(false);
+  const [term3Checked, setTerm3Checked] = useState(false);
+  const [term4Checked, setTerm4Checked] = useState(false);
+
+  // 전체 동의 체크박스 변경 시
+  const handleAllCheck = () => {
+    const newCheckedState = !allChecked;
+    setAllChecked(newCheckedState);
+    setTerm2Checked(newCheckedState);
+    setTerm3Checked(newCheckedState);
+    setTerm4Checked(newCheckedState);
+  };
+
+  // 개별 체크박스 변경 시
+  const handleIndividualCheck = (setCheckFunc, currentCheckState) => {
+    setCheckFunc(!currentCheckState);
+
+    // 개별 항목이 모두 체크된 경우 전체 동의도 체크
+    if (!currentCheckState && term2Checked && term3Checked && term4Checked) {
+      setAllChecked(true);
+    } else if (currentCheckState && allChecked) {
+      // 하나라도 해제되면 전체 동의 체크 해제
+      setAllChecked(false);
+    }
+  };
+
   const goTo2 = () => {
     navigate("/myData3");
   };
+
   return (
     <div className="mydata-container">
       <div className="mydata-text">
@@ -73,13 +101,26 @@ function MyData2() {
         <div className="agreement-product-section">
           <div className="agreement-product-header">
             <label>
-              <input type="checkbox" name="term" /> 전체동의
+              <input
+                type="checkbox"
+                name="allCheck"
+                checked={allChecked}
+                onChange={handleAllCheck}
+              />{" "}
+              전체동의
             </label>
           </div>
           <ul className="agreement-product-list">
             <li>
               <label>
-                <input type="checkbox" name="term2" />{" "}
+                <input
+                  type="checkbox"
+                  name="term2"
+                  checked={term2Checked}
+                  onChange={() =>
+                    handleIndividualCheck(setTerm2Checked, term2Checked)
+                  }
+                />{" "}
                 <span style={{ color: "#099A96", fontWeight: "bold" }}>
                   [필수]
                 </span>{" "}
@@ -88,7 +129,14 @@ function MyData2() {
             </li>
             <li>
               <label>
-                <input type="checkbox" name="term3" />{" "}
+                <input
+                  type="checkbox"
+                  name="term3"
+                  checked={term3Checked}
+                  onChange={() =>
+                    handleIndividualCheck(setTerm3Checked, term3Checked)
+                  }
+                />{" "}
                 <span style={{ color: "#099A96", fontWeight: "bold" }}>
                   [필수]
                 </span>{" "}
@@ -97,7 +145,14 @@ function MyData2() {
             </li>
             <li>
               <label>
-                <input type="checkbox" name="term4" />{" "}
+                <input
+                  type="checkbox"
+                  name="term4"
+                  checked={term4Checked}
+                  onChange={() =>
+                    handleIndividualCheck(setTerm4Checked, term4Checked)
+                  }
+                />{" "}
                 <span style={{ color: "#099A96", fontWeight: "bold" }}>
                   [필수]
                 </span>{" "}

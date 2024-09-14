@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../../../assets/css/InquiryResult.css";
 import "react-custom-alert/dist/index.css";
 import { ReactComponent as Char } from "../../../assets/svg/연말정산/sun.svg";
+import { ReactComponent as Cloud } from "../../../assets/svg/cloud.svg";
 import { ReactComponent as Info } from "../../../assets/svg/Info.svg";
 import creditCardIcon from "../../../assets/svg/연말정산/credit-card.svg";
 import userIcon from "../../../assets/svg/연말정산/user.svg";
@@ -36,6 +37,7 @@ const ResultYearEnd = () => {
     const steps = duration / stepTime;
     const taxAmount = Math.abs(estimatedTaxAmount);
     const increment = taxAmount / steps;
+    console.log("estimated", estimatedTaxAmount);
 
     let currentAmount = 0;
     const interval = setInterval(() => {
@@ -61,8 +63,8 @@ const ResultYearEnd = () => {
           <h1>
             {user.name} 님은
             <br />
-            {amount < 0 ? (
-              <span style={{ color: "#18cd8c", fontSize: "30px" }}>
+            {estimatedTaxAmount >= 0 ? (
+              <span style={{ color: "#FD0606", fontSize: "30px" }}>
                 {Math.abs(amount).toLocaleString()}
               </span>
             ) : (
@@ -70,7 +72,7 @@ const ResultYearEnd = () => {
                 {amount.toLocaleString()}
               </span>
             )}
-            {amount < 0 ? (
+            {estimatedTaxAmount >= 0 ? (
               <>
                 원
                 <br />
@@ -90,7 +92,7 @@ const ResultYearEnd = () => {
           </button>
         </div>
         <div className="right">
-          <Char />
+          {estimatedTaxAmount >= 0 ? <Cloud /> : <Char />}
         </div>
       </div>
 

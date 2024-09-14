@@ -4,12 +4,18 @@ import { ReactComponent as UserIcon } from "../../assets/svg/연말정산/piggy-
 import { ReactComponent as ArrowUp } from "../../assets/svg/arrow-up.svg";
 import { ReactComponent as ArrowDown } from "../../assets/svg/arrow-down.svg";
 import { ReactComponent as MoneyIcon } from "../../assets/svg/연말정산/money.svg";
+import { useNavigate } from "react-router-dom";
 
 const IrpDetails = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleDetails = () => {
     setIsOpen(!isOpen);
+  };
+
+  const goToPensionSignUp = () => {
+    navigate("/pension/product");
   };
 
   return (
@@ -40,7 +46,9 @@ const IrpDetails = () => {
               연금저축 계좌를 개설하면 <br />
               15% 세액공제 혜택을 받을 수 있어요!
             </span>
-            <button className="button">계좌 개설하기</button>
+            <button className="button" onClick={goToPensionSignUp}>
+              계좌 개설하기
+            </button>
           </div>
           <div className="irp-limit-body">
             <span>
@@ -56,7 +64,7 @@ const IrpDetails = () => {
               <div className="limit-text" style={{ left: "30%" }}>
                 132
               </div>
-              <div className="unit">1000(만원)</div>
+              <div className="unit">900(만원)</div>
             </div>
           </div>
         </div>

@@ -111,6 +111,7 @@
 
 .income-sum-input-container {
   padding: 7px;
+  margin: 15px 0;
 }
 
 .income-sum-input-box label {
@@ -122,6 +123,7 @@
   flex: 1;
   width: 100px;
   text-align: right;
+  padding: 0px 5px;
 }
 
 .income-sum-input-box span {
