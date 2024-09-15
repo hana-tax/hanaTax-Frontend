@@ -4,15 +4,35 @@ import { ReactComponent as ArrowUp } from "../../../assets/svg/arrow-up.svg";
 import { ReactComponent as ArrowDown } from "../../../assets/svg/arrow-down.svg";
 import { useNavigate } from "react-router-dom";
 import useTaxStore from "../../../store/taxStore";
+import useYearEndStore from "../../../store/yearEndStore";
 
 const DeductionResultYearEnd = () => {
   const navigate = useNavigate();
   const totalIncome = useTaxStore((state) => state.totalIncome);
   const wageIncomeAmount = useTaxStore((state) => state.wageIncomeAmount);
-  const [detailItems] = useState([
-    { label: "근로소득 공제", amount: wageIncomeAmount.toLocaleString() },
-    { label: "종합소득 공제", amount: "414,532.5" },
-  ]);
+  const taxPaidValue = useTaxStore((state) => state.taxPaidValue);
+  const cardDeductionAmount = useYearEndStore(
+    (state) => state.cardDeductionAmount
+  );
+  const traditionalMarketDeduction = useYearEndStore(
+    (state) => state.traditionalMarketDeduction
+  );
+  const busTrafficDeduction = useYearEndStore(
+    (state) => state.busTrafficDeduction
+  );
+  const cultureDeduction = useYearEndStore((state) => state.cultureDeduction);
+  const personDeduction = useYearEndStore((state) => state.personDeduction);
+  const houseDeductionAmount = useYearEndStore(
+    (state) => state.houseDeductionAmount
+  );
+  const monthlyHouseDeductionAmount = useYearEndStore(
+    (state) => state.monthlyHouseDeductionAmount
+  );
+  const businessDeduction = useYearEndStore((state) => state.businessDeduction);
+  const insuranceDeduction = useYearEndStore(
+    (state) => state.insuranceDeduction
+  );
+
   const [isOpen, setIsOpen] = useState(true);
 
   const toggleDetails = () => {
@@ -26,6 +46,19 @@ const DeductionResultYearEnd = () => {
   const ToBack = () => {
     navigate(-1);
   };
+
+  const totalDeductions =
+    Number(cardDeductionAmount) +
+    Number(personDeduction) +
+    Number(traditionalMarketDeduction) +
+    Number(busTrafficDeduction) +
+    Number(cultureDeduction) +
+    Number(houseDeductionAmount);
+
+  const [detailItems] = useState([
+    { label: "근로소득 공제", amount: wageIncomeAmount.toLocaleString() },
+    { label: "종합소득 공제", amount: totalDeductions.toLocaleString() },
+  ]);
 
   return (
     <div className="deduction-result-container">
@@ -55,15 +88,25 @@ const DeductionResultYearEnd = () => {
             <div className="deduction-detail-container">
               <div className="deduction-detail-item">
                 <span>카드 공제</span>
-                <span>1,958,550원</span>
+                <span>{Number(cardDeductionAmount).toLocaleString()}원</span>
               </div>
               <div className="deduction-detail-item">
                 <span>가족 공제</span>
-                <span>0원</span>
+                <span>{Number(personDeduction).toLocaleString()}원</span>
               </div>
               <div className="deduction-detail-item">
-                <span>전통시장, 도서, 문화</span>
-                <span>319,000원</span>
+                <span>전통시장</span>
+                <span>
+                  {Number(traditionalMarketDeduction).toLocaleString()}원
+                </span>
+              </div>
+              <div className="deduction-detail-item">
+                <span>대중교통</span>
+                <span>{Number(busTrafficDeduction).toLocaleString()}원</span>
+              </div>
+              <div className="deduction-detail-item">
+                <span>도서･공연･영화･신문･박물관･미술관</span>
+                <span>{Number(cultureDeduction).toLocaleString()}원</span>
               </div>
               <div className="deduction-detail-item">
                 <span>4대 보험</span>
@@ -71,7 +114,7 @@ const DeductionResultYearEnd = () => {
               </div>
               <div className="deduction-detail-item">
                 <span>주택 공제</span>
-                <span>0원</span>
+                <span>{Number(houseDeductionAmount).toLocaleString()}원</span>
               </div>
               <div className="deduction-detail-item">
                 <span>기타 공제</span>
@@ -89,11 +132,13 @@ const DeductionResultYearEnd = () => {
             <div className="deduction-detail-container">
               <div className="deduction-detail-item">
                 <span>중소기업 감면</span>
-                <span>0원</span>
+                <span>{Number(businessDeduction).toLocaleString()}원</span>
               </div>
               <div className="deduction-detail-item">
                 <span>월세 공제</span>
-                <span>0원</span>
+                <span>
+                  {Number(monthlyHouseDeductionAmount).toLocaleString()}원
+                </span>
               </div>
               <div className="deduction-detail-item">
                 <span>연금 공제</span>
@@ -101,7 +146,7 @@ const DeductionResultYearEnd = () => {
               </div>
               <div className="deduction-detail-item">
                 <span>보험료</span>
-                <span>227,000원</span>
+                <span>{Number(insuranceDeduction).toLocaleString()}원</span>
               </div>
               <div className="deduction-detail-item">
                 <span>의료비</span>
@@ -118,7 +163,7 @@ const DeductionResultYearEnd = () => {
             </div>
             <div className="refund-detail-item">
               <span>먼저 낸 세금</span>
-              <span>6,000,000원</span>
+              <span>{Number(taxPaidValue).toLocaleString()}원</span>
             </div>
           </div>
         )}

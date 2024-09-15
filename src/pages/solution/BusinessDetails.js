@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../assets/css/Solution.css";
 import { ReactComponent as UserIcon } from "../../assets/svg/연말정산/briefcase.svg";
 import { ReactComponent as ArrowUp } from "../../assets/svg/arrow-up.svg";
 import { ReactComponent as ArrowDown } from "../../assets/svg/arrow-down.svg";
 import useTaxStore from "../../store/taxStore";
+import useYearEndStore from "../../store/yearEndStore";
 
 const BusinessDetails = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false); // 체크박스 상태
   const taxAmount = useTaxStore((state) => state.taxAmount);
+  const setBusinessDeduction = useYearEndStore(
+    (state) => state.setBusinessDeduction
+  );
 
   const toggleDetails = () => {
     setIsOpen(!isOpen);
@@ -21,6 +25,10 @@ const BusinessDetails = () => {
 
   // 중소기업 소득세 감면 계산 (min(taxAmount * 90%, 200만원))
   const reducedTax = isChecked ? Math.min(taxAmount * 0.9, 2000000) : null;
+
+  useEffect(() => {
+    setBusinessDeduction(reducedTax || 0);
+  }, [reducedTax, setBusinessDeduction]);
 
   return (
     <div className="card-container">

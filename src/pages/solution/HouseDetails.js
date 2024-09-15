@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import "../../assets/css/Solution.css";
 import { ReactComponent as HouseIcon } from "../../assets/svg/연말정산/house.svg";
@@ -6,6 +6,7 @@ import { ReactComponent as ArrowUp } from "../../assets/svg/arrow-up.svg";
 import { ReactComponent as ArrowDown } from "../../assets/svg/arrow-down.svg";
 import { ReactComponent as Info } from "../../assets/svg/Info.svg";
 import useTaxStore from "../../store/taxStore";
+import useYearEndStore from "../../store/yearEndStore";
 import { ToastContainer, toast } from "react-custom-alert";
 
 const HouseDetails = () => {
@@ -20,6 +21,12 @@ const HouseDetails = () => {
   const deductionLimit = 4000000;
   const deductionRate = 0.4;
   const [showTooltip, setShowTooltip] = useState(false);
+  const setHouseDeductionAmount = useYearEndStore(
+    (state) => state.setHouseDeductionAmount
+  );
+  const setMonthlyHouseDeductionAmount = useYearEndStore(
+    (state) => state.setMonthlyHouseDeductionAmount
+  );
 
   // 무주택 세대 여부에 따라 공제금 계산
   const housingSavingsDeduction = isNoHouseChecked
@@ -67,6 +74,16 @@ const HouseDetails = () => {
     parseFloat(yearlyRent || 0) * rentDeductionRate,
     7500000
   );
+
+  useEffect(() => {
+    setHouseDeductionAmount(totalDeduction);
+    setMonthlyHouseDeductionAmount(rentDeduction);
+  }, [
+    totalDeduction,
+    rentDeduction,
+    setHouseDeductionAmount,
+    setMonthlyHouseDeductionAmount,
+  ]);
 
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({

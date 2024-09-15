@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../assets/css/Solution.css";
 import { ReactComponent as CardIcon } from "../../assets/svg/연말정산/credit-card.svg";
 import { ReactComponent as ArrowUp } from "../../assets/svg/arrow-up.svg";
 import { ReactComponent as ArrowDown } from "../../assets/svg/arrow-down.svg";
 import useCardStore from "../../store/cardStore";
 import useTaxStore from "../../store/taxStore";
+import useYearEndStore from "../../store/yearEndStore";
 
 const CardDetails = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,6 +15,20 @@ const CardDetails = () => {
   const directCards = useCardStore((state) => state.directCards); // 직불카드 목록 가져오기
   const prepaidCards = useCardStore((state) => state.prepaidCards); // 선불카드 목록 가져오기
   const totalIncome = useTaxStore((state) => state.totalIncome); // 총 급여
+
+  const setCardDeductionAmount = useYearEndStore(
+    (state) => state.setCardDeductionAmount
+  );
+
+  const setTraditionalMarketDeduction = useYearEndStore(
+    (state) => state.setTraditionalMarketDeduction
+  );
+  const setBusTrafficDeduction = useYearEndStore(
+    (state) => state.setBusTrafficDeduction
+  );
+  const setCultureDeduction = useYearEndStore(
+    (state) => state.setCultureDeduction
+  );
 
   // 공제 계산 시 제외할 카테고리 (공제 계산 시 제외, 사용액에는 포함)
   const excludedCategoriesForDeduction = [50, 51, 59, 60, 61, 62];
@@ -138,16 +153,36 @@ const CardDetails = () => {
       : 0;
 
   // 특수 공제 항목 총합 계산 (최대 한도 적용)
-  const totalSpecialDeduction = Math.min(
-    traditionalMarketDeduction + busTrafficDeduction + cultureDeduction,
-    totalIncome > 70000000 ? 2000000 : 3000000 // 특수 항목 공제 한도
+  const totalSpecialDeduction = Math.floor(
+    Math.min(
+      traditionalMarketDeduction + busTrafficDeduction + cultureDeduction,
+      totalIncome > 70000000 ? 2000000 : 3000000 // 특수 항목 공제 한도
+    )
   );
 
   // 전체 공제액 계산 (최대 한도 적용)
-  const totalDeduction = Math.min(
-    creditDeductionAmount + debitDeductionAmount + totalSpecialDeduction,
-    totalIncome > 70000000 ? 2500000 : 3000000 // 총 공제 한도
+  const totalDeduction = Math.floor(
+    Math.min(
+      creditDeductionAmount + debitDeductionAmount + totalSpecialDeduction,
+      totalIncome > 70000000 ? 2500000 : 3000000 // 총 공제 한도
+    )
   );
+
+  useEffect(() => {
+    setCardDeductionAmount(Math.floor(totalDeduction));
+    setTraditionalMarketDeduction(traditionalMarketDeduction);
+    setBusTrafficDeduction(busTrafficDeduction);
+    setCultureDeduction(cultureDeduction);
+  }, [
+    totalDeduction,
+    traditionalMarketDeduction,
+    busTrafficDeduction,
+    cultureDeduction,
+    setCardDeductionAmount,
+    setTraditionalMarketDeduction,
+    setBusTrafficDeduction,
+    setCultureDeduction,
+  ]);
 
   const amountToSpendForDeduction =
     creditCardSpendThreshold > totalFilteredCreditCardAmount

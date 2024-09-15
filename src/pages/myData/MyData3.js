@@ -38,6 +38,7 @@ import tokenStore from "../../store/tokenStore";
 import useTaxStore from "../../store/taxStore";
 import useCardStore from "../../store/cardStore";
 import useStore from "../../store/useStore";
+import useYearEndStore from "../../store/yearEndStore";
 
 Modal.setAppElement("#root");
 
@@ -46,11 +47,17 @@ function MyData3() {
   const { token, setToken, clearToken } = tokenStore();
   const setHouseBalance = useTaxStore((state) => state.setHouseBalance);
   const setHouseLoanBalance = useTaxStore((state) => state.setHouseLoanBalance);
+  const addPensionSavingBalance = useTaxStore(
+    (state) => state.addPensionSavingBalance
+  );
   const addCreditCard = useCardStore((state) => state.addCreditCard);
   const addDebitCard = useCardStore((state) => state.addDebitCard);
   const addDirectCard = useCardStore((state) => state.addDirectCard);
   const addPrePaidCard = useCardStore((state) => state.addPrePaidCard);
   const user = useStore((state) => state.user);
+  const setInsuranceDeduction = useYearEndStore(
+    (state) => state.setInsuranceDeduction
+  );
   const [selectedCards, setSelectedCards] = useState({
     카드: [],
     은행: [],
@@ -269,6 +276,7 @@ function MyData3() {
 
       const accounts = response.data; // 서버에서 반환한 계좌 정보들
       console.log(accounts); // accounts 전체를 출력하여 배열 구조 확인
+      let insuranceAmount = 0;
 
       accounts.forEach((account) => {
         console.log(
@@ -282,6 +290,15 @@ function MyData3() {
           setHouseLoanBalance(account.interest);
 
           console.log("저장된 balance: ", account.interest);
+        }
+
+        if (account.accountType === 5) {
+          addPensionSavingBalance(account.balance); //연금저축계좌 연 납입금
+        }
+
+        if ([30, 31, 32, 33].includes(account.insuranceType)) {
+          insuranceAmount += account.insuranceAmount; // 보험 총합 계산
+          console.log(insuranceAmount);
         }
 
         if (account.cardType === 26) {
@@ -299,6 +316,9 @@ function MyData3() {
         }
       });
 
+      const insuranceDeduction = Math.min(insuranceAmount, 1000000) * 0.12;
+      setInsuranceDeduction(insuranceDeduction);
+      console.log(insuranceDeduction);
       console.log(user.id);
       console.log(assetCodes);
       console.log("연결 요청 성공:", response.data);

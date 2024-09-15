@@ -212,13 +212,6 @@ function Header() {
                       <li className="dropdown-item">연금펀드 입금</li>
                     </ul>
                   </div>
-                  <div className="dropdown-column">
-                    <span className="menu-title">절세 상식과 꿀팁</span>
-                    <ul className="dropdown-submenu">
-                      <li className="dropdown-item">ISA 계좌의 모든 것</li>
-                      <li className="dropdown-item">연금저축의 모든 것</li>
-                    </ul>
-                  </div>
                 </div>
               </div>
             </div>

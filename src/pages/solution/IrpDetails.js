@@ -5,9 +5,14 @@ import { ReactComponent as ArrowUp } from "../../assets/svg/arrow-up.svg";
 import { ReactComponent as ArrowDown } from "../../assets/svg/arrow-down.svg";
 import { ReactComponent as MoneyIcon } from "../../assets/svg/연말정산/money.svg";
 import { useNavigate } from "react-router-dom";
+import useTaxStore from "../../store/taxStore";
 
 const IrpDetails = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const totalIncome = useTaxStore((state) => state.totalIncome); // 총 급여
+  const pensionSavingBalance = useTaxStore(
+    (state) => state.pensionSavingBalance
+  );
   const navigate = useNavigate();
 
   const toggleDetails = () => {
@@ -17,6 +22,13 @@ const IrpDetails = () => {
   const goToPensionSignUp = () => {
     navigate("/pension/product");
   };
+
+  const totalLimit = 9000000;
+  const remainingLimit = totalLimit - pensionSavingBalance;
+
+  const deductionRate = totalIncome <= 55000000 ? 0.15 : 0.12;
+
+  const deductionAmount = Math.floor(pensionSavingBalance * deductionRate);
 
   return (
     <div className="card-container">
@@ -44,7 +56,7 @@ const IrpDetails = () => {
             <MoneyIcon />
             <span>
               연금저축 계좌를 개설하면 <br />
-              15% 세액공제 혜택을 받을 수 있어요!
+              {deductionRate * 100}% 세액공제 혜택을 받을 수 있어요!
             </span>
             <button className="button" onClick={goToPensionSignUp}>
               계좌 개설하기
@@ -53,16 +65,31 @@ const IrpDetails = () => {
           <div className="irp-limit-body">
             <span>
               IRP 세액공제 한도가 <br />
-              7,680,000원 남았어요! <br />
-              198,000원 공제받을 수 있어요.
+              {remainingLimit.toLocaleString()}원 남았어요! <br />
+              {deductionAmount.toLocaleString()}원 공제받을 수 있어요.
             </span>
             <div className="limit-all-bar">
-              <div className="limit-bar" style={{ width: "30%" }}></div>
-              <div className="limit-circle" style={{ left: "28%" }}></div>
+              <div
+                className="limit-bar"
+                style={{
+                  width: `${(pensionSavingBalance / totalLimit) * 100}%`,
+                }}
+              ></div>
+              <div
+                className="limit-circle"
+                style={{
+                  left: `${(pensionSavingBalance / totalLimit) * 100 - 2}%`,
+                }}
+              ></div>
             </div>
             <div className="limit-text-unit">
-              <div className="limit-text" style={{ left: "30%" }}>
-                132
+              <div
+                className="limit-text"
+                style={{
+                  left: `${(pensionSavingBalance / totalLimit) * 100}%`,
+                }}
+              >
+                {Math.floor(pensionSavingBalance / 10000).toLocaleString()}
               </div>
               <div className="unit">900(만원)</div>
             </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../assets/css/Solution.css"; // 스타일 파일 임포트
 import { ReactComponent as UserIcon } from "../../assets/svg/연말정산/user.svg"; // 사용자 아이콘
 import { ReactComponent as ArrowUp } from "../../assets/svg/arrow-up.svg";
@@ -7,10 +7,14 @@ import { ReactComponent as Info } from "../../assets/svg/Info.svg";
 import { ReactComponent as Warning } from "../../assets/svg/warning.svg";
 import Modal from "react-modal";
 import { ToastContainer, toast } from "react-custom-alert";
+import useYearEndStore from "../../store/yearEndStore";
 
 const PersonDetails = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const setPersonDeductionAmount = useYearEndStore(
+    (state) => state.setPersonDeductionAmount
+  );
   const [options, setOptions] = useState([
     { name: "배우자", count: 0, isChecked: false },
     { name: "8세 미만의 자녀", count: 0 },
@@ -151,6 +155,11 @@ const PersonDetails = () => {
 
     return total;
   };
+
+  useEffect(() => {
+    const totalDeduction = calculateTotalDeduction();
+    setPersonDeductionAmount(totalDeduction);
+  }, [options, addDeduction, setPersonDeductionAmount]);
 
   return (
     <div className="card-container">

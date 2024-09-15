@@ -17,6 +17,10 @@ const useTaxStore = create((set) => ({
   houseLoanBalance: 0, // 전세자금대출 연납입금
   setHouseLoanBalance: (newBalance) => set({ houseLoanBalance: newBalance }),
 
+  pensionSavingBalance: 0, //연금저축계좌 연납입금
+  addPensionSavingBalance: (newBalance) =>
+    set({ pensionSavingBalance: newBalance }),
+
   setTaxData: (data) => set(() => ({ ...data })),
 }));
 

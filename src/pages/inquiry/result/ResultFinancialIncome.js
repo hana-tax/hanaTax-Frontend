@@ -7,33 +7,42 @@ import { ReactComponent as Info } from "../../../assets/svg/Info.svg";
 import deduction1 from "../../../assets/svg/금융소득/deductionMoney.svg";
 import deduction2 from "../../../assets/svg/금융소득/deduction2.svg";
 import deduction3 from "../../../assets/svg/금융소득/deduction3.svg";
+import useStore from "../../../store/useStore";
+import axios from "axios";
 
 const ResultFinancialIncome = () => {
-  const [amount, setAmount] = useState(0);
   const navigate = useNavigate();
-  const targetAmount = 780000;
+  const user = useStore((state) => state.user);
+  const [isOverTax, setIsOverTax] = useState("");
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    } else {
+      const fetchTaxStatus = async () => {
+        try {
+          const response = await axios.post(
+            "http://localhost:8080/api/income/isOverTax",
+            {
+              id: user.id, // 요청값에 사용자 ID 추가
+            }
+          );
+          const { isOverTax } = response.data;
+
+          console.log(isOverTax);
+          setIsOverTax(isOverTax === "Y" ? "종합과세" : "분리과세");
+        } catch (error) {
+          console.error("API 호출 오류:", error);
+        }
+      };
+
+      fetchTaxStatus();
+    }
+  }, [user, navigate]);
+
   const ToSolutionYearEnd = () => {
     navigate("/financialIncome/solution");
   };
-
-  useEffect(() => {
-    const duration = 2000;
-    const stepTime = 50;
-    const steps = duration / stepTime;
-    const increment = targetAmount / steps;
-
-    let currentAmount = 0;
-    const interval = setInterval(() => {
-      currentAmount += increment;
-      if (currentAmount >= targetAmount) {
-        clearInterval(interval);
-        currentAmount = targetAmount;
-      }
-      setAmount(Math.floor(currentAmount));
-    }, stepTime);
-
-    return () => clearInterval(interval);
-  }, [targetAmount]);
 
   const ToRefundDetails = () => {
     navigate("/financialIncome/refundDetails");
@@ -44,8 +53,8 @@ const ResultFinancialIncome = () => {
       <div className="box">
         <div className="left">
           <h1>
-            김하나 님은<br></br>
-            금융소득 <span>분리과세</span> <br /> 대상자입니다.
+            {user.name} 님은<br></br>
+            금융소득 <span>{isOverTax}</span> <br /> 대상자입니다.
           </h1>
 
           <button className="description-button" onClick={ToRefundDetails}>
