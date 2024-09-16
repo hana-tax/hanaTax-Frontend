@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   BarChart,
   Bar,
@@ -17,23 +18,21 @@ import {
 import "../../assets/css/Report.css";
 import { ReactComponent as ArrowRight } from "../../assets/svg/arrow-right.svg";
 
-const data = [
-  { name: "종합과세배당소득", value: 32, fill: "#0BB6EC" },
-  { name: "종합과세이자소득", value: 68, fill: "#0FC9BA" },
-  { name: "Gross-up배당소득", value: 12, fill: "#D9D9D9" },
+const initialMonthData = [
+  { name: "1월", income: 0, invest: 0 },
+  { name: "2월", income: 0, invest: 0 },
+  { name: "3월", income: 0, invest: 0 },
+  { name: "4월", income: 0, invest: 0 },
+  { name: "5월", income: 0, invest: 0 },
+  { name: "6월", income: 0, invest: 0 },
+  { name: "7월", income: 0, invest: 0 },
+  { name: "8월", income: 0, invest: 0 },
+  { name: "9월", income: 0, invest: 0 },
+  { name: "10월", income: 0, invest: 0 },
+  { name: "11월", income: 0, invest: 0 },
+  { name: "12월", income: 0, invest: 0 },
 ];
 
-const monthData = [
-  { name: "1월", income: 50000000, invest: 45000000 },
-  { name: "2월", income: 70000000, invest: 67000000 },
-  { name: "3월", income: 90000000, invest: 86000000 },
-  { name: "4월", income: 85000000, invest: 80000000 },
-  { name: "5월", income: 88000000, invest: 85000000 },
-  { name: "6월", income: 95000000, invest: 93000000 },
-  { name: "7월", income: 87000000, invest: 85000000 },
-  { name: "8월", income: 91000000, invest: 88000000 },
-  { name: "9월", income: 100000000, invest: 95000000 },
-];
 const RADIAN = Math.PI / 180;
 const commonFontStyle = {
   fontFamily: "Pretendard-Regular",
@@ -128,16 +127,96 @@ const CustomBarShape = (props) => {
 };
 
 const MyReport = () => {
+  const [selectedYear, setSelectedYear] = useState(2024);
+  const [totalInterestIncome, setTotalInterestIncome] = useState(0);
+  const [totalDividendIncome, setTotalDividendIncome] = useState(0);
+  const [monthlyData, setMonthlyData] = useState(initialMonthData);
+  const [differenceFromLastMonth, setDifferenceFromLastMonth] = useState(0);
+
+  const financialIncomeIds = {
+    2024: 7,
+    2023: 6,
+    2022: 5,
+    2021: 4,
+    2020: 3,
+    2019: 2,
+    2018: 1,
+  };
+  const fetchIncomeData = async () => {
+    const financialIncomeId = financialIncomeIds[selectedYear];
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/income/incomeList",
+        {
+          financialIncomeId,
+        }
+      );
+      let interestIncome = 0;
+      let dividendIncome = 0;
+      let lastMonthTotal = 0;
+
+      // 월별 데이터 초기화
+      let updatedMonthlyData = [...initialMonthData];
+
+      response.data.forEach((item) => {
+        const incomeDate = new Date(item.incomeDate);
+        const monthIndex = incomeDate.getMonth(); // 0-11
+
+        if (item.incomeType === 34) {
+          interestIncome += item.incomeAccount; // 이자소득 합산
+          updatedMonthlyData[monthIndex].income += item.incomeAccount; // 월별 이자소득 추가
+        } else if (item.incomeType === 35 || item.incomeType === 36) {
+          dividendIncome += item.incomeAccount; // 배당소득 합산
+          updatedMonthlyData[monthIndex].invest += item.incomeAccount; // 월별 배당소득 추가
+        }
+      });
+
+      if (selectedYear === 2024) {
+        updatedMonthlyData = updatedMonthlyData.slice(0, 9);
+      }
+
+      const currentMonthTotal =
+        updatedMonthlyData[updatedMonthlyData.length - 1].income +
+        updatedMonthlyData[updatedMonthlyData.length - 1].invest; // 마지막 달의 합계
+      lastMonthTotal =
+        updatedMonthlyData[updatedMonthlyData.length - 2]?.income +
+          updatedMonthlyData[updatedMonthlyData.length - 2]?.invest || 0; // 마지막 전 달의 합계
+
+      const difference = currentMonthTotal - lastMonthTotal;
+      setDifferenceFromLastMonth(difference);
+
+      setTotalDividendIncome(dividendIncome);
+      setTotalInterestIncome(interestIncome);
+      setMonthlyData(updatedMonthlyData); // 월별 데이터 상태 업데이트
+      console.log(response.data);
+      console.log(updatedMonthlyData);
+    } catch (error) {
+      console.error("Error fetching income data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchIncomeData(); // 연도 선택이 변경될 때마다 데이터 요청
+  }, [selectedYear]);
+
+  const data = [
+    { name: "종합과세배당소득", value: totalDividendIncome, fill: "#0BB6EC" },
+    { name: "종합과세이자소득", value: totalInterestIncome, fill: "#0FC9BA" },
+    { name: "Gross-up배당소득", value: 0, fill: "#D9D9D9" },
+  ];
+
   return (
     <div className="my-report-container">
       <div className="my-fi-box">
         <span>나의 금융소득</span>
         <br />
-        233,000원
+        {(totalInterestIncome + totalDividendIncome).toLocaleString()}원
       </div>
       <p>요약</p>
       <div className="select-year">
         <select
+          value={selectedYear}
+          onChange={(e) => setSelectedYear(e.target.value)}
           style={{
             padding: "5px",
             border: "1px solid #E3E3E3",
@@ -190,29 +269,38 @@ const MyReport = () => {
       <div className="income-total-box">
         <div className="income-row">
           <span className="income-label">이자소득</span>
-          <span className="income-value">158,440원</span>
+          <span className="income-value">
+            {totalInterestIncome.toLocaleString()}원
+          </span>
           <ArrowRight className="arrow-right-icon" />
         </div>
         <div className="income-row">
           <span className="income-label">배당소득</span>
-          <span className="income-value">74,560원</span>
+          <span className="income-value">
+            {totalDividendIncome.toLocaleString()}원
+          </span>
           <ArrowRight className="arrow-right-icon" />
         </div>
         <hr />
         <div className="total-row" style={{ marginTop: "30px" }}>
           <span className="total-label">합계</span>
-          <span className="total-value">74,560원</span>
+          <span className="total-value">
+            {(totalDividendIncome + totalInterestIncome).toLocaleString()}원
+          </span>
         </div>
       </div>
       <div className="fi-sum-box">
         <div className="fi-sum-text">
           <p>총 금융소득 추이</p>
-          <span className="trend-change">지난달 대비 +3,000원</span>
+          <span className="trend-change">
+            지난달 대비 {differenceFromLastMonth >= 0 ? "+" : ""}
+            {differenceFromLastMonth.toLocaleString()}원
+          </span>
         </div>
 
         <ResponsiveContainer width="100%" height={400}>
           <BarChart
-            data={monthData}
+            data={monthlyData}
             margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
@@ -222,7 +310,6 @@ const MyReport = () => {
               tick={{ style: xFontStyle }}
             />
             <Tooltip content={<CustomTooltip />} />
-
             <Legend wrapperStyle={commonFontStyle} />
             <Bar dataKey="income" fill="#13BD7E" stackId="a" />
             <Bar

@@ -8,11 +8,15 @@ import deduction1 from "../../../assets/svg/금융소득/deductionMoney.svg";
 import deduction2 from "../../../assets/svg/금융소득/deduction2.svg";
 import deduction3 from "../../../assets/svg/금융소득/deduction3.svg";
 import useStore from "../../../store/useStore";
+import useFinancialIncomeStore from "../../../store/financialIncomeStore";
 import axios from "axios";
 
 const ResultFinancialIncome = () => {
   const navigate = useNavigate();
   const user = useStore((state) => state.user);
+  const setFinancialIncomeId = useFinancialIncomeStore(
+    (state) => state.setFinancialIncomeId
+  );
   const [isOverTax, setIsOverTax] = useState("");
 
   useEffect(() => {
@@ -24,13 +28,15 @@ const ResultFinancialIncome = () => {
           const response = await axios.post(
             "http://localhost:8080/api/income/isOverTax",
             {
-              id: user.id, // 요청값에 사용자 ID 추가
+              id: user.id,
             }
           );
-          const { isOverTax } = response.data;
+          const { isOverTax, financialIncomeId } = response.data;
 
           console.log(isOverTax);
           setIsOverTax(isOverTax === "Y" ? "종합과세" : "분리과세");
+
+          setFinancialIncomeId(financialIncomeId);
         } catch (error) {
           console.error("API 호출 오류:", error);
         }
@@ -38,7 +44,7 @@ const ResultFinancialIncome = () => {
 
       fetchTaxStatus();
     }
-  }, [user, navigate]);
+  }, [user, navigate, setFinancialIncomeId]);
 
   const ToSolutionYearEnd = () => {
     navigate("/financialIncome/solution");
