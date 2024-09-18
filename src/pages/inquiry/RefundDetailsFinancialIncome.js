@@ -7,6 +7,7 @@ import { ReactComponent as Warning } from "../../assets/svg/warning.svg";
 import useFinancialIncomeStore from "../../store/financialIncomeStore";
 import Modal from "react-modal";
 import axios from "axios";
+import useStore from "../../store/useStore";
 
 Modal.setAppElement("#root");
 
@@ -47,6 +48,7 @@ const RefundDetailsYearEnd = () => {
   const financialIncomeId = useFinancialIncomeStore(
     (state) => state.financialIncomeId
   );
+  const user = useStore((state) => state.user);
   const [incomeDetails, setIncomeDetails] = useState(null);
   const [isApplicationModalOpen, setIsApplicationModalOpen] = useState(false);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
@@ -86,9 +88,15 @@ const RefundDetailsYearEnd = () => {
     setIsApplicationModalOpen(false);
   };
 
-  const handleApplicationSubmit = () => {
-    setIsApplicationModalOpen(false);
-    setIsConfirmationModalOpen(true);
+  const handleApplicationSubmit = async () => {
+    try {
+      await axios.post(`http://localhost:8080/api/user/${user.id}/alert`);
+      setIsApplicationModalOpen(false);
+      setIsConfirmationModalOpen(true);
+    } catch (error) {
+      console.error("알림 신청 오류:", error);
+      alert("알림 신청에 실패했습니다. 다시 시도해 주세요.");
+    }
   };
 
   const closeConfirmationModal = () => {

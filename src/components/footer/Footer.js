@@ -36,7 +36,7 @@ const Footer = () => {
             </h2>
             <p className="lg">
               고객센터 2002-1110
-              <span className="xs-block">평일 09~18시 (은행 휴무일 제외)</span>
+              <span className="xs-block">평일 09~18시 (휴무일 제외)</span>
             </p>
             <p>
               <span className="xs-block">사업자번호 : 616-81-00615</span>
