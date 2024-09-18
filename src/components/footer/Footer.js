@@ -1,5 +1,6 @@
 import React from "react";
 import "../../assets/css/Footer.css"; // 스타일을 위한 CSS 파일을 임포트합니다.
+import { ReactComponent as Logo } from "../../assets/svg/하나은행로고_흰.svg";
 
 const Footer = () => {
   const goTopBtn = () => {
@@ -31,7 +32,7 @@ const Footer = () => {
         <div>
           <div className="copyright">
             <h2 className="logo">
-              <img src="/hmpg/images/res/layout/foot/logo.png" alt="하나택스" />
+              <Logo style={{ width: "auto", height: "55px" }} />
             </h2>
             <p className="lg">
               고객센터 2002-1110
