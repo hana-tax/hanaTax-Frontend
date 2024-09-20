@@ -40,6 +40,7 @@ import NaverRedirectPage from "./pages/Login/naver/NaverRedirectPage";
 import MyData1 from "./pages/myData/MyData1";
 import MyData2 from "./pages/myData/MyData2";
 import MyData3 from "./pages/myData/MyData3";
+import MyPage from "./pages/myPage/myPage";
 import InvestAnalysis from "./pages/product/투자성향분석/InvestAnalysis";
 
 function App() {
@@ -110,6 +111,7 @@ function App() {
           <Route path="/myData1" element={<MyData1 />} />
           <Route path="/myData2" element={<MyData2 />} />
           <Route path="/myData3" element={<MyData3 />} />
+          <Route path="/myPage" element={<MyPage />} />
         </Routes>
         <Footer />
       </div>

@@ -7,6 +7,7 @@ import { ReactComponent as Icon4 } from "../../assets/svg/mydata4.svg";
 import { useNavigate } from "react-router-dom";
 import Loading from "./Loading"; // Loading 컴포넌트 임포트
 import axios from "axios";
+import useStore from "../../store/useStore";
 import tokenStore from "../../store/tokenStore";
 
 function MyData1() {
@@ -14,6 +15,7 @@ function MyData1() {
   const [residentNo1, setResidentNo1] = useState("");
   const [residentNo2, setResidentNo2] = useState("");
   const [authCode, setAuthCode] = useState("");
+  const user = useStore((state) => state.user);
   const { token, setToken, clearToken } = tokenStore();
 
   const navigate = useNavigate();
@@ -51,18 +53,18 @@ function MyData1() {
       console.log(response.data);
       setAuthCode(response.data); // authCode 상태 업데이트
       console.log(response.data);
-      await fetchTokens(response.data); // 토큰 요청 함수 호출
+      await fetchTokens(user.id, response.data); // 토큰 요청 함수 호출
     } catch (error) {
       console.error("API 요청 오류:", error);
     }
   };
 
-  const fetchTokens = async (authCode) => {
+  const fetchTokens = async (userId, authCode) => {
     try {
       const response = await axios.post(
         `http://localhost:8080/api/mydata/auth/token`,
         null,
-        { params: { authCode } }
+        { params: { userId, authCode } }
       );
 
       console.log(authCode);

@@ -52,6 +52,8 @@ const RefundDetailsYearEnd = () => {
   const [incomeDetails, setIncomeDetails] = useState(null);
   const [isApplicationModalOpen, setIsApplicationModalOpen] = useState(false);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const [emailChecked, setEmailChecked] = useState(false); // 이메일 체크 상태
+  const [smsChecked, setSmsChecked] = useState(false); // 문자 체크 상태
 
   useEffect(() => {
     // API 호출
@@ -89,8 +91,14 @@ const RefundDetailsYearEnd = () => {
   };
 
   const handleApplicationSubmit = async () => {
+    const alertMethods = [];
+    if (emailChecked) alertMethods.push(1); // 이메일 체크 시 추가
+    if (smsChecked) alertMethods.push(2); // 문자 체크 시 추가
+
     try {
-      await axios.post(`http://localhost:8080/api/user/${user.id}/alert`);
+      await axios.post(`http://localhost:8080/api/user/${user.id}/alert`, {
+        alertMethods: alertMethods,
+      });
       setIsApplicationModalOpen(false);
       setIsConfirmationModalOpen(true);
     } catch (error) {
@@ -299,6 +307,8 @@ const RefundDetailsYearEnd = () => {
                   type="checkbox"
                   className="custom-checkbox"
                   style={{ marginRight: "10px" }}
+                  checked={emailChecked}
+                  onChange={() => setEmailChecked(!emailChecked)}
                 ></input>
                 이메일
               </div>
@@ -307,6 +317,8 @@ const RefundDetailsYearEnd = () => {
                   type="checkbox"
                   className="custom-checkbox"
                   style={{ marginRight: "10px" }}
+                  checked={smsChecked}
+                  onChange={() => setSmsChecked(!smsChecked)}
                 ></input>
                 문자(SMS)
               </div>

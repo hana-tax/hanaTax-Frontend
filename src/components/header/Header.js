@@ -243,7 +243,14 @@ function Header() {
                   >
                     {user.name}님 안녕하세요
                   </span>
-                  <div className="my-profile-update-box">내 정보 수정</div>
+                  <div
+                    className="my-profile-update-box"
+                    onClick={() => {
+                      navigate("/myPage");
+                    }}
+                  >
+                    마이페이지
+                  </div>
                   <div className="my-profile-underline"></div>
                 </div>
                 <ul className="dropdown-mymenu-ul">
