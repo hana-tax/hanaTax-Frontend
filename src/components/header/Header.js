@@ -24,8 +24,6 @@ function Header() {
       });
 
       if (response.status === 200) {
-        console.log(response);
-
         toast.success("로그아웃 되었습니다.");
         logout();
 
@@ -39,7 +37,6 @@ function Header() {
     }
   };
   const state = useStore.getState();
-  console.log(state);
 
   useEffect(() => {
     new RollingNum(".header-money", "?????", "slide"); // 초기 값은 ?????로 설정

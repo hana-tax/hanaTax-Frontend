@@ -246,7 +246,7 @@ const InvestAnalysis = () => {
         <Icon />
       </div>
       <div className="invest-analysis">
-        <div className="progress">
+        <div className="invest-progress">
           <div className="progress-info">
             <span style={{ color: "#099A96", fontWeight: "bold" }}>
               {currentQuestion}

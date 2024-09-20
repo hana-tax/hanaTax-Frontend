@@ -10,7 +10,7 @@
   background-color: white;
   border-radius: 10px;
   padding: 20px;
-  width: 200px;
+  width: 220px;
   height: 300px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -119,7 +119,7 @@
 .connect-assets {
   background-color: rgba(161, 213, 212, 0.81);
   border: none;
-  padding: 10px 82px;
+  padding: 10px 72px;
   border-radius: 10px;
   color: #099a96;
   cursor: pointer;
@@ -411,4 +411,31 @@ input[type="checkbox"]:checked + .switchContainer .switchButton {
   display: flex;
   flex-direction: column;
   width: 55%;
+}
+
+.invest-analysis-register-button {
+  background-color: white;
+  color: #099a96;
+  border: 1px solid #099a96;
+  padding: 5px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-family: "Pretendard-Regular";
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.invest-analysis-register-button:hover {
+  background-color: #099a96;
+  color: white;
+  border: 1px solid #099a96;
+}
+
+.connect-success-assets {
+  background-color: rgba(90, 186, 186, 0.88);
+  border: none;
+  padding: 10px 96px;
+  border-radius: 10px;
+  color: white;
+  font-family: "Pretendard-Bold";
 }
