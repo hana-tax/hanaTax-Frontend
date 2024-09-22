@@ -86,6 +86,10 @@ const Home = () => {
     }
   };
 
+  const handleServiceClick = (path) => {
+    navigate(path);
+  };
+
   return (
     <div>
       {isLoading && (
@@ -140,7 +144,7 @@ const Home = () => {
         <p>이런 서비스 어때요?</p>
         <div className="service-container">
           <div className="service">
-            <span>온라인으로 빠르게!</span>
+            <span>연말정산, 언제 어디서나!</span>
             <div classeName="text-right-arrow">
               <p>
                 연말정산 공제혜택 <Right style={{ marginLeft: "5px" }} />
@@ -148,7 +152,7 @@ const Home = () => {
             </div>
           </div>
           <div className="service">
-            <span>온라인으로 빠르게!</span>
+            <span>과세 대상, 간편하게 확인!</span>
             <div classeName="text-right-arrow">
               <p>
                 종합과세대상자 확인 <Right style={{ marginLeft: "5px" }} />
@@ -156,10 +160,10 @@ const Home = () => {
             </div>
           </div>
           <div className="service">
-            <span>온라인으로 빠르게!</span>
+            <span>세금 계산, 한 번에 해결!</span>
             <div classeName="text-right-arrow">
               <p>
-                세금 계산기 <Right style={{ marginLeft: "5px" }} />
+                금융 계산기 <Right style={{ marginLeft: "5px" }} />
               </p>
             </div>
           </div>
@@ -186,10 +190,18 @@ const Home = () => {
           {[
             { component: <Account />, label: "잔액조회" },
             { component: <Inquiry />, label: "거래내역조회" },
-            { component: <PieChart />, label: "금융소득 분석" },
-            { component: <Calculator />, label: "세금계산" },
-            { component: <InquiryYearEnd />, label: "연말정산조회" },
-            { component: <Card />, label: "계좌개설" },
+            {
+              component: <PieChart />,
+              label: "금융소득 분석",
+              path: "/financialIncome/myReport",
+            },
+            { component: <Calculator />, label: "금융계산" },
+            {
+              component: <InquiryYearEnd />,
+              label: "연말정산조회",
+              path: "/inquiryYearEnd",
+            },
+            { component: <Card />, label: "계좌개설", path: "/productlist" },
           ].map((item, index) => (
             <motion.div
               key={index}
@@ -208,6 +220,7 @@ const Home = () => {
                 },
               }}
               className="baro-box"
+              onClick={() => handleServiceClick(item.path)}
             >
               <div className="baro-circle">{item.component}</div>
               {item.label}

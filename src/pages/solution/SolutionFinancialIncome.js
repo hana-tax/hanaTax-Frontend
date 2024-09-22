@@ -14,13 +14,9 @@ const SolutionFinancialIncome = () => {
   return (
     <div className="solution-detail-container">
       <div className="summary">
-        <h1>
-          솔루션 이행시, <br></br>최대 <span>1,917,150원 </span>
-          아낄 수 있어요!
-        </h1>
+        <h1>절세가이드 전략을 살펴보세요.</h1>
         <p>
-          절세 전략을 살펴보세요. <br></br>이행할때 마다 아낄 수 있는 돈이
-          늘어나요.
+          절세 전략을 살펴보세요. <br></br>
         </p>
       </div>
       <InterestDispersion />

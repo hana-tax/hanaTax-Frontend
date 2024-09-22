@@ -77,7 +77,7 @@ const FamilyDispersion = () => {
         <div className="family-card-body">
           <div className="span-icon">
             <span>
-              증여공제 활용 시,
+              사전증여 활용 시,
               <Info
                 className="info-icon"
                 onMouseEnter={handleTooltipMouseEnter}
@@ -89,8 +89,13 @@ const FamilyDispersion = () => {
                   2,000만원)까지 증여세가 없습니다.
                 </div>
               )}
-              <br /> 최대 10,300,000원 줄일 수 있어요!
+              <br /> 금융소득을 분산할 수 있어요!
             </span>
+            <p>
+              (예시 사례) 금융자산이 10억원(투자수익률 6% 가정) <br /> -각각
+              배우자와 자녀에게 증여공제 한도 내로 각각 6억원, 5000만원
+              증여한다면?
+            </p>
           </div>
           <div className="family-radio">
             <label>
@@ -113,7 +118,7 @@ const FamilyDispersion = () => {
           <div className="total-income">
             <div className="total-income-item">
               <span>금융소득</span>
-              <span>{financialIncome.toLocaleString()}원</span>{" "}
+              <span>6000만원</span>{" "}
             </div>
             <div className="total-income-item">
               <span>세부담합계</span>
@@ -135,9 +140,9 @@ const FamilyDispersion = () => {
                 </div>
                 <div className="total-income-item">
                   <span>금융소득</span>
-                  <span>{financialIncome.toLocaleString()}원</span>
-                  {spouse && <span>2,100만원</span>}
-                  {child && <span>200만원</span>}
+                  <span>2100만원</span>
+                  {spouse && <span>3,600만원</span>}
+                  {child && <span>300만원</span>}
                 </div>
                 <div className="total-income-item">
                   <span>세부담합계</span>
@@ -150,7 +155,7 @@ const FamilyDispersion = () => {
             <div className="total-income" style={{ marginTop: "30px" }}>
               <span>
                 배우자, 자녀가 없으면 <br />
-                증여공제를 활용할 수 없어요. 😢
+                사전증여를 활용할 수 없어요. 😢
               </span>
             </div>
           )}

@@ -72,7 +72,11 @@ const InquiryFinancialIncome = () => {
             <br />
             확인하세요
           </h1>
-          <button className="inquiry-button" onClick={handleInquiryClick}>
+          <button
+            className="inquiry-button"
+            onClick={handleInquiryClick}
+            style={{ marginTop: "0px" }}
+          >
             대상자 여부 확인하기
           </button>
           <button className="description-button" onClick={ToAllofYearEnd}>
