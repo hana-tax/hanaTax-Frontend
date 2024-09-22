@@ -18,13 +18,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
-  { name: "안전자산", 또래친구: 100, 송지원님: 80 },
-  { name: "투자자산", 또래친구: 50, 송지원님: 30 },
-  { name: "연금자산", 또래친구: 10, 송지원님: 5 },
-  { name: "외화자산", 또래친구: 0, 송지원님: 0 },
-  { name: "절세자산", 또래친구: 5, 송지원님: 2 },
-];
 const MyPage = () => {
   const [isAssetsVisible, setIsAssetsVisible] = useState(false);
   const { user, setUserInfo } = useStore();
@@ -43,7 +36,9 @@ const MyPage = () => {
   const [fundCount, setFundCount] = useState(0);
   const [linkedAssets, setLinkedAssets] = useState("");
   const [ci, setCi] = useState("");
-  const [enrollResponse, setEnrollResponse] = useState({});
+  const [data, setData] = useState([]);
+  const [difference, setDifference] = useState(0);
+  const [topTaxSavingAssets, setTopTaxSavingAssets] = useState([]);
 
   const handleToggle = () => {
     setIsAssetsVisible(!isAssetsVisible);
@@ -69,6 +64,20 @@ const MyPage = () => {
       default:
         return "";
     }
+  };
+
+  const calculateAgeGroup = (residentNumber) => {
+    console.log(residentNumber);
+    const birthYear = parseInt(residentNumber.substring(0, 2), 10);
+    const currentYear = new Date().getFullYear();
+    const fullBirthYear =
+      birthYear <= currentYear % 100 ? 2000 + birthYear : 1900 + birthYear;
+    const age = currentYear - fullBirthYear;
+
+    if (age >= 20 && age < 30) return "20s";
+    if (age >= 30 && age < 40) return "30s";
+    if (age >= 40 && age < 50) return "40s";
+    return "";
   };
 
   useEffect(() => {
@@ -195,6 +204,130 @@ const MyPage = () => {
         } else {
           console.error("펀드 계좌 API 호출 오류:", error);
         }
+      });
+
+    const ageGroup = calculateAgeGroup(user.residentNumber);
+
+    axios
+      .get(
+        `http://localhost:8080/api/join-history/compare/${ageGroup}?userId=${userId}`
+      )
+      .then((response) => {
+        const comparisonData = response.data;
+        console.log("비교 데이터:", comparisonData);
+        const peerTotal =
+          comparisonData.peerAssets.safeAssets +
+          comparisonData.peerAssets.investmentAssets +
+          comparisonData.peerAssets.pensionAssets +
+          comparisonData.peerAssets.foreignAssets +
+          comparisonData.peerAssets.taxSavingAssets;
+
+        const userTotal =
+          comparisonData.userAssets.safeAssets +
+          comparisonData.userAssets.investmentAssets +
+          comparisonData.userAssets.pensionAssets +
+          comparisonData.userAssets.foreignAssets +
+          comparisonData.userAssets.taxSavingAssets;
+
+        // 각 자산에 대한 백분율 계산
+        const chartData = [
+          {
+            name: "안전자산",
+            또래친구: Math.round(
+              (comparisonData.peerAssets.safeAssets / peerTotal) * 100
+            ),
+            [user.name + "님"]: Math.round(
+              (comparisonData.userAssets.safeAssets / userTotal) * 100
+            ),
+          },
+          {
+            name: "투자자산",
+            또래친구: Math.round(
+              (comparisonData.peerAssets.investmentAssets / peerTotal) * 100
+            ),
+            [user.name + "님"]: Math.round(
+              (comparisonData.userAssets.investmentAssets / userTotal) * 100
+            ),
+          },
+          {
+            name: "연금자산",
+            또래친구: Math.round(
+              (comparisonData.peerAssets.pensionAssets / peerTotal) * 100
+            ),
+            [user.name + "님"]: Math.round(
+              (comparisonData.userAssets.pensionAssets / userTotal) * 100
+            ),
+          },
+          {
+            name: "외화자산",
+            또래친구: Math.round(
+              (comparisonData.peerAssets.foreignAssets / peerTotal) * 100
+            ),
+            [user.name + "님"]: Math.round(
+              (comparisonData.userAssets.foreignAssets / userTotal) * 100
+            ),
+          },
+          {
+            name: "절세자산",
+            또래친구: Math.round(
+              (comparisonData.peerAssets.taxSavingAssets / peerTotal) * 100
+            ),
+            [user.name + "님"]: Math.round(
+              (comparisonData.userAssets.taxSavingAssets / userTotal) * 100
+            ),
+          },
+        ];
+
+        setData(chartData);
+        setDifference(comparisonData.difference);
+      })
+      .catch((error) => {
+        console.error("자산 비교 API 호출 오류:", error);
+      });
+
+    axios
+      .get(`http://localhost:8080/api/join-history/top-tax/${ageGroup}`)
+      .then((response) => {
+        const topAssets = response.data;
+
+        // totalAmount의 총합을 계산
+        const totalAmountSum = topAssets.reduce(
+          (acc, asset) => acc + asset.totalAmount,
+          0
+        );
+
+        // 각 asset에 대해 퍼센트 계산하고 이름 매핑
+        const formattedTopAssets = topAssets.map((asset) => {
+          let assetName = "";
+          switch (asset.accountType) {
+            case 4:
+              assetName = "ISA";
+              break;
+            case 76:
+              assetName = "비과세 저축";
+              break;
+            case 5:
+              assetName = "IRP/연금저축";
+              break;
+            default:
+              assetName = "알 수 없는 자산";
+          }
+
+          const percentage = Math.round(
+            (asset.totalAmount / totalAmountSum) * 100
+          );
+
+          return {
+            name: assetName,
+            percentage: percentage,
+          };
+        });
+
+        // formattedTopAssets을 화면에 반영
+        setTopTaxSavingAssets(formattedTopAssets);
+      })
+      .catch((error) => {
+        console.error("절세자산 Top 3 API 호출 오류:", error);
       });
 
     // linked-assets 호출 후 enroll API 호출
@@ -601,8 +734,14 @@ const MyPage = () => {
             <div className="peer-summary">
               <p>{user.name} 님은 또래 친구들 대비</p>
               <p style={{ fontWeight: "bold", fontSize: "15px" }}>
-                금융자산이 <span className="blue-highlight">180,640원</span>이
-                적어요.
+                금융자산이{" "}
+                <span
+                  className="blue-highlight"
+                  style={{ color: difference < 0 ? "red" : "#1a73e8" }}
+                >
+                  {Math.abs(difference).toLocaleString()}원
+                </span>
+                {difference > 0 ? "이 많아요." : "이 적어요."}
               </p>
             </div>
 
@@ -620,7 +759,7 @@ const MyPage = () => {
                     <Tooltip />
                     <Legend />
                     <Bar dataKey="또래친구" fill="#ffcc29" />
-                    <Bar dataKey="송지원님" fill="#1a73e8" />
+                    <Bar dataKey={`${user.name}님`} fill="#1a73e8" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -630,45 +769,29 @@ const MyPage = () => {
           <div className="peer-top-assets">
             <h3>또래 친구의 절세자산 TOP 3</h3>
             <ul className="top-asset-list">
-              <li
-                className="top-asset-item"
-                style={{ backgroundColor: "#EDDFFF" }}
-              >
-                <span style={{ fontSize: "20px" }}>🥇&nbsp;</span> ISA(
-                <span
+              {topTaxSavingAssets.map((asset, index) => (
+                <li
+                  key={index}
+                  className="top-asset-item"
                   style={{
-                    fontFamily: "Pretendard-SemiBold",
-                    color: "#A412BC",
+                    backgroundColor: index === 0 ? "#EDDFFF" : "#EDEDEE", // 1등은 #EDDFFF, 나머지는 #EDEDEE
                   }}
                 >
-                  54
-                </span>{" "}
-                %)
-              </li>
-              <li className="top-asset-item">
-                <span style={{ fontSize: "20px" }}>🥈&nbsp;</span> IRP/연금저축(
-                <span
-                  style={{
-                    fontFamily: "Pretendard-SemiBold",
-                    color: "#A412BC",
-                  }}
-                >
-                  28
-                </span>{" "}
-                %)
-              </li>
-              <li className="top-asset-item">
-                <span style={{ fontSize: "20px" }}>🥉&nbsp;</span> 저축성보험(
-                <span
-                  style={{
-                    fontFamily: "Pretendard-SemiBold",
-                    color: "#A412BC",
-                  }}
-                >
-                  18
-                </span>{" "}
-                %)
-              </li>
+                  <span style={{ fontSize: "20px" }}>
+                    {index === 0 ? "🥇" : index === 1 ? "🥈" : "🥉"}&nbsp;
+                  </span>
+                  {asset.name}(
+                  <span
+                    style={{
+                      fontFamily: "Pretendard-SemiBold",
+                      color: "#A412BC",
+                    }}
+                  >
+                    {asset.percentage}
+                  </span>
+                  %)
+                </li>
+              ))}
             </ul>
           </div>
         </div>
