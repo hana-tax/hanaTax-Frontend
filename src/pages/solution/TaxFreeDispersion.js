@@ -15,7 +15,11 @@ const TaxFreeDispersion = () => {
 
   return (
     <div className="card-container">
-      <div className="card-header" onClick={toggleDetails}>
+      <div
+        className="card-header"
+        style={{ padding: "10px 10px 10px 17px" }}
+        onClick={toggleDetails}
+      >
         <UserIcon />
         <span>비과세 상품 활용하기</span>
         {isOpen ? (
@@ -33,7 +37,7 @@ const TaxFreeDispersion = () => {
               </div>
               <p>비과세종합저축</p>
             </div>
-            <span>
+            <span style={{ fontWeight: "normal" }}>
               비과세종합저축은 이자에 대한 세금이 없어요.
               <br /> 1인당 5,000만 원의 저축 원금까지 비과세 혜택이 적용되어요.
             </span>
@@ -55,7 +59,7 @@ const TaxFreeDispersion = () => {
               </div>
               <p>개인종합자산관리계좌 (ISA)</p>
             </div>
-            <span>
+            <span style={{ fontWeight: "normal" }}>
               ISA는 개인종합자산관리계좌로, 이 계좌로 예적금, 펀드, 국내 상장
               주식, ETF 등에 투자할 수 있어요. ISA 계좌로 투자를 해 발생한 이익
               중, 200만 원까지는 비과세 혜택이 적용되어요.
@@ -86,7 +90,7 @@ const TaxFreeDispersion = () => {
               </div>
               <p>연금저축</p>
             </div>
-            <span>
+            <span style={{ fontWeight: "normal" }}>
               연금저축은 노후 대비를 위한 저축성 상품이에요. 연금을 수령할 때
               이자소득세 15.4%가 과세되지 않아요. 연 납입액의 최대 600만 원까지
               세액공제를 해주고, 소득에 따라 13.2~16.5%로 달라져요.
@@ -110,7 +114,7 @@ const TaxFreeDispersion = () => {
               </div>
               <p>연금보험</p>
             </div>
-            <span>
+            <span style={{ fontWeight: "normal" }}>
               연금보험 역시 연금을 수령할 때 이자소득세 15.4%를 내지 않아도
               돼요. 연금을 수령할 때도 연금저축과 달리 세금을 내지 않아요. 그
               대신 연금보험은 별도의 세액공제 혜택이 없어요.

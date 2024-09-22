@@ -16,19 +16,16 @@
 .yearend-content {
   background-color: #4f6be7;
   border-radius: 20px;
-  width: 110vh;
-  height: 60vh;
-  display: inline-block;
-  margin-bottom: 20px;
+  width: 570px;
+  margin-bottom: 40px;
   margin-left: 20px;
 }
 .content {
-  display: inline-block;
 }
 
 .allofChar {
   width: 100%;
-  margin-top: 40px;
+  margin-top: 30px;
   margin-left: 33px;
 }
 
@@ -40,8 +37,8 @@
 .toc-container {
   background-color: #f4f5f7;
   border-radius: 20px;
-  width: 110vh;
-  height: 29vh;
+  width: 560px;
+  height: 170px;
   padding: 1px 30px;
   margin-bottom: 60px;
   margin-top: 60px;

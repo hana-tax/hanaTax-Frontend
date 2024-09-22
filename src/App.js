@@ -9,6 +9,7 @@ import LoginForm from "./pages/Login/LoginForm";
 import Signup from "./pages/Signup/Signup";
 import Signup2 from "./pages/Signup/Signup2";
 import AllofYearEnd from "./pages/Allof/allofYearEnd";
+import AllofFinancialIncome from "./pages/Allof/allofFinancialIncome";
 import InquiryYearEnd from "./pages/inquiry/InquiryYearEnd";
 import ResultYearEnd from "./pages/inquiry/result/ResultYearEnd";
 import RefundDetailsYearEnd from "./pages/inquiry/RefundDetailsYearEnd";
@@ -63,6 +64,11 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/signup2" element={<Signup2 />} />
           <Route path="/allofYearEnd" element={<AllofYearEnd />} />
+          <Route
+            path="/allofFinancialIncome"
+            element={<AllofFinancialIncome />}
+          />
+
           <Route path="/inquiryYearEnd" element={<InquiryYearEnd />} />
           <Route
             path="/inquiryFinancialIncome"

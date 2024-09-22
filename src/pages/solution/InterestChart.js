@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -9,24 +9,61 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import axios from "axios";
 
-const data = [
-  { name: "1월", 이자: 50, 배당: 50 },
-  { name: "2월", 이자: 60, 배당: 55 },
-  { name: "3월", 이자: 65, 배당: 63 },
-  { name: "4월", 이자: 70, 배당: 67 },
-  { name: "5월", 이자: 80, 배당: 72 },
-  { name: "6월", 이자: 95, 배당: 85 },
-  { name: "7월", 이자: 100, 배당: 95 },
-  { name: "8월", 이자: 120, 배당: 110 },
-  { name: "9월", 이자: 130, 배당: 115 },
-  { name: "10월", 이자: 140, 배당: 130 },
-];
+const InterestChart = ({ onDataLoad }) => {
+  const [data, setData] = useState([]);
 
-const InterestChart = () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/api/income/incomeList",
+          { financialIncomeId: 7 }
+        );
+
+        const rawData = response.data;
+
+        const months = [
+          "1월",
+          "2월",
+          "3월",
+          "4월",
+          "5월",
+          "6월",
+          "7월",
+          "8월",
+          "9월",
+          "10월",
+        ];
+        const initialData = months.map((month) => ({
+          name: month,
+          이자: 0,
+          배당: 0,
+        }));
+
+        rawData.forEach((item) => {
+          const date = new Date(item.incomeDate);
+          const monthIndex = date.getMonth();
+          if (item.incomeType === 34) {
+            initialData[monthIndex]["이자"] += item.incomeAccount;
+          } else if (item.incomeType === 35) {
+            initialData[monthIndex]["배당"] += item.incomeAccount;
+          }
+        });
+
+        setData(initialData);
+        onDataLoad(initialData); // 데이터 로드 후 분산 평가 호출
+      } catch (error) {
+        console.error("API 호출 오류:", error);
+      }
+    };
+
+    fetchData();
+  }, [onDataLoad]);
+
   return (
     <div style={{ marginLeft: "-35px", width: "120%", marginTop: "20px" }}>
-      {" "}
       <ResponsiveContainer width="100%" height={300}>
         <LineChart
           data={data}

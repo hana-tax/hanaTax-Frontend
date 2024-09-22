@@ -467,7 +467,7 @@ input[type="radio"]:checked {
   margin: 20px;
   cursor: pointer;
   color: #aaaaaa;
-  padding: 10px 0;
+  padding: 20px 0px 0px 0px;
 }
 
 .interest-dispersion-body {
@@ -572,8 +572,8 @@ input[type="radio"]:checked {
 }
 
 .dispersion3-icon {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
 }
 
 .tax-free-dispersion-body {
@@ -648,6 +648,12 @@ input[type="radio"]:checked {
   font-family: "Pretandard-Regular";
   width: 130px;
   padding: 8px 0;
+  transition: all 0.3s ease;
+}
+
+.account-make-btn:hover {
+  background-color: #7684ff;
+  color: #fff;
 }
 
 .account-make-btn-box {
@@ -735,7 +741,31 @@ input[type="checkbox"]:checked + .toggleSwitch .toggleButton {
   transition: opacity 0.3s;
 }
 
+.tooltip-family-box {
+  visibility: visible;
+  background-color: #fff;
+  color: #757575;
+  border: 1px solid #d9d9d9;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-weight: normal;
+  position: absolute;
+  z-index: 1;
+  top: 100%; /* 아이콘 위에 툴팁 표시 */
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
 .checkbox-info:hover .tooltip-box {
+  visibility: visible;
+  opacity: 1;
+}
+
+.info-icon:hover .tooltip-family-box {
   visibility: visible;
   opacity: 1;
 }
@@ -761,4 +791,15 @@ input[type="checkbox"]:checked + .toggleSwitch .toggleButton {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+}
+
+.advice-box {
+  background-color: #f2f4f6;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  display: flex;
+  margin-top: 20px;
+  padding: 20px;
+  color: #000;
+  font-family: "Pretendard-SemiBold";
 }

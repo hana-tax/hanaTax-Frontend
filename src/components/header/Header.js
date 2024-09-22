@@ -148,15 +148,7 @@ function Header() {
                       </li>
                     </ul>
                   </div>
-                  <div className="dropdown-column">
-                    <span className="menu-title">금융소득 상식과 꿀팁</span>
-                    <ul className="dropdown-submenu">
-                      <li className="dropdown-item">금융소득의 모든 것</li>
-                      <li className="dropdown-item">
-                        금융소득 종합과세 VS 분리과세
-                      </li>
-                    </ul>
-                  </div>
+
                   <div className="dropdown-column">
                     <span className="menu-title">세테크 시작하기</span>
                     <ul className="dropdown-submenu">
@@ -193,7 +185,6 @@ function Header() {
                       >
                         ISA 상품/가입
                       </li>
-                      <li className="dropdown-item">ISA 조회/입금</li>
                     </ul>
                   </div>
                   <div className="dropdown-column">
@@ -205,8 +196,6 @@ function Header() {
                       >
                         연금저축펀드 상품
                       </li>
-
-                      <li className="dropdown-item">연금펀드 입금</li>
                     </ul>
                   </div>
                 </div>

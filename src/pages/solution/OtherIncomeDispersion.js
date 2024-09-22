@@ -13,7 +13,11 @@ const OtherIncomeDispersion = () => {
 
   return (
     <div className="card-container">
-      <div className="card-header" onClick={toggleDetails}>
+      <div
+        className="card-header"
+        style={{ padding: "10px" }}
+        onClick={toggleDetails}
+      >
         <UserIcon className="dispersion3-icon" />
         <span>타 소득으로 분산 투자하기</span>
         {isOpen ? (

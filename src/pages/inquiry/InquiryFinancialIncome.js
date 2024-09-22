@@ -48,7 +48,7 @@ const InquiryFinancialIncome = () => {
   };
 
   const ToAllofYearEnd = () => {
-    navigate("/allofYearEnd");
+    navigate("/allofFinancialIncome");
   };
 
   const toggleAnswer = (index) => {
