@@ -20,11 +20,17 @@ import {
 
 const MyPage = () => {
   const [isAssetsVisible, setIsAssetsVisible] = useState(false);
-  const { user, setUserInfo } = useStore();
+  const { user, setUserInfo, lastLoginTime } = useStore((state) => ({
+    user: state.user,
+    setUserInfo: state.setUserInfo,
+    lastLoginTime: state.lastLoginTime, // 최근 접속 시간 가져오기
+  }));
   const navigate = useNavigate();
   const [profileName, setProfileName] = useState("");
   const [totalBalance, setTotalBalance] = useState(0);
+  const [enrollBalacne, setEnrollBalance] = useState(0);
   const [savingCount, setSavingCount] = useState(0);
+  const [myDataSavingCount, setMyDataSavingCount] = useState(0);
   const [savingExpiringSoonCount, setSavingExpiringSoonCount] = useState(0);
   const [isaExpiringSoonCount, setIsaExpiringSoonCount] = useState(0);
   const [isaJoinAccount, setIsaJoinAccount] = useState(0);
@@ -34,6 +40,7 @@ const MyPage = () => {
   const [loanCount, setLoanCount] = useState(0);
   const [insuranceCount, setInsuranceCount] = useState(0);
   const [fundCount, setFundCount] = useState(0);
+  const [myDataFundCount, setMyDataFundCount] = useState(0);
   const [linkedAssets, setLinkedAssets] = useState("");
   const [ci, setCi] = useState("");
   const [data, setData] = useState([]);
@@ -68,6 +75,10 @@ const MyPage = () => {
 
   const calculateAgeGroup = (residentNumber) => {
     console.log(residentNumber);
+    if (!residentNumber || typeof residentNumber !== "string") {
+      console.error("Invalid resident number:", residentNumber); // Log error for debugging
+      return ""; // Return a default value or handle the error case
+    }
     const birthYear = parseInt(residentNumber.substring(0, 2), 10);
     const currentYear = new Date().getFullYear();
     const fullBirthYear =
@@ -126,6 +137,7 @@ const MyPage = () => {
       .post("http://localhost:8080/api/join-history/total", { id: userId })
       .then((response) => {
         setTotalBalance(response.data.totalBalance || 0);
+        console.log(response.data.totalBalance);
       })
       .catch((error) => {
         console.error("총 자산 API 호출 오류:", error);
@@ -165,6 +177,7 @@ const MyPage = () => {
         setIsaCount(response.data.length || 0); // ISA 계좌 개수 저장
 
         console.log(response.data);
+        console.log(response.data.length);
         setIsaJoinAccount(response.data[0].joinAccount);
 
         const currentDate = new Date();
@@ -207,7 +220,7 @@ const MyPage = () => {
       });
 
     const ageGroup = calculateAgeGroup(user.residentNumber);
-
+    console.log(user.residentNumber);
     axios
       .get(
         `http://localhost:8080/api/join-history/compare/${ageGroup}?userId=${userId}`
@@ -358,11 +371,11 @@ const MyPage = () => {
             const enrollData = enrollResponse.data; // API 응답 데이터
             console.log("Enroll API Response:", enrollData);
 
-            let totalBalanceWithEnroll = totalBalance;
+            let newEntrollBalance = 0;
             // API 응답 데이터를 기반으로 개수를 업데이트
-            let newSavingCount = savingCount;
-            let newIsaCount = isaCount;
-            let newFundCount = fundCount;
+            let newSavingCount = 0;
+            console.log(totalBalance);
+            let newFundCount = 0;
             let loanCount = 0;
             let insuranceCount = 0;
 
@@ -382,19 +395,21 @@ const MyPage = () => {
                 insuranceCount += 1;
               }
 
+              if (item.loanCode) {
+                loanCount += 1;
+              }
+
               if (item.balance) {
-                totalBalanceWithEnroll += item.balance;
+                newEntrollBalance += item.balance;
               }
             });
 
             // 상태 업데이트
-            setSavingCount(newSavingCount);
-            setIsaCount(newIsaCount);
-            setFundCount(newFundCount);
+            setMyDataSavingCount(newSavingCount);
+            setMyDataFundCount(newFundCount);
             setInsuranceCount(insuranceCount);
-            setLoanCount(insuranceCount);
-
-            setTotalBalance(totalBalanceWithEnroll);
+            setLoanCount(loanCount);
+            setEnrollBalance(newEntrollBalance);
           })
           .catch((error) => {
             console.error("Enroll API 호출 오류:", error);
@@ -413,6 +428,9 @@ const MyPage = () => {
     setLoanCount,
     setIsaCount,
     setInsuranceCount,
+    setEnrollBalance,
+    setMyDataSavingCount,
+    setMyDataFundCount,
   ]);
 
   return (
@@ -454,10 +472,8 @@ const MyPage = () => {
           </div>
           <div className="info-row">
             <span className="info-row-subject">최근 접속시간</span>
-            <span>
-              2024.09.19
-              <br />
-              (14:14:00)
+            <span style={{ textAlign: "right" }}>
+              {lastLoginTime || "접속 시간이 없습니다."}
             </span>
           </div>
           <div className="info-row">
@@ -496,10 +512,12 @@ const MyPage = () => {
             자산현황
           </span>
           <div className="asset-tabs">
-            <span className="active">예·적금 {savingCount}개</span>
+            <span className="active">
+              예·적금 {savingCount + myDataSavingCount}개
+            </span>
             <span>ISA {isaCount}개</span>
             <span>대출 {loanCount}개</span>
-            <span>펀드 {fundCount}개</span>
+            <span>펀드 {fundCount + myDataFundCount}개</span>
             <span>보험 {insuranceCount}개</span>
           </div>
         </div>
@@ -526,8 +544,8 @@ const MyPage = () => {
             <div className="asset-amount">
               <span style={{ fontSize: isAssetsVisible ? "22px" : "15px" }}>
                 {isAssetsVisible
-                  ? `${totalBalance.toLocaleString()}원`
-                  : "정보 숨김"}
+                  ? `${(totalBalance + enrollBalacne).toLocaleString()}원`
+                  : "자산 숨김"}
               </span>
               {isAssetsVisible && <ArrowRight style={{ marginLeft: "5px" }} />}
             </div>
@@ -542,7 +560,7 @@ const MyPage = () => {
               <button className="connect-success-assets">연결 완료</button>
             )}
           </div>
-          <div className="expiry-info">
+          <div className="expiry-info" style={{ marginRight: "40px" }}>
             <span style={{ fontFamily: "Pretendard-Bold", fontSize: "17px" }}>
               만기 도래
             </span>
@@ -555,10 +573,10 @@ const MyPage = () => {
                 <span>ISA</span>
                 <span>{isaExpiringSoonCount}개</span>
               </div>
-              <div className="expiry-item">
+              {/* <div className="expiry-item">
                 <span>펀드</span>
                 <span>2개</span>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

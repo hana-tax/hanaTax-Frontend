@@ -1,0 +1,119 @@
+.account-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #f9f9f9;
+  padding: 50px 150px;
+  border-radius: 8px;
+}
+
+.account-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.account-header h2 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.account-header span {
+  color: #999;
+}
+
+.account-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.account-notice {
+  font-size: 14px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 20px;
+  width: 150px;
+  text-align: center;
+}
+
+.total-asset-account {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 250px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.total-title {
+  font-size: 16px;
+  color: #333;
+}
+
+.total-amount {
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.balance-details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.deposit-amount,
+.withdrawal-amount {
+  font-size: 14px;
+  color: #28a745;
+}
+
+.account-list {
+  flex-grow: 1;
+  margin-left: 20px;
+}
+
+.account-item {
+  background-color: #fff;
+  padding: 15px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.account-item.selected {
+  background-color: #3eccc836;
+  border: 2px solid #099a96;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.account-item .account-type {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.account-item .last-transaction,
+.account-item .account-balance {
+  font-size: 14px;
+  color: #666;
+}
+
+.account-footer {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 20px;
+}
+
+.camera-icon img {
+  width: 40px;
+  height: 40px;
+}

@@ -10,7 +10,7 @@ const RefundDetailsYearEnd = () => {
   const totalIncome = useTaxStore((state) => state.totalIncome);
   const taxAmount = useTaxStore((state) => state.taxAmount);
   const wageIncomeAmount = useTaxStore((state) => state.wageIncomeAmount);
-  const totalTaxDeduction = useTaxStore((state) => state.totalTaxDeduction);
+  const finalizedTaxAmount = useTaxStore((state) => state.finalizedTaxAmount);
   const taxPaidValue = useTaxStore((state) => state.taxPaidValue);
 
   const ToBack = () => {
@@ -21,7 +21,7 @@ const RefundDetailsYearEnd = () => {
     { title: "근로소득금액", amount: wageIncomeAmount },
     { title: "과세표준", amount: taxableIncome },
     { title: "산출세액", amount: taxAmount },
-    { title: "결합세액", amount: totalTaxDeduction },
+    { title: "결정세액", amount: finalizedTaxAmount },
   ];
 
   return (
@@ -32,7 +32,16 @@ const RefundDetailsYearEnd = () => {
           <h3>예상 환급세액</h3>
           <h2>{Math.abs(estimatedTaxAmount).toLocaleString()}원</h2>
         </div>
-        <p>이미 낸 세금이 내야 할 세금보다 많아서 돌려주는 금액입니다.</p>
+        <div className="refund-details-box">
+          {estimatedTaxAmount < 0 ? (
+            <p>
+              예상 환급세액은 이미 낸 세금이 내야 할 세금보다 많아 돌려받는
+              금액입니다.
+            </p>
+          ) : (
+            <p>예상 환급세액이 없습니다. 납부해야 할 세금이 더 많습니다.</p>
+          )}
+        </div>
       </div>
       <div className="refund-details">
         <div className="refund-details-box">

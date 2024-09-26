@@ -1,5 +1,5 @@
 import "./App.css";
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Header from "./components/header/Header";
@@ -43,8 +43,27 @@ import MyData2 from "./pages/myData/MyData2";
 import MyData3 from "./pages/myData/MyData3";
 import MyPage from "./pages/myPage/myPage";
 import InvestAnalysis from "./pages/product/투자성향분석/InvestAnalysis";
+import MyAccount from "./pages/myPage/myAccount";
 
+import Chatbot from "react-chatbot-kit";
+import config from "./pages/bot/config";
+import ActionProvider from "./pages/bot/ActionProvider";
+import MessageParser from "./pages/bot/MessageParser";
+import "react-chatbot-kit/build/main.css";
+import "./assets/css/Chatbot.css";
+import "remixicon/fonts/remixicon.css";
+import { ReactComponent as Talks } from "./assets/svg/talks.svg";
 function App() {
+  const [showChat, setShowChat] = useState(false);
+
+  const handleNext = () => {
+    setShowChat(true);
+  };
+
+  const handleCloseChatbot = () => {
+    setShowChat(false); // Close the chatbot
+  };
+
   return (
     <BrowserRouter>
       <div>
@@ -118,7 +137,142 @@ function App() {
           <Route path="/myData2" element={<MyData2 />} />
           <Route path="/myData3" element={<MyData3 />} />
           <Route path="/myPage" element={<MyPage />} />
+          <Route path="/myAccount" element={<MyAccount />} />
         </Routes>
+        <div className="App">
+          {!showChat && (
+            <div style={{ position: "fixed", bottom: "10px", right: "10px" }}>
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "55px",
+                  left: "-75px",
+                  background:
+                    "linear-gradient(90deg, rgba(157, 92, 255, 1) 0%, rgba(92, 130, 255, 1) 100%)",
+                  color: "white",
+                  padding: "8px 12px",
+                  borderRadius: "10px",
+                  fontFamily: "Pretendard-Regular",
+                  fontSize: "12px",
+                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                톡스에게 질문하세요!
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "-7px",
+                    right: "20px",
+                    width: "0",
+                    height: "0",
+                    borderLeft: "8px solid transparent",
+                    borderRight: "8px solid transparent",
+                    borderTop: "8px solid #697bff",
+                  }}
+                ></div>
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "50%",
+                  backgroundColor: "#ececec",
+                  width: "40px",
+                  height: "40px",
+                  marginRight: "22px",
+                }}
+                onClick={handleNext}
+              >
+                <Talks
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                    borderRadius: "50%",
+                  }}
+                />
+              </div>
+            </div>
+          )}
+
+          {showChat && (
+            <div style={{ position: "fixed", bottom: "10px", right: "10px" }}>
+              <Chatbot
+                config={config}
+                actionProvider={ActionProvider}
+                messageParser={MessageParser}
+              />
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginTop: "10px",
+                  justifyContent: "center",
+                }}
+              >
+                <button
+                  style={{
+                    background:
+                      "linear-gradient(90deg, rgba(157, 92, 255, 1) 0%, rgba(92, 130, 255, 1) 100%)",
+                    color: "white",
+                    borderRadius: "20px",
+                    padding: "10px 25px",
+                    border: "none",
+                    display: "flex",
+                    alignItems: "center",
+                    fontFamily: "Pretendard-Regular",
+                    width: "200px",
+                    opacity: 0,
+                    transform: "translateX(100%)",
+                    animation: "slideIn 0.3s forwards",
+                  }}
+                >
+                  <i className="ri-close-line" onClick={handleCloseChatbot} />
+                  <span style={{ marginLeft: "15px" }}>
+                    무엇을 도와드릴까요?
+                  </span>
+                </button>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "50%",
+                    backgroundColor: "#ececec",
+                    width: "40px",
+                    height: "40px",
+                    position: "absolute",
+                    right: "25px",
+                  }}
+                  onClick={handleNext}
+                >
+                  <Talks
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      borderRadius: "50%",
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+          <style jsx="true">{`
+            @keyframes slideIn {
+              0% {
+                transform: translateX(100%); /* Start off-screen to the right */
+                opacity: 0;
+              }
+              100% {
+                transform: translateX(0); /* End at the original position */
+                opacity: 1;
+              }
+            }
+          `}</style>
+        </div>
+
         <Footer />
       </div>
     </BrowserRouter>

@@ -88,7 +88,7 @@ select:focus {
 }
 
 .card-animation-container.open {
-  max-height: 700px;
+  max-height: 2000px;
 }
 
 .card-box {
@@ -161,7 +161,7 @@ select:focus {
   display: flex;
   justify-content: space-between;
 }
-.progress-bar {
+.progress-bar1 {
   height: 20px;
   border-radius: 6px;
   flex-grow: 1; /* 나머지 공간을 채우도록 설정 */

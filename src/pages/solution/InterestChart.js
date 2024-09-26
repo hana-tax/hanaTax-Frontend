@@ -63,7 +63,14 @@ const InterestChart = ({ onDataLoad }) => {
   }, [onDataLoad]);
 
   return (
-    <div style={{ marginLeft: "-35px", width: "120%", marginTop: "20px" }}>
+    <div
+      style={{
+        marginLeft: "-35px",
+        width: "120%",
+        fontSize: "12px",
+        marginTop: "20px",
+      }}
+    >
       <ResponsiveContainer width="100%" height={300}>
         <LineChart
           data={data}

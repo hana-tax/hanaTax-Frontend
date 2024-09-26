@@ -6,11 +6,12 @@ import useStore from "../../store/useStore";
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  const { login, logout, isLoggedIn, user } = useStore((state) => ({
+  const { login, logout, setLastLoginTime } = useStore((state) => ({
     login: state.login,
     logout: state.logout,
     isLoggedIn: state.isLoggedIn,
     user: state.user,
+    setLastLoginTime: state.setLastLoginTime,
   }));
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -40,6 +41,10 @@ const LoginForm = () => {
       const userName = data.name; // 이름 가져오기
       toast.success(`${userName}님, 반가워요!`); // 이름으로 메시지 표시
       login({ id: username, name: userName });
+
+      const currentTime = new Date().toLocaleString();
+      setLastLoginTime(currentTime);
+
       setIsSubmitted(true);
       navigate("/");
     } catch (error) {

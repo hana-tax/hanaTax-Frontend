@@ -26,7 +26,7 @@ const OtherIncomeDispersion = () => {
           <ArrowDown className="toggle-arrow" />
         )}
       </div>
-      {isOpen && (
+      <div className={`card-animation-container ${isOpen ? "open" : ""}`}>
         <div className="deduction-body">
           <p>연금소득세로 분산하자!</p>
           <div className="other-income-dispersion-body">
@@ -59,7 +59,7 @@ const OtherIncomeDispersion = () => {
             </span>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };

@@ -292,7 +292,7 @@ const CardDetails = () => {
                 <div className="discount-item" key={index}>
                   <div className="progress-all-bar">
                     <div
-                      className="progress-bar"
+                      className="progress-bar1"
                       style={{
                         width: `${item.percentage}%`,
                         backgroundColor: item.color,

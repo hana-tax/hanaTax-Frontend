@@ -188,8 +188,12 @@ const Home = () => {
         </motion.div>
         <div className="baro-container">
           {[
-            { component: <Account />, label: "잔액조회" },
-            { component: <Inquiry />, label: "거래내역조회" },
+            {
+              component: <Account />,
+              label: "전체계좌조회",
+              path: "/myAccount",
+            },
+            { component: <Inquiry />, label: "또래자산비교", path: "/myPage" },
             {
               component: <PieChart />,
               label: "금융소득 분석",

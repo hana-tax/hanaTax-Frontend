@@ -61,7 +61,7 @@ const InterestDispersion = () => {
           <ArrowDown className="toggle-arrow" />
         )}{" "}
       </div>
-      {isOpen && (
+      <div className={`card-animation-container ${isOpen ? "open" : ""}`}>
         <div className="interest-dispersion-body">
           <div className="card-box">
             <p>한 해에 몰리지 않게 이자, 배당소득 분산하기!</p>
@@ -83,7 +83,7 @@ const InterestDispersion = () => {
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };

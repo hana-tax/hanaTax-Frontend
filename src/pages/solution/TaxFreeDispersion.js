@@ -28,7 +28,7 @@ const TaxFreeDispersion = () => {
           <ArrowDown className="toggle-arrow" />
         )}
       </div>
-      {isOpen && (
+      <div className={`card-animation-container ${isOpen ? "open" : ""}`}>
         <div className="deduction-body">
           <div className="tax-free-dispersion-body">
             <div className="num-p-box">
@@ -141,7 +141,7 @@ const TaxFreeDispersion = () => {
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };

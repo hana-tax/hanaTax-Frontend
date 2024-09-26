@@ -73,7 +73,7 @@ const FamilyDispersion = () => {
           <ArrowDown className="toggle-arrow" />
         )}
       </div>
-      {isOpen && (
+      <div className={`card-animation-container ${isOpen ? "open" : ""}`}>
         <div className="family-card-body">
           <div className="span-icon">
             <span>
@@ -161,7 +161,7 @@ const FamilyDispersion = () => {
           )}
           <div className="family-body"></div>
         </div>
-      )}
+      </div>
     </div>
   );
 };

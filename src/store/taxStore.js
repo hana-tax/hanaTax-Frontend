@@ -11,6 +11,9 @@ const useTaxStore = create((set) => ({
   taxPaidValue: 0, //기납부 세액
   wageIncomeAmount: 0, //근로소득금액
 
+  finalTaxDifference: 0, // 새로운 상태 추가
+  setFinalTaxDifference: (value) => set({ finalTaxDifference: value }),
+
   houseBalance: 0, // 주택청약예금 연납입금
   setHouseBalance: (newBalance) => set({ houseBalance: newBalance }),
 

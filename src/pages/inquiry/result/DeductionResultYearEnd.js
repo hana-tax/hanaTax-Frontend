@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../../assets/css/InquiryResult.css";
 import { ReactComponent as ArrowUp } from "../../../assets/svg/arrow-up.svg";
 import { ReactComponent as ArrowDown } from "../../../assets/svg/arrow-down.svg";
 import { useNavigate } from "react-router-dom";
 import useTaxStore from "../../../store/taxStore";
+import useAuthStore from "../../../store/useStore";
 import useYearEndStore from "../../../store/yearEndStore";
+import axios from "axios";
 
 const DeductionResultYearEnd = () => {
   const navigate = useNavigate();
@@ -21,10 +23,12 @@ const DeductionResultYearEnd = () => {
     (state) => state.busTrafficDeduction
   );
   const cultureDeduction = useYearEndStore((state) => state.cultureDeduction);
+  const wageIncomeDeduction = useTaxStore((state) => state.wageIncomeDeduction);
   const personDeduction = useYearEndStore((state) => state.personDeduction);
   const houseDeductionAmount = useYearEndStore(
     (state) => state.houseDeductionAmount
   );
+  const user = useAuthStore((state) => state.user);
   const monthlyHouseDeductionAmount = useYearEndStore(
     (state) => state.monthlyHouseDeductionAmount
   );
@@ -33,7 +37,42 @@ const DeductionResultYearEnd = () => {
     (state) => state.insuranceDeduction
   );
 
+  const estimatedTaxAmount = useTaxStore((state) => state.estimatedTaxAmount);
+
+  const [joinAccount, setJoinAccount] = useState(0);
+
+  //산출세액 계산
+  const calculateTax = (taxableIncome) => {
+    if (taxableIncome <= 14000000) {
+      return taxableIncome * 0.06;
+    } else if (taxableIncome <= 50000000) {
+      return 840000 + (taxableIncome - 14000000) * 0.15;
+    } else if (taxableIncome <= 88000000) {
+      return 6240000 + (taxableIncome - 50000000) * 0.24;
+    } else if (taxableIncome <= 150000000) {
+      return 15360000 + (taxableIncome - 88000000) * 0.35;
+    } else if (taxableIncome <= 300000000) {
+      return 37060000 + (taxableIncome - 150000000) * 0.38;
+    } else if (taxableIncome <= 500000000) {
+      return 94060000 + (taxableIncome - 300000000) * 0.4;
+    } else if (taxableIncome <= 1000000000) {
+      return 174060000 + (taxableIncome - 500000000) * 0.42;
+    } else {
+      return 384060000 + (taxableIncome - 1000000000) * 0.45;
+    }
+  };
+  const taxableIncome = useTaxStore((state) => state.taxableIncome); //과세표준
+
+  const taxAmount = useTaxStore((state) => state.taxAmount); //산출세액
+
   const [isOpen, setIsOpen] = useState(true);
+
+  const insuranceHouseMontly =
+    Number(insuranceDeduction) +
+    Number(houseDeductionAmount) +
+    Number(monthlyHouseDeductionAmount);
+
+  const standardTaxDeduction = insuranceHouseMontly >= 130000 ? 0 : 130000;
 
   const toggleDetails = () => {
     setIsOpen(!isOpen);
@@ -47,13 +86,54 @@ const DeductionResultYearEnd = () => {
     navigate(-1);
   };
 
+  const userId = user.id;
+  useEffect(() => {
+    const fetchJoinHistory = async () => {
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/api/join-history/fund",
+          {
+            id: userId, // 사용자 ID를 바인딩
+          }
+        );
+        const totalJoinAccount = response.data.reduce(
+          (acc, item) => acc + item.joinAccount,
+          0
+        );
+        setJoinAccount(totalJoinAccount);
+      } catch (error) {
+        console.error("Error fetching join history:", error);
+      }
+    };
+
+    fetchJoinHistory();
+  }, []);
+
+  const pensionDeductionLimit =
+    joinAccount > 9000000
+      ? 0
+      : joinAccount > 6000000
+      ? 600000
+      : Math.min(joinAccount, 600000);
+
+  const totalTaxDeduction =
+    Number(businessDeduction) +
+    Number(monthlyHouseDeductionAmount) +
+    // 111300 + // 연금 공제
+    Number(standardTaxDeduction) +
+    Number(wageIncomeDeduction) +
+    Number(insuranceDeduction) +
+    Number(pensionDeductionLimit);
+  // 879000 + // 교육비
+  // 258000; // 기타
+
   const totalDeductions =
     Number(cardDeductionAmount) +
     Number(personDeduction) +
     Number(traditionalMarketDeduction) +
     Number(busTrafficDeduction) +
     Number(cultureDeduction) +
-    Number(houseDeductionAmount);
+    Number(houseDeductionAmount); //4대보험, 기타공제 빠짐
 
   const [detailItems] = useState([
     { label: "근로소득 공제", amount: wageIncomeAmount.toLocaleString() },
@@ -108,10 +188,10 @@ const DeductionResultYearEnd = () => {
                 <span>도서･공연･영화･신문･박물관･미술관</span>
                 <span>{Number(cultureDeduction).toLocaleString()}원</span>
               </div>
-              <div className="deduction-detail-item">
+              {/* <div className="deduction-detail-item">
                 <span>4대 보험</span>
                 <span>319,000원</span>
-              </div>
+              </div> */}
               <div className="deduction-detail-item">
                 <span>주택 공제</span>
                 <span>{Number(houseDeductionAmount).toLocaleString()}원</span>
@@ -122,14 +202,27 @@ const DeductionResultYearEnd = () => {
               </div>
             </div>
             <div className="refund-detail-item">
-              <span>공제 후 세금</span>
-              <span>2,540,128.05원</span>
+              <span>종합소득 과세표준</span>
+              <span>
+                {(taxableIncome - totalDeductions).toLocaleString()}원
+              </span>
+            </div>
+            <div className="refund-detail-item">
+              <span>산출세액</span>
+              <span>
+                {calculateTax(taxableIncome - totalDeductions).toLocaleString()}
+                원
+              </span>
             </div>
             <div className="refund-detail-item">
               <span>세금 공제</span>
-              <span>1,773,300원</span>
+              <span>{totalTaxDeduction.toLocaleString()}원</span>
             </div>
             <div className="deduction-detail-container">
+              <div className="deduction-detail-item">
+                <span>근로소득</span>
+                <span>{Number(wageIncomeDeduction).toLocaleString()}원</span>
+              </div>
               <div className="deduction-detail-item">
                 <span>중소기업 감면</span>
                 <span>{Number(businessDeduction).toLocaleString()}원</span>
@@ -142,23 +235,25 @@ const DeductionResultYearEnd = () => {
               </div>
               <div className="deduction-detail-item">
                 <span>연금 공제</span>
-                <span>111,300원</span>
+                <span>{pensionDeductionLimit.toLocaleString()}원</span>
               </div>
               <div className="deduction-detail-item">
                 <span>보험료</span>
                 <span>{Number(insuranceDeduction).toLocaleString()}원</span>
               </div>
-              <div className="deduction-detail-item">
-                <span>의료비</span>
-                <span>298,000원</span>
-              </div>
+              {/* 
               <div className="deduction-detail-item">
                 <span>교육비</span>
                 <span>879,000원</span>
+              </div> */}
+
+              <div className="deduction-detail-item">
+                <span>표준세액공제</span>
+                <span>{standardTaxDeduction.toLocaleString()}원</span>
               </div>
               <div className="deduction-detail-item">
                 <span>기타</span>
-                <span>258,000원</span>
+                <span>0원</span>
               </div>
             </div>
             <div className="refund-detail-item">
@@ -168,8 +263,62 @@ const DeductionResultYearEnd = () => {
           </div>
         )}
         <div className="refund-detail-item">
-          <span>돌려받는 돈</span>
-          <span>5,233,171.95원</span>
+          {calculateTax(taxableIncome - totalDeductions) -
+            totalDeductions -
+            totalTaxDeduction -
+            taxPaidValue >
+          0 ? (
+            <span>추가 납부해야 할 세금</span>
+          ) : (
+            <span>환급받는 금액</span>
+          )}
+          <span>
+            {calculateTax(taxableIncome - totalDeductions) -
+              totalDeductions -
+              totalTaxDeduction -
+              taxPaidValue <
+            0
+              ? Math.abs(
+                  calculateTax(taxableIncome - totalDeductions) -
+                    totalDeductions -
+                    totalTaxDeduction -
+                    taxPaidValue
+                ).toLocaleString()
+              : (
+                  calculateTax(taxableIncome - totalDeductions) -
+                  totalDeductions -
+                  totalTaxDeduction -
+                  taxPaidValue
+                ).toLocaleString()}{" "}
+            원
+          </span>
+        </div>
+
+        <div className="solutionBefore">
+          <span style={{ marginRight: "15px" }}>솔루션 전 </span>
+
+          <div className="solutionAfter">
+            {estimatedTaxAmount -
+              (calculateTax(taxableIncome - totalDeductions) -
+                totalDeductions -
+                totalTaxDeduction -
+                taxPaidValue) >
+            0 ? (
+              <span style={{ color: "red" }}> ▲ </span>
+            ) : (
+              <span style={{ color: "blue" }}> ▼ </span>
+            )}
+            <span>
+              {Math.abs(
+                estimatedTaxAmount -
+                  (calculateTax(taxableIncome - totalDeductions) -
+                    totalDeductions -
+                    totalTaxDeduction -
+                    taxPaidValue)
+              ).toLocaleString()}{" "}
+              원
+            </span>
+          </div>
         </div>
       </div>
       <div className="buttons">

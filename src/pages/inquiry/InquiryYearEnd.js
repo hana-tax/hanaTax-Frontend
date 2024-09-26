@@ -122,6 +122,7 @@ const InquiryYearEnd = () => {
       totalTaxDeduction,
       estimatedTaxAmount,
       taxPaidValue,
+      finalizedTaxAmount,
       wageIncomeAmount: incomeValue - calculatedDeduction,
     });
 
