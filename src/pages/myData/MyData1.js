@@ -43,12 +43,9 @@ function MyData1() {
     console.log(userCi);
     try {
       const hashedUserCi = await hashResidentNumber(userCi);
-      const response = await axios.get(
-        `http://localhost:8080/api/mydata/auth/authorize`,
-        {
-          params: { userCi: hashedUserCi }, // 쿼리 파라미터로 주민등록번호 전달
-        }
-      );
+      const response = await axios.get(`/api/mydata/auth/authorize`, {
+        params: { userCi: hashedUserCi }, // 쿼리 파라미터로 주민등록번호 전달
+      });
       // console.log(hashedUserCi);
       console.log(response.data);
       setAuthCode(response.data); // authCode 상태 업데이트
@@ -61,11 +58,9 @@ function MyData1() {
 
   const fetchTokens = async (userId, authCode) => {
     try {
-      const response = await axios.post(
-        `http://localhost:8080/api/mydata/auth/token`,
-        null,
-        { params: { userId, authCode } }
-      );
+      const response = await axios.post(`/api/mydata/auth/token`, null, {
+        params: { userId, authCode },
+      });
 
       console.log(authCode);
       const { accessToken, refreshToken } = response.data;

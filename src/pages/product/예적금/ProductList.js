@@ -16,9 +16,7 @@ const ProductList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8080/api/product/deposit/list"
-        );
+        const response = await axios.get("/api/product/deposit/list");
         if (response.status === 200) {
           const depositProducts = response.data.map((product) => ({
             id: product.depositId,

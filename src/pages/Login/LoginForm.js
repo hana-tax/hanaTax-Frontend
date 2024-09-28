@@ -60,7 +60,7 @@ const LoginForm = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/user/logout", {
+      const response = await fetch("/api/user/logout", {
         method: "POST",
         credentials: "include", // 쿠키를 포함하여 요청
       });

@@ -14,22 +14,19 @@ const MyAccount = () => {
     const fetchAccountData = async () => {
       try {
         // Fetch savings accounts
-        const accountResponse = await axios.post(
-          "http://localhost:8080/api/join-history/saving",
-          { id: userId }
-        );
+        const accountResponse = await axios.post("/api/join-history/saving", {
+          id: userId,
+        });
 
         // Fetch ISA accounts
-        const isaResponse = await axios.post(
-          "http://localhost:8080/api/join-history/isa",
-          { id: userId }
-        );
+        const isaResponse = await axios.post("/api/join-history/isa", {
+          id: userId,
+        });
 
         // Fetch Fund accounts
-        const fundResponse = await axios.post(
-          "http://localhost:8080/api/join-history/fund",
-          { id: userId }
-        );
+        const fundResponse = await axios.post("/api/join-history/fund", {
+          id: userId,
+        });
 
         // Combine all accounts into one list
         const allAccounts = [

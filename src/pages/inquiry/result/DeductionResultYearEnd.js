@@ -90,12 +90,9 @@ const DeductionResultYearEnd = () => {
   useEffect(() => {
     const fetchJoinHistory = async () => {
       try {
-        const response = await axios.post(
-          "http://localhost:8080/api/join-history/fund",
-          {
-            id: userId, // 사용자 ID를 바인딩
-          }
-        );
+        const response = await axios.post("/api/join-history/fund", {
+          id: userId, // 사용자 ID를 바인딩
+        });
         const totalJoinAccount = response.data.reduce(
           (acc, item) => acc + item.joinAccount,
           0

@@ -25,12 +25,9 @@ const ResultFinancialIncome = () => {
     } else {
       const fetchTaxStatus = async () => {
         try {
-          const response = await axios.post(
-            "http://localhost:8080/api/income/isOverTax",
-            {
-              id: user.id,
-            }
-          );
+          const response = await axios.post("/api/income/isOverTax", {
+            id: user.id,
+          });
           const { isOverTax, financialIncomeId } = response.data;
 
           console.log(isOverTax);

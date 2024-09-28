@@ -59,12 +59,9 @@ const RefundDetailsYearEnd = () => {
     // API 호출
     const fetchIncomeDetails = async () => {
       try {
-        const response = await axios.post(
-          "http://localhost:8080/api/income/incomeList",
-          {
-            financialIncomeId: financialIncomeId, // 가져온 financialIncomeId 사용
-          }
-        );
+        const response = await axios.post("/api/income/incomeList", {
+          financialIncomeId: financialIncomeId, // 가져온 financialIncomeId 사용
+        });
         setIncomeDetails(response.data);
         console.log(response.data);
       } catch (error) {
@@ -96,7 +93,7 @@ const RefundDetailsYearEnd = () => {
     if (smsChecked) alertMethods.push(2); // 문자 체크 시 추가
 
     try {
-      await axios.post(`http://localhost:8080/api/user/${user.id}/alert`, {
+      await axios.post(`/api/user/${user.id}/alert`, {
         alertMethods: alertMethods,
       });
       setIsApplicationModalOpen(false);

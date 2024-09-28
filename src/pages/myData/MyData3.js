@@ -262,7 +262,7 @@ function MyData3() {
 
       // POST 요청 보내기
       const response = await axios.post(
-        "http://localhost:8080/api/mydata/enroll",
+        "/api/mydata/enroll",
         {
           userId: user.id, // user.id로 수정할것
           assetCodes: assetCodes, // 선택한 자산 코드들

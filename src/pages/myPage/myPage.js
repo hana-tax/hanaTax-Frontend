@@ -96,7 +96,7 @@ const MyPage = () => {
 
     // 토큰 가져오기
     axios
-      .post("http://localhost:8080/api/mydata/auth/get-token", { id: userId })
+      .post("/api/mydata/auth/get-token", { id: userId })
       .then((response) => {
         const newToken = response.data.accessToken; // 새로운 토큰
         setToken(newToken); // 토큰 저장
@@ -110,7 +110,7 @@ const MyPage = () => {
       });
 
     axios
-      .post("http://localhost:8080/api/user/getUserById", { id: userId })
+      .post("/api/user/getUserById", { id: userId })
       .then((response) => {
         setUserInfo(response.data);
         console.log(response.data);
@@ -120,7 +120,7 @@ const MyPage = () => {
       });
 
     axios
-      .post("http://localhost:8080/api/user/risk-profile", { id: userId })
+      .post("/api/user/risk-profile", { id: userId })
       .then((response) => {
         const profileCode = response.data.profileName;
         setProfileName(getInvestmentType(profileCode)); // 성향 설정
@@ -134,7 +134,7 @@ const MyPage = () => {
       });
 
     axios
-      .post("http://localhost:8080/api/join-history/total", { id: userId })
+      .post("/api/join-history/total", { id: userId })
       .then((response) => {
         setTotalBalance(response.data.totalBalance || 0);
         console.log(response.data.totalBalance);
@@ -145,7 +145,7 @@ const MyPage = () => {
 
     // 예·적금 계좌 개수 가져오기
     axios
-      .post("http://localhost:8080/api/join-history/saving", { id: userId })
+      .post("/api/join-history/saving", { id: userId })
       .then((response) => {
         setSavingCount(response.data.length || 0);
 
@@ -172,7 +172,7 @@ const MyPage = () => {
 
     // ISA 계좌 개수 가져오기
     axios
-      .post("http://localhost:8080/api/join-history/isa", { id: userId })
+      .post("/api/join-history/isa", { id: userId })
       .then((response) => {
         setIsaCount(response.data.length || 0); // ISA 계좌 개수 저장
 
@@ -204,7 +204,7 @@ const MyPage = () => {
 
     // 펀드 계좌 개수 가져오기
     axios
-      .post("http://localhost:8080/api/join-history/fund", { id: userId })
+      .post("/api/join-history/fund", { id: userId })
       .then((response) => {
         setFundCount(response.data.length || 0); // 펀드 계좌 개수 저장
         setFundSum(response.data[0].joinAccount);
@@ -222,9 +222,7 @@ const MyPage = () => {
     const ageGroup = calculateAgeGroup(user.residentNumber);
     console.log(user.residentNumber);
     axios
-      .get(
-        `http://localhost:8080/api/join-history/compare/${ageGroup}?userId=${userId}`
-      )
+      .get(`/api/join-history/compare/${ageGroup}?userId=${userId}`)
       .then((response) => {
         const comparisonData = response.data;
         console.log("비교 데이터:", comparisonData);
@@ -299,7 +297,7 @@ const MyPage = () => {
       });
 
     axios
-      .get(`http://localhost:8080/api/join-history/top-tax/${ageGroup}`)
+      .get(`/api/join-history/top-tax/${ageGroup}`)
       .then((response) => {
         const topAssets = response.data;
 
@@ -345,7 +343,7 @@ const MyPage = () => {
 
     // linked-assets 호출 후 enroll API 호출
     axios
-      .post("http://localhost:8080/api/mydata/linked-assets", { id: userId })
+      .post("/api/mydata/linked-assets", { id: userId })
       .then((response) => {
         const { linkedAssets, ci } = response.data;
         setLinkedAssets(linkedAssets);
@@ -355,7 +353,7 @@ const MyPage = () => {
         const assetCodesArray = linkedAssets.split(",").map(Number);
         axios
           .post(
-            "http://localhost:8080/api/mydata/enroll",
+            "/api/mydata/enroll",
             {
               userId: userId,
               ci: ci,
