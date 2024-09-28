@@ -52,9 +52,7 @@ const ProductDetails = () => {
   // 상품 정보를 가져오는 함수
   const fetchProductDetails = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8080/api/product/deposit/${id}`
-      );
+      const response = await axios.get(`/api/product/deposit/${id}`);
       if (response.status === 200) {
         setProduct(response.data); // 상품 정보 상태에 저장
         const productData = response.data;
@@ -73,9 +71,7 @@ const ProductDetails = () => {
 
   const fetchInterestRates = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:8080/api/product/deposit/interest/${id}`
-      );
+      const response = await fetch(`/api/product/deposit/interest/${id}`);
       const data = await response.json();
       setInterestRates(data);
     } catch (error) {

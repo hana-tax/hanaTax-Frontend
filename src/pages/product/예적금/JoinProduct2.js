@@ -28,12 +28,9 @@ function JoinProduct2() {
   useEffect(() => {
     const fetchAccounts = async () => {
       try {
-        const response = await axios.post(
-          "http://localhost:8080/api/account/depositList",
-          {
-            id: user.id,
-          }
-        );
+        const response = await axios.post("/api/account/depositList", {
+          id: user.id,
+        });
         setAccounts(response.data);
         console.log(response.data);
       } catch (error) {
@@ -101,31 +98,28 @@ function JoinProduct2() {
       console.log(productId);
       console.log(user.id);
 
-      const response = await axios.post(
-        "http://localhost:8080/api/product/deposit/signup",
-        {
-          depositAccountDTO: {
-            accountPasswd: password,
-            accountStatus: 6, // 6: 계좌 정상
-            balance: amount,
-            createDate: createDate,
-            expirationDate: formattedExpirationDate,
-            depositId: productId,
-            id: user.id,
-            accountType: 3, // 3: 예적금 계좌
-          },
-          joinHistoryDTO: {
-            accountType: 3, // 3: 예적금 계좌
-            joinAccount: amount,
-            joinDate: createDate, // 현재 날짜 및 시간
-            expirationDate: expirationDate,
-            interest: interestRate,
-            interestMethod: 0,
-            joinStatus: 14, // 14: 상품 가입 상태 정상
-            id: user.id,
-          },
-        }
-      );
+      const response = await axios.post("/api/product/deposit/signup", {
+        depositAccountDTO: {
+          accountPasswd: password,
+          accountStatus: 6, // 6: 계좌 정상
+          balance: amount,
+          createDate: createDate,
+          expirationDate: formattedExpirationDate,
+          depositId: productId,
+          id: user.id,
+          accountType: 3, // 3: 예적금 계좌
+        },
+        joinHistoryDTO: {
+          accountType: 3, // 3: 예적금 계좌
+          joinAccount: amount,
+          joinDate: createDate, // 현재 날짜 및 시간
+          expirationDate: expirationDate,
+          interest: interestRate,
+          interestMethod: 0,
+          joinStatus: 14, // 14: 상품 가입 상태 정상
+          id: user.id,
+        },
+      });
       setIsApplicationModalOpen(true);
       console.log("Signup successful:", response.data);
     } catch (error) {
