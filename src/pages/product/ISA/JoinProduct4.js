@@ -25,12 +25,9 @@ function JoinProduct4() {
   useEffect(() => {
     const fetchAccounts = async () => {
       try {
-        const response = await axios.post(
-          "http://localhost:8080/api/account/depositList",
-          {
-            id: user.id,
-          }
-        );
+        const response = await axios.post("/api/account/depositList", {
+          id: user.id,
+        });
         setAccounts(response.data);
         console.log(response.data);
       } catch (error) {
@@ -113,10 +110,7 @@ function JoinProduct4() {
     };
 
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/product/isa/signup",
-        postData
-      );
+      const response = await axios.post("/api/product/isa/signup", postData);
       console.log("Signup successful:", response.data);
       openApplicationModal();
     } catch (error) {

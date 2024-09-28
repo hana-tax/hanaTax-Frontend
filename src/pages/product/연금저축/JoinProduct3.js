@@ -72,12 +72,9 @@ function JoinProduct3() {
   useEffect(() => {
     const fetchAccounts = async () => {
       try {
-        const response = await axios.post(
-          "http://localhost:8080/api/account/depositList",
-          {
-            id: user.id,
-          }
-        );
+        const response = await axios.post("/api/account/depositList", {
+          id: user.id,
+        });
         setAccounts(response.data);
         console.log(response.data);
       } catch (error) {
@@ -130,7 +127,7 @@ function JoinProduct3() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/product/pension/signup",
+        "/api/product/pension/signup",
         postData
       );
       console.log("Signup successful:", response.data);

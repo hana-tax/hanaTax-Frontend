@@ -71,9 +71,7 @@ function JoinProduct3() {
     // 포트폴리오 리스트를 가져오는 API 호출
     const fetchPortfolios = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:8080/api/product/isa/portfolioList"
-        );
+        const response = await fetch("/api/product/isa/portfolioList");
         const data = await response.json();
         setPortfolios(data);
       } catch (error) {
