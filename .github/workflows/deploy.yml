@@ -10,7 +10,7 @@ jobs:
       - name: Checkout source code. # Repo checkout
         uses: actions/checkout@v2
 
-      - name: Check Node v # Node v 확인
+      - name: Check Node version # Node v 확인
         run: node -v
 
       - name: Install Dependencies # 의존 파일 설치
@@ -21,7 +21,7 @@ jobs:
         env:
           CI: ""
 
-      - name: Create zip create
+      - name: Create zip file
         # zip 파일을 만듭니다(파일명은 자유, 대신 아래 workflow에 적을 파일명과 동일하게 맞춰주세요).
         run: zip -qq -r ./build-fe.zip ./build
         shell: bash
@@ -41,9 +41,9 @@ jobs:
           aws s3 cp --region ap-southeast-2 ./build-fe.zip s3://my-github-actions-s3-bucket-cicd/build-fe.zip
 
       - name: Deploy # Deploy to EC2
-        run: aws deploy create-deployment
-          --application-name my-codedeploy-app
-          --deployment-config-name CodeDeployDefault.AllAtOnce
-          --deployment-group-name 
-my-codedeploy-deployment-group
-          --s3-location bucket=my-codedeploy-app,key=build-fe.zip,bundleType=zip
+        run: |
+          aws deploy create-deployment \
+            --application-name my-codedeploy-app \
+            --deployment-config-name CodeDeployDefault.AllAtOnce \
+            --deployment-group-name my-codedeploy-deployment-group \
+            --s3-location bucket=my-github-actions-s3-bucket-cicd,key=build-fe.zip,bundleType=zip
