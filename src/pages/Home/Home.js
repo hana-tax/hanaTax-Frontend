@@ -102,33 +102,88 @@ const Home = () => {
         </div>
       )}
 
+      <div className="home-login-all-box">
+        <div className="login-box1">
+          <h3>아이디 로그인</h3>
+          <div className="home-login-input-box">
+            <div className="home-login-input">
+              <input type="text" placeholder="하나택스 로그인 ID" />
+              <input type="password" placeholder="비밀번호" />
+            </div>
+            <button className="login-button1">로그인</button>
+          </div>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <input type="checkbox" id="rememberId" style={{ width: "10px" }} />
+            <label htmlFor="rememberId">아이디 기억하기</label>
+          </div>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <button
+              className="home-join-button"
+              onClick={() => navigate("/signup")}
+            >
+              하나택스 가입
+            </button>
+          </div>
+        </div>
+      </div>
       <div className="homepage-container">
-        <div
-          className="slider"
-          style={{
-            transform: `translateX(-${currentIndex * 100}%)`,
-          }}
-        >
+        <div className="slider" style={{ height: "400px" }}>
           {boxes.map((box, index) => {
             const SvgComponent = box.SvgComponent;
             return (
               <div
                 key={index}
                 className={`main-box ${box.className}`}
-                style={{ background: box.background }}
+                style={{
+                  background: box.background,
+                  opacity: currentIndex === index ? 1 : 0,
+                  transition: "opacity 1s ease-in-out",
+                  position: "absolute", // Ensure boxes are in the same position
+                  width: "100%", // Make each box fill the container
+                  top: 0,
+                  left: 0,
+                }}
               >
                 <div className="left-section">
-                  <h1>{box.title1}</h1>
-                  <h1>{box.title2}</h1>
-                  <button className="start-button" onClick={handleStartClick}>
+                  <h1
+                    className={currentIndex === index ? "fade-in" : "fade-out"}
+                    style={{
+                      transition: "opacity 1s ease-in-out",
+                    }}
+                  >
+                    {box.title1}
+                  </h1>
+                  <h1
+                    className={currentIndex === index ? "fade-in" : "fade-out"}
+                    style={{
+                      transition: "opacity 1s ease-in-out",
+                    }}
+                  >
+                    {box.title2}
+                  </h1>
+                  <button
+                    className={`start-button ${
+                      currentIndex === index ? "fade-in" : "fade-out"
+                    }`}
+                    onClick={handleStartClick}
+                    style={{
+                      transition: "opacity 1s ease-in-out",
+                    }}
+                  >
                     시작하기
                   </button>
                 </div>
-                <SvgComponent className="char" />
+                <SvgComponent
+                  className={currentIndex === index ? "fade-in" : "fade-out"}
+                  style={{
+                    transition: "opacity 1s ease-in-out",
+                  }}
+                />
               </div>
             );
           })}
         </div>
+
         <div className="navigation-dots">
           {boxes.map((_, index) => (
             <div
@@ -139,7 +194,6 @@ const Home = () => {
           ))}
         </div>
       </div>
-
       <div className="second-container">
         <p>이런 서비스 어때요?</p>
         <div className="service-container">

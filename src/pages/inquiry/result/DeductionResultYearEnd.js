@@ -295,7 +295,7 @@ const DeductionResultYearEnd = () => {
         </div>
 
         <div className="solutionBefore">
-          <span style={{ marginRight: "15px" }}>솔루션 전 </span>
+          <span style={{ marginRight: "15px" }}>솔루션 전 비교 </span>
 
           <div className="solutionAfter">
             {estimatedTaxAmount -

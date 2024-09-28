@@ -1,23 +1,116 @@
 .homepage-container {
-  width: 100%;
-  overflow: hidden;
   position: relative;
+  height: auto;
+  overflow: hidden;
+}
+
+.fade-in {
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.homepage-login-container {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  padding: 20px;
   height: 400px;
+}
+
+.home-login-all-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-join-button {
+  width: 90%;
+  border-radius: 20px;
+  padding: 10px;
+  color: #fff;
+  border: none;
+  font-size: 14px;
+  font-family: "Pretendard-SemiBold";
+  background: linear-gradient(
+    90deg,
+    rgb(157, 92, 255) 0%,
+    rgb(92, 130, 255) 100%
+  );
+}
+
+.login-box1 {
+  position: absolute;
+  left: 8%;
+  top: 160px;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 25px;
+  height: 210px;
+  border-radius: 20px;
+  width: 270px;
+  z-index: 100000;
+}
+
+.login-box1 h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.login-box1 input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-family: "Pretendard-Regular";
+  margin-bottom: 5px;
+  font-size: 14px;
+  width: 140px;
+}
+
+.login-box1 .login-button1 {
+  padding: 15px;
+  background: linear-gradient(
+    90deg,
+    rgb(157, 92, 255) 0%,
+    rgb(92, 130, 255) 100%
+  );
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  width: 32%;
+  font-family: "Pretendard-SemiBold";
 }
 
 .slider {
   display: flex;
   transition: transform 0.5s ease-in-out;
-  width: 300%; /* 총 슬라이드 수에 따라 변경 */
+  position: relative; /* 슬라이더는 상대적인 위치에 놓이게 설정 */
+  height: 400px;
+}
+
+.home-login-input-box {
+  display: flex;
+  justify-content: center;
+}
+
+.home-login-input {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
 }
 
 .main-box {
   display: flex;
   align-items: center;
-
-  border-radius: 8px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 400px;
-  flex: 1 0 100%; /* 한 슬라이드의 너비를 100%로 설정 */
 }
 
 .left-section h1 {
@@ -71,17 +164,18 @@
 .left-section {
   display: flex;
   flex-direction: column;
-  margin-left: 120px;
+  margin-left: 490px;
 }
 .box1 .char {
-  margin-left: -351px;
+  margin-left: 51px;
+  width: 400px;
 }
 .box2 .char {
   margin-left: 120px;
 }
 .box3 .char {
   margin-left: 120px;
-  width: 450px;
+  width: 300px;
 }
 
 .navigation-dots {
@@ -183,12 +277,14 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+  position: relative;
 }
 
 .three-container {
   background-color: #eff4fe;
   height: 500px;
   padding: 30px 150px;
+  position: relative;
 }
 
 .text-right-arrow {
