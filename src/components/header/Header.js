@@ -18,10 +18,13 @@ function Header() {
   };
   const handleLogout = async () => {
     try {
-      const response = await fetch("/api/user/logout", {
-        method: "POST",
-        credentials: "include", // 쿠키를 포함하여 요청
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/user/logout`,
+        {
+          method: "POST",
+          credentials: "include", // 쿠키를 포함하여 요청
+        }
+      );
 
       if (response.status === 200) {
         toast.success("로그아웃 되었습니다.");
