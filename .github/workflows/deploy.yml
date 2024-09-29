@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout source code. # Repo checkout
-        uses: actions/checkout@v3  # 업데이트된 버전
+        uses: actions/checkout@v3 # 업데이트된 버전
 
       - name: Check Node version # Node v 확인
         run: node -v
@@ -23,11 +23,11 @@ jobs:
 
       - name: Create zip file
         # zip 파일을 만듭니다(파일명은 자유, 대신 아래 workflow에 적을 파일명과 동일하게 맞춰주세요).
-        run: zip -qq -r ./build-fe.zip ./build
+        run: zip -qq -r ./build-fe.zip .
         shell: bash
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2  # 업데이트된 버전
+        uses: aws-actions/configure-aws-credentials@v2 # 업데이트된 버전
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
