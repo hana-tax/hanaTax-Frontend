@@ -41,12 +41,9 @@ const FamilyDispersion = () => {
   useEffect(() => {
     const fetchFinancialIncome = async () => {
       try {
-        const response = await axios.post(
-          "http://localhost:8080/api/income/isOverTax",
-          {
-            id: userId,
-          }
-        );
+        const response = await axios.post("/api/income/isOverTax", {
+          id: userId,
+        });
         setFinancialIncome(response.data.sum); // sum 값을 상태에 저장
       } catch (error) {
         console.error("API 호출 오류:", error);

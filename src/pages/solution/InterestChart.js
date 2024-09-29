@@ -17,10 +17,9 @@ const InterestChart = ({ onDataLoad }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post(
-          "http://localhost:8080/api/income/incomeList",
-          { financialIncomeId: 7 }
-        );
+        const response = await axios.post("/api/income/incomeList", {
+          financialIncomeId: 7,
+        });
 
         const rawData = response.data;
 
