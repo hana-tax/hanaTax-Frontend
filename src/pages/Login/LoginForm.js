@@ -21,20 +21,17 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/user/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include", // 쿠키를 포함하여 요청
-          body: JSON.stringify({
-            id: username,
-            password: password,
-          }),
-        }
-      );
+      const response = await fetch("/api/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", // 쿠키를 포함하여 요청
+        body: JSON.stringify({
+          id: username,
+          password: password,
+        }),
+      });
 
       if (!response.ok) {
         throw new Error("로그인 실패");
