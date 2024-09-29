@@ -13,10 +13,10 @@ permissions:
     mode: 755
 hooks:
   AfterInstall:
-    - location: /home/ubuntu/hanaTax-Frontend/deploy.sh
+    - location: deploy.sh
       timeout: 60
       runas: ubuntu
   ApplicationStart:
-    - location: /home/ubuntu/hanaTax-Frontend/start.sh
+    - location: start.sh
       timeout: 60
       runas: ubuntu
