@@ -145,12 +145,9 @@ const MyReport = () => {
   const fetchIncomeData = async () => {
     const financialIncomeId = financialIncomeIds[selectedYear];
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/income/incomeList",
-        {
-          financialIncomeId,
-        }
-      );
+      const response = await axios.post("/api/income/incomeList", {
+        financialIncomeId,
+      });
       let interestIncome = 0;
       let dividendIncome = 0;
       let lastMonthTotal = 0;

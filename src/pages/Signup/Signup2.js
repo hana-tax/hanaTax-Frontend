@@ -98,10 +98,7 @@ const Signup2 = () => {
     console.log(dataToSubmit);
 
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/user/signup",
-        dataToSubmit
-      );
+      const response = await axios.post("/api/user/signup", dataToSubmit);
       console.log(response);
       if (response.status === 200) {
         toast.success("회원가입이 완료되었습니다.");

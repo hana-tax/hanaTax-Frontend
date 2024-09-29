@@ -64,7 +64,7 @@ const Signup = () => {
   };
 
   const checkId = async () => {
-    const response = await fetch("http://localhost:8080/api/user/idcheck", {
+    const response = await fetch("/api/user/idcheck", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

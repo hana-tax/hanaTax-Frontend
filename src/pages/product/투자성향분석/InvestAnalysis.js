@@ -120,10 +120,7 @@ const InvestAnalysis = () => {
     };
 
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/investAnalysis/insert",
-        postData
-      );
+      const response = await axios.post("/api/investAnalysis/insert", postData);
       console.log("API Response:", response.data);
       setIsModalOpen(false);
       if (accountType === "ISA") {
