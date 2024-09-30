@@ -33,13 +33,15 @@ const Home = () => {
 
   const [username, setUsername] = useState(""); // ID 저장
   const [password, setPassword] = useState("");
-  const { login, logout, isLoggedIn, setLastLoginTime } = useStore((state) => ({
-    login: state.login,
-    logout: state.logout,
-    isLoggedIn: state.isLoggedIn,
-    user: state.user,
-    setLastLoginTime: state.setLastLoginTime,
-  }));
+  const { login, logout, isLoggedIn, setLastLoginTime, user } = useStore(
+    (state) => ({
+      login: state.login,
+      logout: state.logout,
+      isLoggedIn: state.isLoggedIn,
+      user: state.user,
+      setLastLoginTime: state.setLastLoginTime,
+    })
+  );
 
   const boxes = [
     {
@@ -155,41 +157,63 @@ const Home = () => {
       )}
 
       <div className="home-login-all-box">
-        <div className="login-box1">
-          <h3>아이디 로그인</h3>
-          <div className="home-login-input-box">
-            <div className="home-login-input">
-              <input
-                type="text"
-                placeholder="하나택스 로그인 ID"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                style={{ marginBottom: "5px" }}
-              />
-              <input
-                type="password"
-                placeholder="비밀번호"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+        {!isLoggedIn ? (
+          <div className="login-box1">
+            <h3>아이디 로그인</h3>
+            <div className="home-login-input-box">
+              <div className="home-login-input">
+                <input
+                  type="text"
+                  placeholder="하나택스 로그인 ID"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  style={{ marginBottom: "5px" }}
+                />
+                <input
+                  type="password"
+                  placeholder="비밀번호"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <button className="login-button1" onClick={handleLogin}>
+                로그인
+              </button>
             </div>
-            <button className="login-button1" onClick={handleLogin}>
-              로그인
-            </button>
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <input
+                type="checkbox"
+                id="rememberId"
+                style={{ width: "12px" }}
+                checked={rememberId}
+                onChange={(e) => setRememberId(e.target.checked)}
+              />
+              <label htmlFor="rememberId">아이디 기억하기</label>
+            </div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <button
+                className="home-join-button"
+                onClick={() => navigate("/signup")}
+              >
+                하나택스 가입
+              </button>
+            </div>
           </div>
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            <input type="checkbox" id="rememberId" style={{ width: "12px" }} />
-            <label htmlFor="rememberId">아이디 기억하기</label>
+        ) : (
+          <div className="status-box">
+            <div className="status-header">
+              <p>기업번호</p>
+            </div>
+            <div className="status-content">
+              <p>
+                <strong>{user.name}님</strong>
+              </p>
+              <p>이용자 ID: {user.id}</p>
+              <p>최근접속시간: {setLastLoginTime}</p>
+            </div>
+            <button className="logout-button">로그아웃</button>
           </div>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <button
-              className="home-join-button"
-              onClick={() => navigate("/signup")}
-            >
-              하나택스 가입
-            </button>
-          </div>
-        </div>
+        )}
       </div>
       <div className="homepage-container">
         <div className="slider" style={{ height: "400px" }}>
