@@ -134,7 +134,7 @@
   flex-direction: column;
 }
 .asset-selection-container {
-  padding: 20px;
+  padding: 40px;
 }
 
 .asset-selection-header {
@@ -222,7 +222,7 @@
   color: #000;
   font-family: "Pretendard-Bold";
   justify-content: center;
-  transition: all 0.3s;
+  transition: all 0.1s;
   margin: 10px;
 }
 
@@ -264,6 +264,11 @@
   font-family: "Pretendard-Regular";
   padding: 10px 40px;
   font-size: 17px;
+  cursor: pointer;
+}
+
+.mydata-asset-button:hover {
+  background-color: #08726e;
 }
 
 .asset-button-box {

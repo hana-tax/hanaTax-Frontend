@@ -236,10 +236,13 @@ function MyData3() {
   };
 
   const selectAllCards = () => {
-    setSelectedCards((prev) => ({
-      ...prev,
-      [activeTab]: cards[activeTab],
-    }));
+    setSelectedCards((prev) => {
+      const isAllSelected = prev[activeTab].length === cards[activeTab].length;
+      return {
+        ...prev,
+        [activeTab]: isAllSelected ? [] : cards[activeTab],
+      };
+    });
   };
 
   const countSelectedCards = (tab) => {

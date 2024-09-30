@@ -29,6 +29,7 @@
 
 .home-join-button {
   width: 90%;
+  margin-top: 5px;
   border-radius: 20px;
   padding: 10px;
   color: #fff;
@@ -51,7 +52,7 @@
   height: 210px;
   border-radius: 20px;
   width: 270px;
-  z-index: 100000;
+  z-index: 100;
 }
 
 .login-box1 h3 {
@@ -359,18 +360,18 @@
 
 .hand-phone {
   position: absolute;
-  top: 1070px;
   left: 720px;
+  bottom: 100px;
 }
 
 .triangle-exclude {
   position: absolute;
-  top: 940px;
-  right: 100px;
+  bottom: 450px;
+  right: 120px;
 }
 
 .circle-exclude {
   position: absolute;
-  top: 1300px;
+  bottom: 70px;
   left: 100px;
 }

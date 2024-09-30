@@ -43,7 +43,7 @@ function MyData1() {
     console.log(userCi);
     try {
       const hashedUserCi = await hashResidentNumber(userCi);
-      const response = await axios.get(`/api/mydata/auth/authorize`, {
+      const response = await axios.get("/api/mydata/auth/authorize", {
         params: { userCi: hashedUserCi }, // 쿼리 파라미터로 주민등록번호 전달
       });
       // console.log(hashedUserCi);
@@ -58,7 +58,7 @@ function MyData1() {
 
   const fetchTokens = async (userId, authCode) => {
     try {
-      const response = await axios.post(`/api/mydata/auth/token`, null, {
+      const response = await axios.post("/api/mydata/auth/token", null, {
         params: { userId, authCode },
       });
 

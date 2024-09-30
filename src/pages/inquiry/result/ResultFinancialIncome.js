@@ -77,7 +77,7 @@ const ResultFinancialIncome = () => {
       <div className="solution-container">
         <div className="solutions-section">
           <h2>똑똑한 절세 방법을 알려드릴게요!</h2>
-          <div className="slider">
+          <div className="slider-ani">
             <div className="slide-track">
               <div className="slide">
                 <img src={deduction1} alt="money" />

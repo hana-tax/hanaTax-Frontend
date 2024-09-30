@@ -108,7 +108,7 @@ const ResultYearEnd = () => {
             있는 <br />
             방법을 알려드릴게요!
           </h2>
-          <div className="slider">
+          <div className="slider-ani">
             <div className="slide-track">
               <div className="slide">
                 <img src={creditCardIcon} alt="Credit Card" />

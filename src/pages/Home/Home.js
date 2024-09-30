@@ -28,9 +28,17 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
   const navigate = useNavigate();
   const { token } = tokenStore((state) => ({ token: state.token }));
+  const [rememberId, setRememberId] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const { isLoggedIn } = useStore((state) => ({
+  const [username, setUsername] = useState(""); // ID 저장
+  const [password, setPassword] = useState("");
+  const { login, logout, isLoggedIn, setLastLoginTime } = useStore((state) => ({
+    login: state.login,
+    logout: state.logout,
     isLoggedIn: state.isLoggedIn,
+    user: state.user,
+    setLastLoginTime: state.setLastLoginTime,
   }));
 
   const boxes = [
@@ -57,15 +65,59 @@ const Home = () => {
     },
   ];
 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("/api/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", // 쿠키를 포함하여 요청
+        body: JSON.stringify({
+          id: username,
+          password: password,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("로그인 실패");
+      }
+
+      const data = await response.json();
+      const userName = data.name; // 이름 가져오기
+      toast.success(`${userName}님, 반가워요!`); // 이름으로 메시지 표시
+      login({ id: username, name: userName });
+
+      const currentTime = new Date().toLocaleString();
+      setLastLoginTime(currentTime);
+
+      setIsSubmitted(true);
+      navigate("/"); // 로그인 후 메인 페이지로 이동
+    } catch (error) {
+      toast.error("로그인 중 오류가 발생했습니다.");
+      console.error("로그인 오류:", error);
+    }
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) =>
         prevIndex === boxes.length - 1 ? 0 : prevIndex + 1
       );
-    }, 5000); // 5초마다 전환
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [boxes.length]);
+
+  useEffect(() => {
+    const savedUsername = localStorage.getItem("rememberedUsername");
+    if (savedUsername) {
+      setUsername(savedUsername);
+      setRememberId(true);
+    }
+  }, []);
 
   const handleStartClick = () => {
     if (!isLoggedIn) {
@@ -107,13 +159,26 @@ const Home = () => {
           <h3>아이디 로그인</h3>
           <div className="home-login-input-box">
             <div className="home-login-input">
-              <input type="text" placeholder="하나택스 로그인 ID" />
-              <input type="password" placeholder="비밀번호" />
+              <input
+                type="text"
+                placeholder="하나택스 로그인 ID"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                style={{ marginBottom: "5px" }}
+              />
+              <input
+                type="password"
+                placeholder="비밀번호"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
-            <button className="login-button1">로그인</button>
+            <button className="login-button1" onClick={handleLogin}>
+              로그인
+            </button>
           </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
-            <input type="checkbox" id="rememberId" style={{ width: "10px" }} />
+            <input type="checkbox" id="rememberId" style={{ width: "12px" }} />
             <label htmlFor="rememberId">아이디 기억하기</label>
           </div>
           <div style={{ display: "flex", justifyContent: "center" }}>

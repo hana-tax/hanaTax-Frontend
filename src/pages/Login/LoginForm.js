@@ -92,6 +92,7 @@ const LoginForm = () => {
               placeholder="아이디"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              style={{ marginBottom: "7px" }}
             />
             <input
               type="password"
